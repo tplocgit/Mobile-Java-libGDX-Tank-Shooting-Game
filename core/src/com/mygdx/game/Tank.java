@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -26,12 +25,13 @@ abstract class Tank extends GameObject {
     public final static int DIR_UP = 2;
     public final static int DIR_DOWN = 3;
     //graphic
-    TextureRegion tankTexture, bulletTextureRegion;
+    TextureRegion tankTextureRegion, bulletTextureRegion, shieldTextureRegion;
 
     public Tank(float xPos, float yPos, float width, float height, float movementSpeed, int firepower,
                 int shield, float bulletWidth, float bulletHeight,
                 float bulletMovementSpeed, float timeBetweenShots, int direction,
-                TextureRegion tankTexture, TextureRegion bulletTextureRegion) {
+                TextureRegion tankTextureRegion, TextureRegion bulletTextureRegion,
+                TextureRegion shieldTextureRegion) {
         this.setX(xPos);
         this.setY(yPos);
         this.setWidth(width);
@@ -45,8 +45,9 @@ abstract class Tank extends GameObject {
         this.bulletMovementSpeed = bulletMovementSpeed;
         this.timeBetweenShots = timeBetweenShots;
         this.direction = direction;
-        this.tankTexture = tankTexture;
+        this.tankTextureRegion = tankTextureRegion;
         this.bulletTextureRegion = bulletTextureRegion;
+        this.shieldTextureRegion = shieldTextureRegion;
     }
 
     public void update(float deltaTime) {
@@ -65,7 +66,9 @@ abstract class Tank extends GameObject {
     }
 
     public void draw(Batch batch) {
-        batch.draw(tankTexture, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        batch.draw(tankTextureRegion, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        if (shield > 0)
+            batch.draw(shieldTextureRegion, this.getX() - 12, this.getY() - 12, this.getWidth() + 25, this.getHeight() + 25);
     }
     
     public void moveLeft(float deltaTime) {

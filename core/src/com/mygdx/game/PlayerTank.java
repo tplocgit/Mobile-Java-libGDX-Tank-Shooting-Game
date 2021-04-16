@@ -6,34 +6,35 @@ public class PlayerTank extends Tank {
     public PlayerTank(float xPos, float yPos, float width, float height, float movementSpeed,
                       int firepower, int shield, float bulletWidth, float bulletHeight,
                       float bulletMovementSpeed, float timeBetweenShots, int direction,
-                      TextureRegion tankTexture, TextureRegion bulletTextureRegion) {
+                      TextureRegion tankTexture, TextureRegion bulletTextureRegion,
+                      TextureRegion shieldTextureRegion) {
         super(xPos, yPos, width, height, movementSpeed, firepower, shield, bulletWidth, bulletHeight,
-                bulletMovementSpeed, timeBetweenShots, direction, tankTexture, bulletTextureRegion);
+                bulletMovementSpeed, timeBetweenShots, direction, tankTexture, bulletTextureRegion,
+                shieldTextureRegion);
     }
 
     @Override
     public void moveLeft(float deltaTime) {
         super.moveLeft(deltaTime);
-        this.tankTexture = GameScreen.TEXTURE_ATLAS.findRegion("tank_blue_left");
-
+        this.tankTextureRegion = GameScreen.TEXTURE_ATLAS.findRegion("tank_blue_left");
     }
 
     @Override
     public void moveRight(float deltaTime) {
         super.moveRight(deltaTime);
-        this.tankTexture = GameScreen.TEXTURE_ATLAS.findRegion("tank_blue_right");
+        this.tankTextureRegion = GameScreen.TEXTURE_ATLAS.findRegion("tank_blue_right");
     }
 
     @Override
     public void moveUp(float deltaTime) {
         super.moveUp(deltaTime);
-        this.tankTexture = GameScreen.TEXTURE_ATLAS.findRegion("tank_blue_up");
+        this.tankTextureRegion = GameScreen.TEXTURE_ATLAS.findRegion("tank_blue_up");
     }
 
     @Override
     public void moveDown(float deltaTime) {
         super.moveDown(deltaTime);
-        this.tankTexture = GameScreen.TEXTURE_ATLAS.findRegion("tank_blue_down");
+        this.tankTextureRegion = GameScreen.TEXTURE_ATLAS.findRegion("tank_blue_down");
     }
 
     @Override

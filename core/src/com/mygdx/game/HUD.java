@@ -18,18 +18,22 @@ public class HUD {
     Stage stage;
     OrthographicCamera cam;
     BitmapFont font;
-    float life;
-    int score, enemyCount;
+    float life, movementSpeed;
+    int score, enemyCount, firepower, shield;
     Vector2 position;
     boolean debugMode = true;
 
-    public HUD(int score, float life, int enemyCount, Vector2 initPosition, boolean debugMode) {
+    public HUD(int score, float life, int firepower, int shield, float movementSpeed, int enemyCount,
+               Vector2 initPosition, boolean debugMode) {
         cam = new OrthographicCamera();
         viewport = new FitViewport(800, 480, cam);
         stage = new Stage(viewport, GameScreen.batch);
         this.debugMode = debugMode;
         this.score = score;
         this.life = life;
+        this.movementSpeed = movementSpeed;
+        this.firepower = firepower;
+        this.shield = shield;
         this.enemyCount = enemyCount;
         this.position = initPosition;
 
@@ -57,10 +61,22 @@ public class HUD {
         font.draw(batch, String.format(Locale.getDefault(), "%06d", score), 400, 435,
                 20,  Align.center, false);
 
-        font.draw(batch, "Life", 720, 475, 20, Align.right, false);
-        font.draw(batch, String.format(Locale.getDefault(), "%.0f", life), 700, 435,
+        font.draw(batch, "Power", 720, 475, 20, Align.right, false);
+        font.draw(batch, String.format(Locale.getDefault(), "%2d", firepower), 700, 435,
                 20, Align.right, false);
-        font.draw(batch, "%", 735, 435,
+        font.draw(batch, "Speed", 720, 400, 20, Align.right, false);
+        font.draw(batch, String.format(Locale.getDefault(), "%.0f", movementSpeed), 700, 360,
+                20, Align.right, false);
+
+        font.draw(batch, "Life", 300, 80, 20, Align.left, false);
+        font.draw(batch, String.format(Locale.getDefault(), "%.0f", life), 450, 80,
+                20, Align.right, false);
+        font.draw(batch, "%", 485, 80,
+                20, Align.right, false);
+        font.draw(batch, "Shield", 300, 40, 20, Align.left, false);
+        font.draw(batch, String.format(Locale.getDefault(), "%02d", shield), 450, 40,
+                20, Align.right, false);
+        font.draw(batch, "%", 485, 40,
                 20, Align.right, false);
 
         if (this.life <= 0)
