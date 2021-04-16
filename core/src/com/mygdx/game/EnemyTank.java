@@ -59,41 +59,53 @@ public class EnemyTank extends Tank {
                 bullets[0].setX(this.getX() + (this.getWidth() / 2) - this.getWidth() * 0.26f);
                 bullets[0].setY(this.getY() + this.getHeight() * 0.8f);
                 bullets[0].direction = Direction.UP;
+                bullets[0].setWidth(bulletWidth);
+                bullets[0].setHeight(bulletHeight);
 
                 bullets[1].setX(this.getX() + (this.getWidth() / 2) + this.getWidth() * 0.12f);
                 bullets[1].setY(this.getY() + this.getHeight() * 0.8f);
                 bullets[1].direction = Direction.UP;
+                bullets[1].setWidth(bulletWidth);
+                bullets[1].setHeight(bulletHeight);
                 break;
             case Direction.DOWN:
                 bullets[0].setX(this.getX() + (this.getWidth() / 2) - this.getWidth() * 0.26f);
                 bullets[0].setY(this.getY() + this.getHeight() * 0.05f);
                 bullets[0].direction = Direction.DOWN;
+                bullets[0].setWidth(bulletWidth);
+                bullets[0].setHeight(bulletHeight);
 
                 bullets[1].setX(this.getX() + (this.getWidth() / 2) + this.getWidth() * 0.12f);
                 bullets[1].setY(this.getY() + this.getHeight() * 0.05f);
                 bullets[1].direction = Direction.DOWN;
+                bullets[1].setWidth(bulletWidth);
+                bullets[1].setHeight(bulletHeight);
                 break;
             case Direction.LEFT:
                 bullets[0].setX(this.getX() + this.getWidth() * 0.02f);
                 bullets[0].setY(this.getY() + this.getHeight() / 2 + this.getHeight() * 0.16f);
                 bullets[0].direction = Direction.LEFT;
-                bullets[0].rotate90Deg();
+                bullets[0].setWidth(bulletHeight);
+                bullets[0].setHeight(bulletWidth);
 
                 bullets[1].setX(this.getX() + this.getWidth() * 0.02f);
                 bullets[1].setY(this.getY() + this.getHeight() / 2 - this.getHeight() * 0.22f);
                 bullets[1].direction = Direction.LEFT;
-                bullets[1].rotate90Deg();
+                bullets[1].setWidth(bulletHeight);
+                bullets[1].setHeight(bulletWidth);
                 break;
             case Direction.RIGHT:
                 bullets[0].setX(this.getX() + this.getWidth() - this.getWidth() * 0.2f);
                 bullets[0].setY(this.getY() + this.getHeight() / 2 + this.getHeight() * 0.16f);
                 bullets[0].direction = Direction.RIGHT;
-                bullets[0].rotate90Deg();
+                bullets[0].setWidth(bulletHeight);
+                bullets[0].setHeight(bulletWidth);
 
                 bullets[1].setX(this.getX() + this.getWidth() - this.getWidth() * 0.22f);
                 bullets[1].setY(this.getY() + this.getHeight() / 2 - this.getHeight() * 0.22f);
                 bullets[1].direction = Direction.RIGHT;
-                bullets[1].rotate90Deg();
+                bullets[1].setWidth(bulletHeight);
+                bullets[1].setHeight(bulletWidth);
                 break;
         }
 
@@ -106,7 +118,7 @@ public class EnemyTank extends Tank {
         super.update(deltaTime);
         timeSinceLastDirChange += deltaTime;
         if (timeSinceLastDirChange > dirChangeFreq){
-            direction = new Random().nextInt(4);
+            this.direction = new Random().nextInt(4);
             timeSinceLastDirChange -= dirChangeFreq;
         }
     }

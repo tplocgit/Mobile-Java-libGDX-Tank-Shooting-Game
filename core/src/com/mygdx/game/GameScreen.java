@@ -244,7 +244,7 @@ public class GameScreen implements Screen {
 
         for (int i = 0; i < enemyTankList.size(); i++) {
             if (enemyTankList.get(i).canFire()) {
-                Bullet[] bullets = enemyTankList.get(i).fireBullet(enemyBulletTextureRegion);
+                Bullet[] bullets = enemyTankList.get(i).fireBullet(enemyTankList.get(i).bulletTextureRegion);
                 Collections.addAll(enemyBulletList, bullets);
             }
         }
@@ -314,19 +314,19 @@ public class GameScreen implements Screen {
     private void moveEnemy(EnemyTank enemyTank, float deltaTime) {
         boolean[] collisionDetected = detectCollisions(enemyTank, deltaTime);
 
+        if(enemyTank.direction == Direction.LEFT)
+            enemyTank.bulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletRed2_left");
+
+        else if(enemyTank.direction == Direction.RIGHT)
+            enemyTank.bulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletRed2_right");
+
+        else if(enemyTank.direction == Direction.UP)
+            enemyTank.bulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletRed2_up");
+
+        else if(enemyTank.direction == Direction.DOWN)
+            enemyTank.bulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletRed2_down");
+
         if (!collisionDetected[enemyTank.direction]) {
-            if(enemyTank.direction == Direction.LEFT)
-                enemyTank.bulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletRed2_left");
-
-            else if(enemyTank.direction == Direction.RIGHT)
-                enemyTank.bulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletRed2_right");
-
-            else if(enemyTank.direction == Direction.UP)
-                enemyTank.bulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletRed2_up");
-
-            else if(enemyTank.direction == Direction.DOWN)
-                enemyTank.bulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletRed2_down");
-
             enemyTank.move(deltaTime);
         }
     }
