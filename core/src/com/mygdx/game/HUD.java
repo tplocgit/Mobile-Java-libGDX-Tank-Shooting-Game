@@ -18,11 +18,12 @@ public class HUD {
     Stage stage;
     OrthographicCamera cam;
     BitmapFont font;
-    int score, life, enemyCount;
+    float life;
+    int score, enemyCount;
     Vector2 position;
     boolean debugMode = true;
 
-    public HUD(int score, int life, int enemyCount, Vector2 initPosition, boolean debugMode) {
+    public HUD(int score, float life, int enemyCount, Vector2 initPosition, boolean debugMode) {
         cam = new OrthographicCamera();
         viewport = new FitViewport(800, 480, cam);
         stage = new Stage(viewport, GameScreen.batch);
@@ -42,8 +43,8 @@ public class HUD {
         //stage.draw();
         batch.begin();
 
-        font.draw(batch, "Enemy", 100, 450, 20, Align.left, false);
-        font.draw(batch, String.format(Locale.getDefault(), "%02d", enemyCount), 100, 400,
+        font.draw(batch, "Enemy", 100, 475, 20, Align.left, false);
+        font.draw(batch, String.format(Locale.getDefault(), "%02d", enemyCount), 100, 435,
                 20, Align.left, false);
 
         if(debugMode) {
@@ -52,16 +53,18 @@ public class HUD {
                     20, Align.left, false);
         }
 
-        font.draw(batch, "Score", 400, 450, 20, Align.center, false);
-        font.draw(batch, String.format(Locale.getDefault(), "%06d", score), 400, 400,
+        font.draw(batch, "Score", 400, 475, 20, Align.center, false);
+        font.draw(batch, String.format(Locale.getDefault(), "%06d", score), 400, 435,
                 20,  Align.center, false);
 
-        font.draw(batch, "Life", 700, 450, 20, Align.right, false);
-        font.draw(batch, String.format(Locale.getDefault(), "%02d", life), 700, 400,
+        font.draw(batch, "Life", 720, 475, 20, Align.right, false);
+        font.draw(batch, String.format(Locale.getDefault(), "%.0f", life), 700, 435,
+                20, Align.right, false);
+        font.draw(batch, "%", 735, 435,
                 20, Align.right, false);
 
         if (this.life <= 0)
-            font.draw(batch, "YOU DIED", 400, 250, 20, Align.center, false);
+            font.draw(batch, "YOU DIED", 400, 200, 20, Align.center, false);
         batch.end();
     }
 

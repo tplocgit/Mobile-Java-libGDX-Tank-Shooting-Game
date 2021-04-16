@@ -3,12 +3,11 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class PlayerTank extends Tank {
-
     public PlayerTank(float xPos, float yPos, float width, float height, float movementSpeed,
-                      float bulletWidth, float bulletHeight,
+                      int firepower, int shield, float bulletWidth, float bulletHeight,
                       float bulletMovementSpeed, float timeBetweenShots, int direction,
                       TextureRegion tankTexture, TextureRegion bulletTextureRegion) {
-        super(xPos, yPos, width, height, movementSpeed, bulletWidth, bulletHeight,
+        super(xPos, yPos, width, height, movementSpeed, firepower, shield, bulletWidth, bulletHeight,
                 bulletMovementSpeed, timeBetweenShots, direction, tankTexture, bulletTextureRegion);
     }
 

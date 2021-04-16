@@ -9,10 +9,10 @@ public class EnemyTank extends Tank {
     float dirChangeFreq = 1.0f;
 
     public EnemyTank(float xPos, float yPos, float width, float height, float movementSpeed,
-                      float bulletWidth, float bulletHeight,
+                      int firepower, int shield, float bulletWidth, float bulletHeight,
                       float bulletMovementSpeed, float timeBetweenShots, int direction,
                       TextureRegion tankTexture, TextureRegion bulletTextureRegion) {
-        super(xPos, yPos, width, height, movementSpeed, bulletWidth, bulletHeight,
+        super(xPos, yPos, width, height, movementSpeed, firepower, shield, bulletWidth, bulletHeight,
                 bulletMovementSpeed, timeBetweenShots, direction, tankTexture, bulletTextureRegion);
     }
 

@@ -44,7 +44,7 @@ public class GameScreen implements Screen {
     public static final TextureAtlas TEXTURE_ATLAS = new TextureAtlas("images.atlas");;
     private TextureRegion playerTankTextureRegion, enemyTankTextureRegion, barrelRedTextureRegion,
             barrelGreenTextureRegion, playerBulletTextureRegion, enemyBulletTextureRegion;
-    private TextureRegion explosionTextureRegion;
+    private TextureRegion explosionTextureRegion, deadStateTexture;
 
     //timing
     private int backgroundOffset;
@@ -73,6 +73,8 @@ public class GameScreen implements Screen {
     private final int ENEMY_BULLET_WIDTH = 10;
     private final int ENEMY_BULLET_HEIGHT = 12;
     private final int ENEMY_QUANTITY = 5;
+    private final int PLAYER_FIREPOWER = 10;
+    private final int ENEMY_FIREPOWER = 5;
 
     //game objects
     private PlayerTank playerTank;
@@ -97,6 +99,7 @@ public class GameScreen implements Screen {
     private int score = 0, enemyCount = 0;
 
     private ArrayList<Vector2> spawnPos;
+    boolean deadState = false;
 
     GameScreen() {
 
@@ -116,6 +119,7 @@ public class GameScreen implements Screen {
         playerBulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletBlue2_up");
         enemyBulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletRed2_up");
         explosionTextureRegion = TEXTURE_ATLAS.findRegion("explosion4");
+        deadStateTexture = new TextureRegion(new Texture("dead_state.png"));
 
         //backgroundOffset = 0;
         font = new BitmapFont();
@@ -125,11 +129,12 @@ public class GameScreen implements Screen {
 
         //set up game objects
         playerTank = new PlayerTank(TILE_SIZE, TILE_SIZE,
-                PLAYER_WIDTH, PLAYER_HEIGHT, TILE_SIZE * 5,
+                PLAYER_WIDTH, PLAYER_HEIGHT,
+                TILE_SIZE * 5, PLAYER_FIREPOWER, 0,
                 PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT,
                 PLAYER_BULLET_SPEED, PLAYER_TIME_BETWEEN_SHOT, Direction.UP,
                 playerTankTextureRegion, playerBulletTextureRegion);
-        playerTank.life = 3;
+        playerTank.life = 100;
 
         /*enemyTank = new EnemyTank(TILE_SIZE * (WORLD_TILE_WIDTH - 2),
                 TILE_SIZE * (WORLD_TILE_HEIGHT - 2),
@@ -200,15 +205,14 @@ public class GameScreen implements Screen {
         // change direction later maybe
         int direction = GENERATOR.nextInt(4);
         int pos = GENERATOR.nextInt(5);
-        //if (enemyTankList.size() < ENEMY_QUANTITY)
-        spawnEnemies(spawnPos.get(pos).x, spawnPos.get(pos).y, direction, delta);
+        if (enemyTankList.size() < ENEMY_QUANTITY && !deadState)
+            spawnEnemies(spawnPos.get(pos).x, spawnPos.get(pos).y, direction, delta);
 
         for (EnemyTank tank : enemyTankList) {
             moveEnemy(tank, delta);
             tank.update(delta);
             tank.draw(batch);
         }
-
 
         //background
         //batch.draw(background, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
@@ -229,7 +233,7 @@ public class GameScreen implements Screen {
     }
 
     private void renderBullets(float deltaTime) {
-        if (playerTank.canFire() && controller.crossHairPressed) {
+        if (playerTank.canFire() && controller.crossHairPressed && !deadState) {
             Bullet[] bullets = playerTank.fireBullet(playerBulletTextureRegion);
             Collections.addAll(playerBulletList, bullets);
         }
@@ -264,7 +268,6 @@ public class GameScreen implements Screen {
                 playerBulletList.remove(i);
         }
 
-
         for (int i = 0; i < enemyBulletList.size(); i++) {
             Bullet bullet = enemyBulletList.get(i);
             bullet.draw(batch);
@@ -287,17 +290,18 @@ public class GameScreen implements Screen {
                     bullet.getY() > TILE_SIZE * (NUMBER_OF_WIDTH_TILE - 1) || bullet.getY() < 0)
                 enemyBulletList.remove(i);
         }
-
     }
 
     private void spawnEnemies(float x, float y, int direction, float deltaTime) {
         spawnTimers += deltaTime;
+        EnemyTank enemyTank = new EnemyTank(x, y, PLAYER_WIDTH, PLAYER_HEIGHT,
+                TILE_SIZE * 3, ENEMY_FIREPOWER, 0,
+                PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT,
+                ENEMY_BULLET_SPEED, ENEMY_TIME_BETWEEN_SHOT, direction,
+                enemyTankTextureRegion, enemyBulletTextureRegion);
         if (spawnTimers > spawnerDownTime){
-            enemyTankList.add(new EnemyTank(x, y,
-                    PLAYER_WIDTH, PLAYER_HEIGHT, TILE_SIZE * 3,
-                    PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT,
-                    ENEMY_BULLET_SPEED, ENEMY_TIME_BETWEEN_SHOT, direction,
-                    enemyTankTextureRegion, enemyBulletTextureRegion));
+            enemyTank.life = 30;
+            enemyTankList.add(enemyTank);
             my_hud.enemyCount += 1;
             spawnTimers -= spawnerDownTime;
         }
@@ -313,7 +317,6 @@ public class GameScreen implements Screen {
             else if(enemyTank.direction == Direction.RIGHT)
                 enemyTank.bulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletRed2_right");
 
-
             else if(enemyTank.direction == Direction.UP)
                 enemyTank.bulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletRed2_up");
 
@@ -325,37 +328,38 @@ public class GameScreen implements Screen {
     }
 
     private void detectInput(float deltaTime) {
+        if (!deadState) {
+            boolean[] collisionDetected = detectCollisions(playerTank, deltaTime);
 
-        boolean[] collisionDetected = detectCollisions(playerTank, deltaTime);
+            //keyboard input
+            if (controller.leftPressed) {
+                playerBulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletBlue2_left");
+                playerTank.direction = Direction.LEFT;
+                if (!collisionDetected[playerTank.direction])
+                    playerTank.move(deltaTime);
+            }
 
-        //keyboard input
-        if(controller.leftPressed) {
-            playerBulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletBlue2_left");
-            playerTank.direction = Direction.LEFT;
-            if(!collisionDetected[playerTank.direction])
-                playerTank.move(deltaTime);
+            if (controller.rightPressed) {
+                playerBulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletBlue2_right");
+                playerTank.direction = Direction.RIGHT;
+                if (!collisionDetected[playerTank.direction])
+                    playerTank.move(deltaTime);
+            }
+
+            if (controller.upPressed) {
+                playerBulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletBlue2_up");
+                playerTank.direction = Direction.UP;
+                if (!collisionDetected[playerTank.direction])
+                    playerTank.move(deltaTime);
+            }
+
+            if (controller.downPressed) {
+                playerBulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletBlue2_down");
+                playerTank.direction = Direction.DOWN;
+                if (!collisionDetected[playerTank.direction])
+                    playerTank.move(deltaTime);
+            }
         }
-
-        if(controller.rightPressed) {
-            playerBulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletBlue2_right");
-            playerTank.direction = Direction.RIGHT;
-            if(!collisionDetected[playerTank.direction])
-                playerTank.move(deltaTime);
-        }
-
-        if(controller.upPressed) {
-            playerBulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletBlue2_up");
-            playerTank.direction = Direction.UP;
-            if(!collisionDetected[playerTank.direction])
-                playerTank.move(deltaTime);
-        }
-        if(controller.downPressed) {
-            playerBulletTextureRegion = TEXTURE_ATLAS.findRegion("bulletBlue2_down");
-            playerTank.direction = Direction.DOWN;
-            if(!collisionDetected[playerTank.direction])
-                playerTank.move(deltaTime);
-        }
-
 
         camera.position.set(playerTank.getX() + playerTank.getWidth() / 2f, playerTank.getY() + playerTank.getHeight() / 2f, 0);
     }
@@ -381,15 +385,20 @@ public class GameScreen implements Screen {
                 for (int j = 0; j < enemyTankList.size(); j++) {
                     if (enemyTankList.get(j).collides(playerBulletList.get(i).getHitBox())) {
                         playerBulletList.remove(i);
-                        Explosion explosion = new Explosion(enemyTankList.get(j).getX(),
-                                enemyTankList.get(j).getY(),
-                                enemyTankList.get(j).getWidth(), enemyTankList.get(j).getHeight(),
-                                explosionTextureRegion);
-                        explosion.draw(batch);
-                        enemyTankList.remove(j);
-                        my_hud.score += 100;
-                        my_hud.enemyCount -= 1;
-                        --j;
+                        if (enemyTankList.get(j).life > PLAYER_FIREPOWER) {
+                            enemyTankList.get(j).life -= PLAYER_FIREPOWER;
+                        }
+                        else {
+                            Explosion explosion = new Explosion(enemyTankList.get(j).getX(),
+                                    enemyTankList.get(j).getY(),
+                                    enemyTankList.get(j).getWidth(), enemyTankList.get(j).getHeight(),
+                                    explosionTextureRegion);
+                            explosion.draw(batch);
+                            enemyTankList.remove(j);
+                            my_hud.score += 100;
+                            my_hud.enemyCount -= 1;
+                            --j;
+                        }
                         --i; //safeguard
                         break;
                     }
@@ -401,17 +410,19 @@ public class GameScreen implements Screen {
         for (int i = 0; i < enemyBulletList.size(); i++) {
             if (playerTank.collides(enemyBulletList.get(i).getHitBox())) {
                 enemyBulletList.remove(i);
-                if (playerTank.life > 1) {
-                    playerTank.life -= 1;
-                    my_hud.life -= 1;
+                if (playerTank.life > ENEMY_FIREPOWER) {
+                    playerTank.life -= ENEMY_FIREPOWER;
+                    my_hud.life -= ENEMY_FIREPOWER;
                 }
                 else {
                     Explosion explosion = new Explosion(playerTank.getX(), playerTank.getY(),
                             playerTank.getWidth(), playerTank.getHeight(), explosionTextureRegion);
                     explosion.draw(batch);
+                    playerTank.tankTexture = deadStateTexture;
+                    deadState = true;
                     playerTank.setX(TILE_SIZE * - 50);
                     playerTank.setY(TILE_SIZE * - 50);
-                    my_hud.life -= 1;
+                    my_hud.life -= ENEMY_FIREPOWER;
                     System.out.println("Game over");
                 }
                 --i; //safeguard

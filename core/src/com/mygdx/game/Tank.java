@@ -16,7 +16,9 @@ abstract class Tank extends GameObject {
     float timeBetweenShots;
     float timeSinceLastShot = 0;
     int direction;
-    int life;
+    float life;
+    int firepower;
+    int shield;
     int HIT_BOX_WIDTH = 60;
     int HIT_BOX_HEIGHT = 60;
     public final static int DIR_LEFT = 0;
@@ -26,15 +28,17 @@ abstract class Tank extends GameObject {
     //graphic
     TextureRegion tankTexture, bulletTextureRegion;
 
-    public Tank(float xPos, float yPos, float width, float height, float movementSpeed,
-                float bulletWidth, float bulletHeight,
+    public Tank(float xPos, float yPos, float width, float height, float movementSpeed, int firepower,
+                int shield, float bulletWidth, float bulletHeight,
                 float bulletMovementSpeed, float timeBetweenShots, int direction,
                 TextureRegion tankTexture, TextureRegion bulletTextureRegion) {
-        this.movementSpeed = movementSpeed;
         this.setX(xPos);
         this.setY(yPos);
         this.setWidth(width);
         this.setHeight(height);
+        this.movementSpeed = movementSpeed;
+        this.firepower = firepower;
+        this.shield = shield;
         this.hitBox = calcHitBox(HIT_BOX_WIDTH, HIT_BOX_HEIGHT);
         this.bulletWidth = bulletWidth;
         this.bulletHeight = bulletHeight;
