@@ -17,11 +17,8 @@ public class Bullet extends GameObject {
 
     public Bullet(float xPos, float yPos, float width, float height, float movementSpeed,
                   int direction, TextureRegion textureRegion) {
+        super(xPos, yPos, width, height);
         this.movementSpeed = movementSpeed;
-        this.setX(xPos);
-        this.setY(yPos);
-        this.setWidth(width);
-        this.setHeight(height);
         this.direction = direction;
         this.textureRegion = textureRegion;
     }

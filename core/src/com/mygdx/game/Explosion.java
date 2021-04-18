@@ -8,10 +8,7 @@ public class Explosion extends GameObject {
 
     public Explosion(float xPos, float yPos, float width, float height,
                      TextureRegion textureRegion) {
-        this.setX(xPos);
-        this.setY(yPos);
-        this.setWidth(width);
-        this.setHeight(height);
+        super(xPos, yPos, width, height);
         this.textureRegion = textureRegion;
     }
 
