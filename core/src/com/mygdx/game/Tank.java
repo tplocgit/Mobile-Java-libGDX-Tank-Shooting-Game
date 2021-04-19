@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-class Tank extends GameObject implements Movable {
+public class Tank extends GameObject implements Movable {
     public static final TextureRegion[] DEFAULT_TANK_TEXTURE_REGIONS = {
             GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_left"),
             GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_right"),

@@ -58,7 +58,6 @@ public class GameScreen implements Screen {
             TEXTURE_ATLAS.findRegion("bulletBlue2_right"),
             TEXTURE_ATLAS.findRegion("bulletBlue2_up"),
             TEXTURE_ATLAS.findRegion("bulletBlue2_down"),
-
     };
 
     //timing
@@ -134,8 +133,10 @@ public class GameScreen implements Screen {
     boolean deadState = false;
     boolean shieldState = false;
 
+    //firebase stuff
+    FirebaseInterface myFb;
 
-    GameScreen() {
+    GameScreen(FirebaseInterface fb) {
 
         camera = new OrthographicCamera();
         // make sure the camera always shows us an area of our game world that is
@@ -215,6 +216,11 @@ public class GameScreen implements Screen {
         spawnPos.add(new Vector2(1400, 2048));
         spawnPos.add(new Vector2(624, 2122));
         spawnPos.add(new Vector2(225, 1520));
+
+        //firebase stuff
+        myFb = fb;
+
+        fb.writePlayerTankVal("P1", playerTank);
     }
 
     @Override

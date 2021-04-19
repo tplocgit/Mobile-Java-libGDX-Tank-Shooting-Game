@@ -7,6 +7,6 @@ import com.mygdx.game.TankShootingGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new TankShootingGame(), config);
+		new LwjglApplication(new TankShootingGame(new DesktopInterface()), config);
 	}
 }
