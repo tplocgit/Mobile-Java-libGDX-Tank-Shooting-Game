@@ -113,29 +113,29 @@ class Tank extends GameObject implements Movable {
             case Direction.UP:
                 bulletCenterPosition.y = this.getY() + this.getHeight();
                 bulletCenterPosition.x = this.getX() + (this.getWidth() - this.sampleBullet.getWidth()) / 2f;
-                bulletLeftPosition.y = bulletRightPosition.y = bulletCenterPosition.y - 3;
+                bulletLeftPosition.y = bulletRightPosition.y = bulletCenterPosition.y - this.sampleBullet.getHeight() / 3f;
                 bulletLeftPosition.x = bulletCenterPosition.x - bulletDistance;
                 bulletRightPosition.x = bulletCenterPosition.x + bulletDistance;
                 break;
             case Direction.DOWN:
                 bulletCenterPosition.y = this.getY();
                 bulletCenterPosition.x = this.getX() + (this.getWidth() - this.sampleBullet.getWidth()) / 2f;
-                bulletLeftPosition.y = bulletRightPosition.y = bulletCenterPosition.y + 3;
+                bulletLeftPosition.y = bulletRightPosition.y = bulletCenterPosition.y + this.sampleBullet.getHeight() / 3f;
                 bulletLeftPosition.x = bulletCenterPosition.x - bulletDistance;
                 bulletLeftPosition.x = bulletCenterPosition.x - bulletDistance;
                 bulletRightPosition.x = bulletCenterPosition.x + bulletDistance;
                 break;
             case Direction.LEFT:
                 bulletCenterPosition.x = this.getX();
-                bulletCenterPosition.y = this.getY() + (this. getHeight() - this.sampleBullet.getHeight()) / 2f;
-                bulletLeftPosition.x = bulletRightPosition.x = bulletCenterPosition.x + 3;
+                bulletCenterPosition.y = this.getY() + (this. getHeight() - this.sampleBullet.getWidth()) / 2f;
+                bulletLeftPosition.x = bulletRightPosition.x = bulletCenterPosition.x + this.sampleBullet.getWidth() / 3f;
                 bulletLeftPosition.y = bulletCenterPosition.y - bulletDistance;
                 bulletRightPosition.y = bulletCenterPosition.y + bulletDistance;
                 break;
             case Direction.RIGHT:
                 bulletCenterPosition.x = this.getX() + this.getWidth();
-                bulletCenterPosition.y = this.getY() + (this. getHeight() - this.sampleBullet.getHeight()) / 2f;
-                bulletLeftPosition.x = bulletRightPosition.x = bulletCenterPosition.x - 3;
+                bulletCenterPosition.y = this.getY() + (this. getHeight() - this.sampleBullet.getWidth()) / 2f;
+                bulletLeftPosition.x = bulletRightPosition.x = bulletCenterPosition.x - this.sampleBullet.getWidth() / 3f;
                 bulletLeftPosition.y = bulletCenterPosition.y + bulletDistance;
                 bulletRightPosition.y = bulletCenterPosition.y + bulletDistance;
                 break;

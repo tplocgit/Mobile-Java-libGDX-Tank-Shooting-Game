@@ -45,7 +45,6 @@ public class Bullet extends GameObject implements Movable {
     public Bullet(Vector2 position, int direction, Bullet bullet) {
         super(bullet);
         this.movementSpeed = bullet.movementSpeed;
-        this.currentTextureRegion = bullet.currentTextureRegion;
         this.bulletTextureRegions = bullet.bulletTextureRegions;
         this.directionChangeUpdate(direction);
         this.setPosition(position);
@@ -75,20 +74,20 @@ public class Bullet extends GameObject implements Movable {
         this.currentTextureRegion = new TextureRegion(currentTextureRegion);
     }
 
-    public void directionChangeUpdate(int changeDirection) {
-        if(!Direction.validateDirection(changeDirection)) return;
+        public void directionChangeUpdate(int changeDirection) {
+            if(!Direction.validateDirection(changeDirection)) return;
 
-        this.currentTextureRegion = this.bulletTextureRegions[this.direction];
+            this.currentTextureRegion = this.bulletTextureRegions[changeDirection];
 
-        if (!Direction.isParallelDirections(this.direction, changeDirection))
-            this.rotateHitBox90Deg();
+            if (!Direction.isParallelDirections(this.direction, changeDirection))
+                this.rotateHitBox90Deg();
 
         this.direction = changeDirection;
     }
 
     public void draw(Batch batch) {
-        float drawX = this.getX() - BULLET_WIDTH / 2f + 4;
-        float drawY = this.getY() - BULLET_HEIGHT / 2f + 4;
+        float drawX = this.getX() - BULLET_WIDTH / 2f;
+        float drawY = this.getY() - BULLET_HEIGHT / 2f;
         batch.draw(currentTextureRegion, drawX, drawY, this.getWidth(), this.getHeight());
     }
 

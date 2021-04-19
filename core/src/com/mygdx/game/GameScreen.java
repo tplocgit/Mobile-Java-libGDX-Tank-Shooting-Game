@@ -61,11 +61,7 @@ public class GameScreen implements Screen {
 
     };
 
-    public static final TextureRegion ENEMY_BULLET_TEXTURE_REGION = TEXTURE_ATLAS.findRegion("bulletRed2_up");
-
-
     //timing
-    private int backgroundOffset;
     private float spawnTimers = 0;
     private float spawnerDownTime = 4;
     private int normalEnemyCounter = 0;
@@ -73,8 +69,7 @@ public class GameScreen implements Screen {
 
     //world parameters
     private static final int OBJECTS_LAYER_INDEX = 2;
-    /*public static final int WORLD_HEIGHT = 40;
-    public static final int WORLD_WIDTH = 40;*/
+
     private static final int TILE_SIZE = 64;
     private static final int NUMBER_OF_WIDTH_TILE = 40;
     private static final int NUMBER_OF_HEIGHT_TILE = 40;
@@ -95,14 +90,10 @@ public class GameScreen implements Screen {
     public static final float PLAYER_HIT_BOX_WIDTH = 60;
     public static final float PLAYER_HIT_BOX_HEIGHT = 60;
     public static final int PLAYER_INITIAL_DIRECTION = Direction.RIGHT;
-    public static final TextureRegion PLAYER_INIT_TEXTURE_REGION = PLAYER1_TANK_TEXTURE_REGIONS[PLAYER_INITIAL_DIRECTION];
-    public static final TextureRegion PLAYER_BULLET_INIT_TEXTURE_REGION = PLAYER1_BULLET_TEXTURE_REGIONS[PLAYER_INITIAL_DIRECTION];
     public static final Bullet PLAYER_BULLET_SAMPLE = new Bullet(
             0, 0, PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT,
             PLAYER_BULLET_SPEED, Direction.UP , PLAYER1_BULLET_TEXTURE_REGIONS);
-    public static final TextureRegion PLAYER_SHEILD_TEXTURE_REGION = new TextureRegion(new Texture("Shield/shieldBlue.png"));
-    
-    
+
     public static final int ENEMY_QUANTITY = 10;
     public static final int ENEMY_FIREPOWER = 5;
     public static final int   ENEMY_BULLET_SPEED = TILE_SIZE * 5;
@@ -367,9 +358,13 @@ public class GameScreen implements Screen {
     private void moveEnemy(Tank enemyTank, Tank enemyBigTank, float deltaTime) {
         if (enemyTank != null) {
             boolean[] collisionDetected = detectCollisions(enemyTank, deltaTime);
+            int trigger = 0;
+            while(collisionDetected[trigger]) ++trigger;
 
-            int i = 0;
-            while(collisionDetected[i] && i < 3) i++;
+            if(collisionDetected[trigger]) return;
+
+            int i = GENERATOR.nextInt(4);
+            while(collisionDetected[i]) GENERATOR.nextInt(4);
 
             enemyTank.direction = i;
 
@@ -381,14 +376,15 @@ public class GameScreen implements Screen {
         if (enemyBigTank != null) {
             boolean[] collisionDetected = detectCollisions(enemyBigTank, deltaTime);
 
-            int i = 0;
-            while(collisionDetected[i] && i < 3) i++;
+            int trigger = 0;
+            while(collisionDetected[trigger]) ++trigger;
+
+            if(collisionDetected[trigger]) return;
+
+            int i = GENERATOR.nextInt(4);
+            while(collisionDetected[i]) GENERATOR.nextInt(4);
 
             enemyBigTank.direction = i;
-
-            if (!collisionDetected[enemyBigTank.direction]) {
-                enemyBigTank.move(deltaTime);
-            }
 
             if (!collisionDetected[enemyBigTank.direction]) {
                 enemyBigTank.move(deltaTime);
