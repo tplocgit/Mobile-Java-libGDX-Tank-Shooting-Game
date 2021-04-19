@@ -4,11 +4,15 @@ import com.badlogic.gdx.Game;
 
 public class TankShootingGame extends Game {
 	GameScreen gameScreen;
+	FirebaseInterface fb;
 
+	public TankShootingGame(FirebaseInterface fb) {
+		this.fb = fb;
+	}
 
 	@Override
 	public void create() {
-		this.gameScreen = new GameScreen();
+		this.gameScreen = new GameScreen(fb);
 		setScreen(this.gameScreen);
 	}
 

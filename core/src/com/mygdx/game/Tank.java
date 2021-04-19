@@ -21,6 +21,103 @@ abstract class Tank extends GameObject {
     protected int HIT_BOX_WIDTH = 60;
     protected int HIT_BOX_HEIGHT = 60;
 
+    //----------------------------------------------------------------------------------------------
+    public float getMovementSpeed() {
+        return movementSpeed;
+    }
+
+    public void setMovementSpeed(float movementSpeed) {
+        this.movementSpeed = movementSpeed;
+    }
+
+    public float getBulletWidth() {
+        return bulletWidth;
+    }
+
+    public void setBulletWidth(float bulletWidth) {
+        this.bulletWidth = bulletWidth;
+    }
+
+    public float getBulletHeight() {
+        return bulletHeight;
+    }
+
+    public void setBulletHeight(float bulletHeight) {
+        this.bulletHeight = bulletHeight;
+    }
+
+    public float getBulletMovementSpeed() {
+        return bulletMovementSpeed;
+    }
+
+    public void setBulletMovementSpeed(float bulletMovementSpeed) {
+        this.bulletMovementSpeed = bulletMovementSpeed;
+    }
+
+    public float getTimeBetweenShots() {
+        return timeBetweenShots;
+    }
+
+    public void setTimeBetweenShots(float timeBetweenShots) {
+        this.timeBetweenShots = timeBetweenShots;
+    }
+
+    public float getTimeSinceLastShot() {
+        return timeSinceLastShot;
+    }
+
+    public void setTimeSinceLastShot(float timeSinceLastShot) {
+        this.timeSinceLastShot = timeSinceLastShot;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    public float getLife() {
+        return life;
+    }
+
+    public void setLife(float life) {
+        this.life = life;
+    }
+
+    public int getFirepower() {
+        return firepower;
+    }
+
+    public void setFirepower(int firepower) {
+        this.firepower = firepower;
+    }
+
+    public int getShield() {
+        return shield;
+    }
+
+    public void setShield(int shield) {
+        this.shield = shield;
+    }
+
+    public int getHIT_BOX_WIDTH() {
+        return HIT_BOX_WIDTH;
+    }
+
+    public void setHIT_BOX_WIDTH(int HIT_BOX_WIDTH) {
+        this.HIT_BOX_WIDTH = HIT_BOX_WIDTH;
+    }
+
+    public int getHIT_BOX_HEIGHT() {
+        return HIT_BOX_HEIGHT;
+    }
+
+    public void setHIT_BOX_HEIGHT(int HIT_BOX_HEIGHT) {
+        this.HIT_BOX_HEIGHT = HIT_BOX_HEIGHT;
+    }
+    //----------------------------------------------------------------------------------------------
 
     //graphic
     public static final TextureRegion[] DEFAULT_TANK_TEXTURE_REGIONS = {

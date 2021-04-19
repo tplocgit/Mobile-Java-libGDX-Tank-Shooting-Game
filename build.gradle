@@ -9,8 +9,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.4'
-        
+        classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath 'com.google.gms:google-services:4.3.5'
 
     }
 }
@@ -52,6 +52,7 @@ project(":desktop") {
 
 project(":android") {
     apply plugin: "com.android.application"
+    apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 
     configurations { natives }
 
@@ -63,7 +64,10 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
-        
+        // Import the Firebase BoM
+        implementation platform('com.google.firebase:firebase-bom:27.0.0')
+        implementation 'com.google.firebase:firebase-database'
+
     }
 }
 

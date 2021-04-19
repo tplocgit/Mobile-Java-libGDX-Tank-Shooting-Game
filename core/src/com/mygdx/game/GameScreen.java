@@ -122,9 +122,9 @@ public class GameScreen implements Screen {
     private ArrayList<Vector2> spawnPos;
     boolean deadState = false;
     boolean shieldState = false;
+    FirebaseInterface fb;
 
-
-    GameScreen() {
+    GameScreen(FirebaseInterface fb) {
 
         camera = new OrthographicCamera();
         // make sure the camera always shows us an area of our game world that is
@@ -134,7 +134,6 @@ public class GameScreen implements Screen {
         viewport = new FitViewport(20 * TILE_SIZE, 10 * TILE_SIZE, camera);
         map = new TmxMapLoader().load("beta_01.tmx");
         renderer = new OrthogonalTiledMapRenderer(this.map);
-
 
 
         //background = TEXTURE_ATLAS.findRegion("bg_prison");
@@ -209,6 +208,18 @@ public class GameScreen implements Screen {
         spawnPos.add(new Vector2(1400, 2048));
         spawnPos.add(new Vector2(624, 2122));
         spawnPos.add(new Vector2(225, 1520));
+
+        //firebase testing stuff
+        this.fb = fb;
+
+       /* fb.setValInDb("message", "duh huh");
+        fb.readValFromDb("message");
+        fb.readValFromDb("testing");*/
+        //fb.readValFromDb("TankGame");
+        /*fb.readValFromDb("TankGame/State");
+        fb.readValFromDb("TankGame/enemyCount");*/
+
+        fb.writePlayerTankVal("P1", playerTank);
     }
 
     @Override
