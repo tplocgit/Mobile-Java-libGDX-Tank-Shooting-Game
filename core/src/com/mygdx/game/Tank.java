@@ -1,28 +1,16 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
-abstract class Tank extends GameObject {
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
-    //characteristics
-    protected float movementSpeed;
-    Rectangle hitBox;
-    //projectile information
-    protected float bulletWidth, bulletHeight;
-    protected float bulletMovementSpeed;
-    protected float timeBetweenShots;
-    protected float timeSinceLastShot = 0;
-    protected int direction;
-    protected float life;
-    protected int firepower;
-    protected int shield;
-    protected int HIT_BOX_WIDTH = 60;
-    protected int HIT_BOX_HEIGHT = 60;
-
-
-    //graphic
+class Tank extends GameObject implements Movable {
     public static final TextureRegion[] DEFAULT_TANK_TEXTURE_REGIONS = {
             GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_left"),
             GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_right"),
@@ -30,38 +18,45 @@ abstract class Tank extends GameObject {
             GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_down"),
     };
 
-    public static final TextureRegion[] DEFAULT_BULLET_TEXTURE_REGIONS = {
-            GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_left"),
-            GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_right"),
-            GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_up"),
-            GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_down"),
-    };
 
-    protected TextureRegion currentTankTextureRegion, currentBulletTextureRegion, shieldTextureRegion;
+    // Graphic
+    public static final TextureRegion SHIELD_TEXTURE_REGION = new TextureRegion(new Texture("Shield/shieldBlue.png"));
+    protected TextureRegion currentTankTextureRegion, currentBulletTextureRegion;
     protected TextureRegion[] tankTextureRegions;
-    protected TextureRegion[] bulletTextureRegions;
+    protected Bullet sampleBullet;
 
-    public Tank(float xPos, float yPos, float width, float height, float movementSpeed, int firepower,
-                int shield, float bulletWidth, float bulletHeight,
-                float bulletMovementSpeed, float timeBetweenShots, int direction,
-                TextureRegion[] tankTextureRegions, TextureRegion initTankTextureRegion,
-                TextureRegion[] bulletTextureRegions, TextureRegion initBulletTextureRegion,
-                TextureRegion shieldTextureRegion) {
-        super(xPos, yPos, width, height);
+    // Game Play
+    protected int bulletMag;
+    protected float movementSpeed;
+    protected float timeBetweenShots;
+    protected float timeSinceLastShot = 0;
+    protected int direction;
+    protected float life;
+    protected int firepower;
+    protected int shield;
+
+
+    public Tank(float xPos, float yPos, float textureWidth, float textureHeight,
+                float hbWidth, float hbHeight, int bulletMag,
+                float movementSpeed, int firepower, int shield, float timeBetweenShots,
+                int direction, Bullet sampleBullet,
+                TextureRegion[] tankTextureRegions) {
+
+        super(xPos, yPos, textureWidth, textureHeight);
+
+        // Graphic
         this.tankTextureRegions = tankTextureRegions;
-        this.bulletTextureRegions = bulletTextureRegions;
+        this.direction = direction;
+        this.currentTankTextureRegion = this.tankTextureRegions[this.direction];
+        this.sampleBullet = sampleBullet;
+
+        // Game Play
+        this.bulletMag = bulletMag;
+        this.hitBox = GameObject.calculateHitBox(this, hbWidth, hbHeight);
         this.movementSpeed = movementSpeed;
         this.firepower = firepower;
         this.shield = shield;
-        this.bulletWidth = bulletWidth;
-        this.bulletHeight = bulletHeight;
-        this.bulletMovementSpeed = bulletMovementSpeed;
         this.timeBetweenShots = timeBetweenShots;
-        this.direction = direction;
-        this.currentTankTextureRegion = initTankTextureRegion;
-        this.currentBulletTextureRegion = initBulletTextureRegion;
-        this.shieldTextureRegion = shieldTextureRegion;
-        updateHitBox();
     }
 
     public void update(float deltaTime) {
@@ -70,14 +65,10 @@ abstract class Tank extends GameObject {
 
         this.updateHitBox();
 
-        if(Direction.isValidDirection(this.direction)) {
+        if(Direction.validateDirection(this.direction)) {
 
             if (this.tankTextureRegions[this.direction] != null)
                 this.currentTankTextureRegion = this.tankTextureRegions[this.direction];
-
-            if (this.bulletTextureRegions[this.direction] != null)
-                this.currentBulletTextureRegion = this.bulletTextureRegions[this.direction];
-
         }
     }
 
@@ -85,16 +76,86 @@ abstract class Tank extends GameObject {
         return (timeSinceLastShot - timeBetweenShots >= 0);
     }
 
-    public abstract Bullet[] fireBullet(TextureRegion bulletTextureRegion);
+    public LinkedList<Bullet> fireBullet() {
+        if(this.bulletMag < 1 || this.bulletMag > 3) return null;
 
-    public boolean collides(Rectangle rectangle) {
+        // calc bullet position later
+        LinkedList<Bullet> bullets = new LinkedList<>();
+
+        Vector2[] bulletPositions = getNextGeneratedBulletPosition();
+
+        timeSinceLastShot = 0;
+
+        for(Vector2 position : bulletPositions)
+            bullets.add(new Bullet(position, this.direction, this.sampleBullet));
+
+        switch (this.bulletMag) {
+            case 1:
+                bullets.remove(bullets.get(0));
+                bullets.remove(bullets.get(2));
+                return bullets;
+            case 2:
+                bullets.remove(bullets.get(1));
+                return bullets;
+            default:
+                return bullets;
+        }
+    }
+
+    public Vector2[] getNextGeneratedBulletPosition() {
+        Vector2[] bulletPositions = new Vector2[3];
+        Vector2 bulletLeftPosition = new Vector2();
+        Vector2 bulletRightPosition = new Vector2();
+        Vector2 bulletCenterPosition = new Vector2();
+        float bulletDistance = 5 + this.sampleBullet.getWidth();
+
+        switch (this.direction) {
+            case Direction.UP:
+                bulletCenterPosition.y = this.getY() + this.getHeight();
+                bulletCenterPosition.x = this.getX() + (this.getWidth() - this.sampleBullet.getWidth()) / 2f;
+                bulletLeftPosition.y = bulletRightPosition.y = bulletCenterPosition.y - 3;
+                bulletLeftPosition.x = bulletCenterPosition.x - bulletDistance;
+                bulletRightPosition.x = bulletCenterPosition.x + bulletDistance;
+                break;
+            case Direction.DOWN:
+                bulletCenterPosition.y = this.getY();
+                bulletCenterPosition.x = this.getX() + (this.getWidth() - this.sampleBullet.getWidth()) / 2f;
+                bulletLeftPosition.y = bulletRightPosition.y = bulletCenterPosition.y + 3;
+                bulletLeftPosition.x = bulletCenterPosition.x - bulletDistance;
+                bulletLeftPosition.x = bulletCenterPosition.x - bulletDistance;
+                bulletRightPosition.x = bulletCenterPosition.x + bulletDistance;
+                break;
+            case Direction.LEFT:
+                bulletCenterPosition.x = this.getX();
+                bulletCenterPosition.y = this.getY() + (this. getHeight() - this.sampleBullet.getHeight()) / 2f;
+                bulletLeftPosition.x = bulletRightPosition.x = bulletCenterPosition.x + 3;
+                bulletLeftPosition.y = bulletCenterPosition.y - bulletDistance;
+                bulletRightPosition.y = bulletCenterPosition.y + bulletDistance;
+                break;
+            case Direction.RIGHT:
+                bulletCenterPosition.x = this.getX() + this.getWidth();
+                bulletCenterPosition.y = this.getY() + (this. getHeight() - this.sampleBullet.getHeight()) / 2f;
+                bulletLeftPosition.x = bulletRightPosition.x = bulletCenterPosition.x - 3;
+                bulletLeftPosition.y = bulletCenterPosition.y + bulletDistance;
+                bulletRightPosition.y = bulletCenterPosition.y + bulletDistance;
+                break;
+        }
+
+        bulletPositions[0] = bulletLeftPosition;
+        bulletPositions[1] = bulletCenterPosition;
+        bulletPositions[2] = bulletRightPosition;
+
+        return bulletPositions;
+    }
+
+    public boolean isColliding(Rectangle rectangle) {
         return hitBox.overlaps(rectangle);
     }
 
     public void draw(Batch batch) {
         batch.draw(currentTankTextureRegion, this.getX(), this.getY(), this.getWidth(), this.getHeight());
         if (shield > 0)
-            batch.draw(shieldTextureRegion, this.getX() - 12, this.getY() - 12, this.getWidth() + 25, this.getHeight() + 25);
+            batch.draw(Tank.SHIELD_TEXTURE_REGION, this.getX() - 12, this.getY() - 12, this.getWidth() + 25, this.getHeight() + 25);
     }
     
     public void moveLeft(float deltaTime) {
@@ -117,6 +178,7 @@ abstract class Tank extends GameObject {
         this.setY(this.getY() - this.movementSpeed * deltaTime);
     }
 
+    @Override
     public void move(float deltaTime) {
         switch (this.direction) {
             case Direction.LEFT: this.moveLeft(deltaTime); break;
@@ -128,12 +190,39 @@ abstract class Tank extends GameObject {
     }
 
     protected void updateHitBox() {
-        this.hitBox = new Rectangle(this.getX() + (this.getWidth() - this.HIT_BOX_WIDTH) / 2f, this.getY() + (this.getHeight() - this.HIT_BOX_HEIGHT) / 2f,
-                this.HIT_BOX_WIDTH, this.HIT_BOX_HEIGHT);
+        this.hitBox = GameObject.calculateHitBox(this, this.hitBox.getWidth(), this.hitBox.getHeight());
     }
 
     public Rectangle getHitbox() {
         return new Rectangle(this.hitBox);
+    }
+
+    public Bullet getSampleBullet() {
+        return new Bullet(sampleBullet);
+    }
+
+    public float getMovementSpeed() {
+        return movementSpeed;
+    }
+
+    public float getTimeBetweenShots() {
+        return timeBetweenShots;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public float getLife() {
+        return life;
+    }
+
+    public int getFirepower() {
+        return firepower;
+    }
+
+    public int getShield() {
+        return shield;
     }
     
     public Rectangle getNextLeftHitBox(float dt) {
