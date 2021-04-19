@@ -95,8 +95,8 @@ public class GameScreen implements Screen {
             PLAYER_BULLET_SPEED, Direction.UP , PLAYER1_BULLET_TEXTURE_REGIONS);
 
     public static final int ENEMY_QUANTITY = 10;
-    public static final int ENEMY_FIREPOWER = 5;
-    public static final int   ENEMY_BULLET_SPEED = TILE_SIZE * 5;
+    public static final int ENEMY_FIREPOWER = 40;
+    public static final int   ENEMY_BULLET_SPEED = TILE_SIZE * 6;
     public static final Bullet ENEMY_BULLET_SAMPLE = new Bullet(
             0, 0, PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT,
             ENEMY_BULLET_SPEED, Direction.UP, Bullet.DEFAULT_TEXTURE_REGIONS
@@ -145,7 +145,6 @@ public class GameScreen implements Screen {
         viewport = new FitViewport(20 * TILE_SIZE, 10 * TILE_SIZE, camera);
         map = new TmxMapLoader().load("beta_01.tmx");
         renderer = new OrthogonalTiledMapRenderer(this.map);
-
 
 
         //background = TEXTURE_ATLAS.findRegion("bg_prison");
@@ -499,9 +498,12 @@ public class GameScreen implements Screen {
                 if (playerTank.shield > 0)
                     shieldState = true;
                 else shieldState = false;
+
                 if (shieldState) {
                     playerTank.shield -= ENEMY_FIREPOWER;
                     my_hud.shield -= ENEMY_FIREPOWER;
+                    if (my_hud.shield < 0)
+                        my_hud.shield = 0;
                 }
                 else {
                     if (playerTank.life > ENEMY_FIREPOWER) {
@@ -511,11 +513,14 @@ public class GameScreen implements Screen {
                         Explosion explosion = new Explosion(playerTank.getX(), playerTank.getY(),
                                 playerTank.getWidth(), playerTank.getHeight(), explosionTextureRegion);
                         explosion.draw(batch);
-                        playerTank.currentTankTextureRegion = deadStateTextureRegion;
+                        TextureRegion[] deadStateTextureRegionArr = {deadStateTextureRegion, deadStateTextureRegion, deadStateTextureRegion, deadStateTextureRegion};
+                        playerTank.tankTextureRegions = deadStateTextureRegionArr;
                         deadState = true;
                         playerTank.setX(TILE_SIZE * -50);
                         playerTank.setY(TILE_SIZE * -50);
                         my_hud.life -= ENEMY_FIREPOWER;
+                        if (my_hud.life < 0)
+                            my_hud.life = 0;
                         System.out.println("Game over");
                     }
                 }
