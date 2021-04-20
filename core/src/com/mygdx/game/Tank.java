@@ -18,7 +18,6 @@ public class Tank extends GameObject implements Movable {
             GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_down"),
     };
 
-
     // Graphic
     public static final TextureRegion SHIELD_TEXTURE_REGION = new TextureRegion(new Texture("Shield/shieldBlue.png"));
     protected TextureRegion currentTankTextureRegion, currentBulletTextureRegion;
@@ -35,6 +34,9 @@ public class Tank extends GameObject implements Movable {
     protected int firepower;
     protected int shield;
 
+    public Tank() {
+        // Default constructor required for calls to DataSnapshot.getValue(Tank.class)
+    }
 
     public Tank(float xPos, float yPos, float textureWidth, float textureHeight,
                 float hbWidth, float hbHeight, int bulletMag,
@@ -50,7 +52,7 @@ public class Tank extends GameObject implements Movable {
         this.currentTankTextureRegion = this.tankTextureRegions[this.direction];
         this.sampleBullet = sampleBullet;
 
-        // Game Play
+        // Gameplay
         this.bulletMag = bulletMag;
         this.hitBox = GameObject.calculateHitBox(this, hbWidth, hbHeight);
         this.movementSpeed = movementSpeed;
@@ -193,7 +195,18 @@ public class Tank extends GameObject implements Movable {
         this.hitBox = GameObject.calculateHitBox(this, this.hitBox.getWidth(), this.hitBox.getHeight());
     }
 
-    public Rectangle getHitbox() {
+    //----------------------------------------------------------------------------------------------
+    //default getter for dataSnapshot.getValue()
+    //no getter = can not get value
+    public int getBulletMag() {
+        return bulletMag;
+    }
+
+    public float getTimeSinceLastShot() {
+        return timeSinceLastShot;
+    }
+
+    public Rectangle getHitBox() {
         return new Rectangle(this.hitBox);
     }
 
@@ -224,7 +237,8 @@ public class Tank extends GameObject implements Movable {
     public int getShield() {
         return shield;
     }
-    
+    //----------------------------------------------------------------------------------------------
+
     public Rectangle getNextLeftHitBox(float dt) {
         return new Rectangle(this.hitBox.x - this.movementSpeed * dt, this.hitBox.y, this.hitBox.width, this.hitBox.height);
     }

@@ -94,7 +94,7 @@ public class GameScreen implements Screen {
             PLAYER_BULLET_SPEED, Direction.UP , PLAYER1_BULLET_TEXTURE_REGIONS);
 
     public static final int ENEMY_QUANTITY = 10;
-    public static final int ENEMY_FIREPOWER = 40;
+    public static final int ENEMY_FIREPOWER = 1;
     public static final int   ENEMY_BULLET_SPEED = TILE_SIZE * 6;
     public static final Bullet ENEMY_BULLET_SAMPLE = new Bullet(
             0, 0, PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT,
@@ -220,7 +220,9 @@ public class GameScreen implements Screen {
         //firebase stuff
         myFb = fb;
 
-        fb.writePlayerTankVal("P1", playerTank);
+        myFb.writePlayerTankVal("P1", playerTank);
+        //fb.readPlayerTankVal("P1");
+        //myFb.readPlayerTankVal("Player/P1");
     }
 
     @Override

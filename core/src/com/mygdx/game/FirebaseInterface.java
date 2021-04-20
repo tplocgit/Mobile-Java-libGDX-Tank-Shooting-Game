@@ -4,6 +4,6 @@ public interface FirebaseInterface {
 
     public void writePlayerTankVal(String userId, Tank playerTank);
 
-    public void readValFromDb(final String target);
+    public void readPlayerTankVal(final String target);
 
 }

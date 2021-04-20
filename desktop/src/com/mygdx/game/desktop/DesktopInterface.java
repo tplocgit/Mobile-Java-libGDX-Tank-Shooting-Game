@@ -11,7 +11,7 @@ public class DesktopInterface implements FirebaseInterface {
     }
 
     @Override
-    public void readValFromDb(String target) {
+    public void readPlayerTankVal(String target) {
 
     }
 }

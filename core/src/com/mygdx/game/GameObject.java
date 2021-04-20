@@ -6,6 +6,10 @@ import com.badlogic.gdx.math.Rectangle;
 public class GameObject extends Rectangle {
     protected Rectangle hitBox;
 
+    public GameObject() {
+        // Default constructor required for calls to DataSnapshot.getValue(Tank.class)
+    }
+
     public GameObject(float xPos, float yPos, float width, float height) {
         super(xPos, yPos, width, height);
         this.hitBox = new Rectangle(this);
