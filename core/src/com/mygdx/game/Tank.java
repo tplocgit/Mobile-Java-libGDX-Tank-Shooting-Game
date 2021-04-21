@@ -40,6 +40,10 @@ public class Tank extends GameObject implements Movable {
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private int score = 100;
 
+    //timing for enemy
+    float timeSinceLastDirChange = 0;
+    float dirChangeFreq = 1.0f;
+
     public Tank() {
         // Default constructor required for calls to DataSnapshot.getValue(Tank.class)
     }

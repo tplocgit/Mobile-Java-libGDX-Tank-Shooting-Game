@@ -92,7 +92,7 @@ public class GameScreen implements Screen {
             PLAYER_BULLET_SPEED, Direction.UP , PLAYER1_BULLET_TEXTURE_REGIONS);
 
     public static final int ENEMY_QUANTITY = 10;
-    public static final int ENEMY_FIREPOWER = 1000;
+    public static final int ENEMY_FIREPOWER = 10;
     public static final int   ENEMY_BULLET_SPEED = TILE_SIZE * 6;
     public static final Bullet ENEMY_BULLET_SAMPLE = new Bullet(
             0, 0, PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT,
@@ -324,10 +324,14 @@ public class GameScreen implements Screen {
 
             if(collisionDetected[trigger]) return;
 
-            int i = GENERATOR.nextInt(4);
-            //while(collisionDetected[i]) GENERATOR.nextInt(4);
+            enemyTank.timeSinceLastDirChange += deltaTime;
+            if (enemyTank.timeSinceLastDirChange > enemyTank.dirChangeFreq){
+                int i = GENERATOR.nextInt(4);
+                //while(collisionDetected[i]) GENERATOR.nextInt(4);
 
-            enemyTank.direction = i;
+                enemyTank.direction = i;
+                enemyTank.timeSinceLastDirChange -= enemyTank.dirChangeFreq;
+            }
 
             if (!collisionDetected[enemyTank.direction]) {
                 enemyTank.move(deltaTime);
@@ -388,7 +392,7 @@ public class GameScreen implements Screen {
             if (enemyTankList != null) {
                 for (int j = 0; j < enemyTankList.size(); j++) {
                     if (enemyTankList.get(j).isColliding(playerTank.getBullets().get(i).getHitBox())) {
-                        playerTank.getBullets().remove(i);
+                        playerTank.bulletCollision(i);
                         if (enemyTankList.get(j).life > PLAYER_FIREPOWER) {
                             enemyTankList.get(j).life -= PLAYER_FIREPOWER;
                         } else {
@@ -397,10 +401,9 @@ public class GameScreen implements Screen {
                                     enemyTankList.get(j).getWidth(), enemyTankList.get(j).getHeight(),
                                     explosionTextureRegion);
                             explosion.draw(batch);
+                            my_hud.score += enemyTankList.get(j).getScore();
                             enemyTankList.remove(j);
-                            my_hud.score += enemyTankList.get(i).getScore();
                             my_hud.enemyCount -= 1;
-                            --j;
                         }
                         --i; //safeguard
                         break;
