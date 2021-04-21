@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import java.lang.management.GarbageCollectorMXBean;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,6 +18,8 @@ public class Tank extends GameObject implements Movable {
             GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_up"),
             GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_down"),
     };
+
+    public static final int[][] BULLETS_POSITION_OF_MAG = {{},{1},{0,2},{0,1,2}};
 
     // Graphic
     public static final TextureRegion SHIELD_TEXTURE_REGION = new TextureRegion(new Texture("Shield/shieldBlue.png"));
@@ -33,13 +36,20 @@ public class Tank extends GameObject implements Movable {
     protected float life;
     protected int firepower;
     protected int shield;
+    private boolean isFire = false;
+    private ArrayList<Bullet> bullets = new ArrayList<>();
+    private int score = 100;
 
     public Tank() {
         // Default constructor required for calls to DataSnapshot.getValue(Tank.class)
     }
 
+    public int getScore() {
+        return score;
+    }
+
     public Tank(float xPos, float yPos, float textureWidth, float textureHeight,
-                float hbWidth, float hbHeight, int bulletMag,
+                float hbWidth, float hbHeight, int bulletMag, int score,
                 float movementSpeed, int firepower, int shield, float timeBetweenShots,
                 int direction, Bullet sampleBullet,
                 TextureRegion[] tankTextureRegions) {
@@ -78,30 +88,22 @@ public class Tank extends GameObject implements Movable {
         return (timeSinceLastShot - timeBetweenShots >= 0);
     }
 
-    public LinkedList<Bullet> fireBullet() {
-        if(this.bulletMag < 1 || this.bulletMag > 3) return null;
+    public ArrayList<Bullet> getBullets() {
+        return new ArrayList<>(bullets);
+    }
 
-        // calc bullet position later
-        LinkedList<Bullet> bullets = new LinkedList<>();
+    public void bulletCollision(int i) {
+        this.bullets.remove(i);
+    }
 
+    public void fireBullet() {
+        if(this.bulletMag < 1 || this.bulletMag > 3) return;
         Vector2[] bulletPositions = getNextGeneratedBulletPosition();
 
         timeSinceLastShot = 0;
 
-        for(Vector2 position : bulletPositions)
-            bullets.add(new Bullet(position, this.direction, this.sampleBullet));
-
-        switch (this.bulletMag) {
-            case 1:
-                bullets.remove(bullets.get(0));
-                bullets.remove(bullets.get(2));
-                return bullets;
-            case 2:
-                bullets.remove(bullets.get(1));
-                return bullets;
-            default:
-                return bullets;
-        }
+        for(int i = 0; i < BULLETS_POSITION_OF_MAG[this.bulletMag].length; ++i)
+            this.bullets.add(new Bullet(bulletPositions[BULLETS_POSITION_OF_MAG[this.bulletMag][i]],this.direction, this.sampleBullet));
     }
 
     public Vector2[] getNextGeneratedBulletPosition() {
@@ -154,12 +156,23 @@ public class Tank extends GameObject implements Movable {
         return hitBox.overlaps(rectangle);
     }
 
-    public void draw(Batch batch) {
+    public void draw(Batch batch, float deltatime) {
         batch.draw(currentTankTextureRegion, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        for (int i = 0; i < this.bullets.size(); ++i) {
+            Bullet bullet = this.bullets.get(i);
+            bullet.draw(batch);
+            bullet.move(deltatime);
+            //check if bullet still inside our world, if not remove them
+            if (bullet.getX() > GameScreen.TILE_SIZE * (GameScreen.NUMBER_OF_HEIGHT_TILE - 1) || bullet.getX() < 0 ||
+                    bullet.getY() > GameScreen.TILE_SIZE * (GameScreen.NUMBER_OF_WIDTH_TILE - 1) || bullet.getY() < 0) {
+                --i;
+                this.bullets.remove(bullet);
+            }
+        }
         if (shield > 0)
             batch.draw(Tank.SHIELD_TEXTURE_REGION, this.getX() - 12, this.getY() - 12, this.getWidth() + 25, this.getHeight() + 25);
     }
-    
+
     public void moveLeft(float deltaTime) {
         this.direction = Direction.LEFT;
         this.setX(this.getX() - this.movementSpeed * deltaTime);
@@ -194,6 +207,7 @@ public class Tank extends GameObject implements Movable {
     protected void updateHitBox() {
         this.hitBox = GameObject.calculateHitBox(this, this.hitBox.getWidth(), this.hitBox.getHeight());
     }
+
 
     //----------------------------------------------------------------------------------------------
     //default getter for dataSnapshot.getValue()
