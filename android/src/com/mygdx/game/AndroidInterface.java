@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,6 +27,9 @@ public class AndroidInterface implements FirebaseInterface {
         // Write a message to the database
         //myDbRef.child("player1").child(userId).setValue(playerTank);
         myDbRef = database.getReference();
+        myDbRef.child("TankGame").child(room).child("Player").child(userId).child("x").setValue(pT.x);
+        myDbRef.child("TankGame").child(room).child("Player").child(userId).child("y").setValue(pT.y);
+        myDbRef.child("TankGame").child(room).child("Player").child(userId).child("hitBox").setValue(pT.hitBox);
         myDbRef.child("TankGame").child(room).child("Player").child(userId).child("hitBox").setValue(pT.hitBox);
         myDbRef.child("TankGame").child(room).child("Player").child(userId).child("firepower").setValue(pT.firepower);
         myDbRef.child("TankGame").child(room).child("Player").child(userId).child("shield").setValue(pT.shield);
@@ -48,7 +53,7 @@ public class AndroidInterface implements FirebaseInterface {
         myDbRef = database.getReference(target);
         myDbRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String key = dataSnapshot.getKey();
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
@@ -63,6 +68,8 @@ public class AndroidInterface implements FirebaseInterface {
                 Log.d(TAG, "direction of target " + target + " is: " + value.direction);
                 Log.d(TAG, "bulletMag of target " + target + " is: " + value.bulletMag);
                 Log.d(TAG, "shield of target " + target + " is: " + value.shield);
+                tank.x = value.x;
+                tank.y = value.y;
                 tank.hitBox = value.hitBox;
                 tank.firepower = value.firepower;
                 tank.direction = value.direction;

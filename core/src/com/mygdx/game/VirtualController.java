@@ -21,6 +21,14 @@ public class VirtualController {
     boolean upPressed, downPressed, leftPressed, rightPressed, crossHairPressed, arrowPressed;
     OrthographicCamera cam;
     public static final int CONTROLLER_BUTTON_DEFAULT_SIZE = 70;
+    public static final int CONTROLLER_BUTTON_MEDIUM_SIZE = 120;
+    public static final Image UP_IMAGE = new Image(new Texture("Controller/up-arrow.png"));
+    public static final Image DOWN_IMAGE = new Image(new Texture("Controller/down-arrow.png"));
+    public static final Image LEFT__IMAGE = new Image(new Texture("Controller/left-arrow.png"));
+    public static final Image RIGHT_IMAGE = new Image(new Texture("Controller/right-arrow.png"));
+    public static final Image CROSSHAIR__IMAGE = new Image(new Texture("Controller/focus.png"));
+
+
 
     public VirtualController() {
         cam = new OrthographicCamera();
@@ -87,7 +95,7 @@ public class VirtualController {
         Table table = new Table();
         table.left().bottom();
 
-        Image upImg = new Image(new Texture("Controller/up.png"));
+        Image upImg = UP_IMAGE;
         upImg.setSize(CONTROLLER_BUTTON_DEFAULT_SIZE, CONTROLLER_BUTTON_DEFAULT_SIZE);
         upImg.addListener(new InputListener() {
 
@@ -103,7 +111,7 @@ public class VirtualController {
             }
         });
 
-        Image downImg = new Image(new Texture("Controller/down.png"));
+        Image downImg = DOWN_IMAGE;
         downImg.setSize(CONTROLLER_BUTTON_DEFAULT_SIZE, CONTROLLER_BUTTON_DEFAULT_SIZE);
         downImg.addListener(new InputListener() {
 
@@ -119,7 +127,7 @@ public class VirtualController {
             }
         });
 
-        Image rightImg = new Image(new Texture("Controller/right.png"));
+        Image rightImg = RIGHT_IMAGE;
         rightImg.setSize(CONTROLLER_BUTTON_DEFAULT_SIZE, CONTROLLER_BUTTON_DEFAULT_SIZE);
         rightImg.addListener(new InputListener() {
 
@@ -135,7 +143,7 @@ public class VirtualController {
             }
         });
 
-        Image leftImg = new Image(new Texture("Controller/left.png"));
+        Image leftImg = LEFT__IMAGE;
         leftImg.setSize(CONTROLLER_BUTTON_DEFAULT_SIZE, CONTROLLER_BUTTON_DEFAULT_SIZE);
         leftImg.addListener(new InputListener() {
 
@@ -151,8 +159,8 @@ public class VirtualController {
             }
         });
 
-        Image crossHairImage = new Image(new Texture("Controller/cross_hair.png"));
-        crossHairImage.setSize(100, 100);
+        Image crossHairImage = CROSSHAIR__IMAGE;
+        crossHairImage.setSize(CONTROLLER_BUTTON_MEDIUM_SIZE, CONTROLLER_BUTTON_MEDIUM_SIZE);
         crossHairImage.addListener(new InputListener() {
 
             @Override

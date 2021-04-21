@@ -283,7 +283,7 @@ public class PvPScreen implements Screen {
         controller.draw();
         my_hud.draw(batch);
 
-        //myFb.writePlayerTankVal("room0", "P1", playerTank);
+        myFb.writePlayerTankVal("room0", "P1", playerTank);
 
         /*
         myFb.writePlayerTankVal("P2", playerTank);
