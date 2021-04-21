@@ -148,7 +148,7 @@ public class Tank extends GameObject implements Movable {
                 bulletCenterPosition.x = this.getX() + this.getWidth();
                 bulletCenterPosition.y = this.getY() + (this. getHeight() - this.sampleBullet.getWidth()) / 2f;
                 bulletLeftPosition.x = bulletRightPosition.x = bulletCenterPosition.x - this.sampleBullet.getWidth() / 3f;
-                bulletLeftPosition.y = bulletCenterPosition.y + bulletDistance;
+                bulletLeftPosition.y = bulletCenterPosition.y - bulletDistance;
                 bulletRightPosition.y = bulletCenterPosition.y + bulletDistance;
                 break;
         }
@@ -164,12 +164,12 @@ public class Tank extends GameObject implements Movable {
         return hitBox.overlaps(rectangle);
     }
 
-    public void draw(Batch batch, float deltatime) {
+    public void draw(Batch batch, float deltaTime) {
         batch.draw(currentTankTextureRegion, this.getX(), this.getY(), this.getWidth(), this.getHeight());
         for (int i = 0; i < this.bullets.size(); ++i) {
             Bullet bullet = this.bullets.get(i);
             bullet.draw(batch);
-            bullet.move(deltatime);
+            bullet.move(deltaTime);
             //check if bullet still inside our world, if not remove them
             /*if (bullet.getX() > GameScreen.TILE_SIZE * (GameScreen.NUMBER_OF_HEIGHT_TILE - 1) || bullet.getX() < 0 ||
                     bullet.getY() > GameScreen.TILE_SIZE * (GameScreen.NUMBER_OF_WIDTH_TILE - 1) || bullet.getY() < 0)*/
