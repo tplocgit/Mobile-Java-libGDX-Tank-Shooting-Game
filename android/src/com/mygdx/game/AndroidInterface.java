@@ -11,6 +11,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 public class AndroidInterface implements FirebaseInterface {
 
     private FirebaseDatabase database;
@@ -29,12 +34,18 @@ public class AndroidInterface implements FirebaseInterface {
         myDbRef = database.getReference();
         myDbRef.child("TankGame").child(room).child("Player").child(userId).child("x").setValue(pT.x);
         myDbRef.child("TankGame").child(room).child("Player").child(userId).child("y").setValue(pT.y);
-        myDbRef.child("TankGame").child(room).child("Player").child(userId).child("hitBox").setValue(pT.hitBox);
+
+        ArrayList<Bullet> bullets = pT.getBullets();
+        for(int i = 0; i < bullets.size(); ++i) {
+            myDbRef.child("TankGame").child(room).child("Player").child(userId).child(Integer.toString(i)).setValue(bullets.get(i));
+        }
+
         myDbRef.child("TankGame").child(room).child("Player").child(userId).child("hitBox").setValue(pT.hitBox);
         myDbRef.child("TankGame").child(room).child("Player").child(userId).child("firepower").setValue(pT.firepower);
         myDbRef.child("TankGame").child(room).child("Player").child(userId).child("shield").setValue(pT.shield);
         myDbRef.child("TankGame").child(room).child("Player").child(userId).child("bulletMag").setValue(pT.bulletMag);
         myDbRef.child("TankGame").child(room).child("Player").child(userId).child("direction").setValue(pT.direction);
+
         //myDbRef.child("player1").child(userId).child("currentTankTextureRegion").setValue(pT.currentTankTextureRegion);
         /*for (TextureRegion textureRegion : pT.tankTextureRegions) {
             myDbRef.child("player1").child(userId).child("currentTankTextureRegion").child("textureRegion").setValue(textureRegion);
@@ -58,18 +69,20 @@ public class AndroidInterface implements FirebaseInterface {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 Tank value = dataSnapshot.getValue(Tank.class);
-                Log.d(TAG, "Key of target " + target + " is: " + key);
-                //Log.d(TAG, "Value of target " + target + " is: " + value);
-                Log.d(TAG, "x of target " + target + " is: " + value.hitBox.x);
-                Log.d(TAG, "y of target " + target + " is: " + value.hitBox.y);
-                Log.d(TAG, "height of target " + target + " is: " + value.hitBox.height);
-                Log.d(TAG, "width of target " + target + " is: " + value.hitBox.width);
-                Log.d(TAG, "firepower of target " + target + " is: " + value.firepower);
-                Log.d(TAG, "direction of target " + target + " is: " + value.direction);
-                Log.d(TAG, "bulletMag of target " + target + " is: " + value.bulletMag);
-                Log.d(TAG, "shield of target " + target + " is: " + value.shield);
+//                Log.d(TAG, "Key of target " + target + " is: " + key);
+//                Log.d(TAG, "Value of target " + target + " is: " + value);
+//                Log.d(TAG, "x of target " + target + " is: " + value.hitBox.x);
+//                Log.d(TAG, "y of target " + target + " is: " + value.hitBox.y);
+//                Log.d(TAG, "height of target " + target + " is: " + value.hitBox.height);
+//                Log.d(TAG, "width of target " + target + " is: " + value.hitBox.width);
+//                Log.d(TAG, "firepower of target " + target + " is: " + value.firepower);
+//                Log.d(TAG, "direction of target " + target + " is: " + value.direction);
+//                Log.d(TAG, "bulletMag of target " + target + " is: " + value.bulletMag);
+//                Log.d(TAG, "shield of target " + target + " is: " + value.shield);
+                if (value == null) return;
                 tank.x = value.x;
                 tank.y = value.y;
+                tank.setBullets(value.getBullets());
                 tank.hitBox = value.hitBox;
                 tank.firepower = value.firepower;
                 tank.direction = value.direction;

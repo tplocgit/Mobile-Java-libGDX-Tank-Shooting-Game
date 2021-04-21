@@ -224,7 +224,7 @@ public class PvPScreen implements Screen {
 
         myFb.writePlayerTankVal("room0", "P1", playerTank);
         myFb.writePlayerTankVal("room0", "P2", enemyTank);
-        myFb.setValEventListener("TankGame/room0/Player/P2", enemyTank);
+        myFb.setValEventListener("TankGame/room0/Player/P1", enemyTank);
 
         /*
         myFb.writePlayerTankVal("P2", playerTank);
@@ -283,7 +283,7 @@ public class PvPScreen implements Screen {
         controller.draw();
         my_hud.draw(batch);
 
-        myFb.writePlayerTankVal("room0", "P1", playerTank);
+        myFb.writePlayerTankVal("room0", "P2", playerTank);
 
         /*
         myFb.writePlayerTankVal("P2", playerTank);

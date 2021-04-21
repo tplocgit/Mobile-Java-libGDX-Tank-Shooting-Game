@@ -188,7 +188,7 @@ public class VirtualController {
         table.add();
 
         Table crossHairTable = new Table();
-        crossHairTable.setPosition(740, 80);
+        crossHairTable.setPosition(740, 110);
         //crossHairTable.right().center();
         crossHairTable.add();
         crossHairTable.add(crossHairImage).size(crossHairImage.getWidth(), crossHairImage.getHeight());

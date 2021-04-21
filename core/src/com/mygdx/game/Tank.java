@@ -263,6 +263,11 @@ public class Tank extends GameObject implements Movable {
     }
     //----------------------------------------------------------------------------------------------
 
+
+    public void setBullets(ArrayList<Bullet> bullets) {
+        this.bullets = new ArrayList<>(bullets);
+    }
+
     public Rectangle getNextLeftHitBox(float dt) {
         return new Rectangle(this.hitBox.x - this.movementSpeed * dt, this.hitBox.y, this.hitBox.width, this.hitBox.height);
     }
