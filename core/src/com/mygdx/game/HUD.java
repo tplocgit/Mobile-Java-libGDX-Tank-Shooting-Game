@@ -22,12 +22,14 @@ public class HUD {
     int score, enemyCount, firepower, shield;
     Vector2 position;
     boolean debugMode = true;
+    boolean isPvp = false;
 
     public HUD(int score, float life, int firepower, int shield, float movementSpeed, int enemyCount,
                Vector2 initPosition, boolean debugMode) {
         cam = new OrthographicCamera();
         viewport = new FitViewport(800, 480, cam);
-        stage = new Stage(viewport, GameScreen.batch);
+        //stage = new Stage(viewport, GameScreen.batch);
+        stage = new Stage(viewport, PvPScreen.batch);
         this.debugMode = debugMode;
         this.score = score;
         this.life = life;
@@ -81,6 +83,9 @@ public class HUD {
 
         if (this.life <= 0)
             font.draw(batch, "YOU DIED", 400, 200, 20, Align.center, false);
+
+        if (isPvp && enemyCount <= 0)
+            font.draw(batch, "YOU WIN", 400, 200, 20, Align.center, false);
         batch.end();
     }
 

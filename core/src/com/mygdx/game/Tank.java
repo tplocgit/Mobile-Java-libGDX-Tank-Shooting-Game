@@ -13,10 +13,14 @@ import java.util.List;
 
 public class Tank extends GameObject implements Movable {
     public static final TextureRegion[] DEFAULT_TANK_TEXTURE_REGIONS = {
-            GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_left"),
+            /*GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_left"),
             GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_right"),
             GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_up"),
-            GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_down"),
+            GameScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_down"),*/
+            PvPScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_left"),
+            PvPScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_right"),
+            PvPScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_up"),
+            PvPScreen.TEXTURE_ATLAS.findRegion("tank_bigRed_down"),
     };
 
     public static final int[][] BULLETS_POSITION_OF_MAG = {{},{1},{0,2},{0,1,2}};
@@ -167,8 +171,10 @@ public class Tank extends GameObject implements Movable {
             bullet.draw(batch);
             bullet.move(deltatime);
             //check if bullet still inside our world, if not remove them
-            if (bullet.getX() > GameScreen.TILE_SIZE * (GameScreen.NUMBER_OF_HEIGHT_TILE - 1) || bullet.getX() < 0 ||
-                    bullet.getY() > GameScreen.TILE_SIZE * (GameScreen.NUMBER_OF_WIDTH_TILE - 1) || bullet.getY() < 0) {
+            /*if (bullet.getX() > GameScreen.TILE_SIZE * (GameScreen.NUMBER_OF_HEIGHT_TILE - 1) || bullet.getX() < 0 ||
+                    bullet.getY() > GameScreen.TILE_SIZE * (GameScreen.NUMBER_OF_WIDTH_TILE - 1) || bullet.getY() < 0)*/
+            if (bullet.getX() > PvPScreen.TILE_SIZE * (PvPScreen.NUMBER_OF_HEIGHT_TILE - 1) || bullet.getX() < 0 ||
+                    bullet.getY() > PvPScreen.TILE_SIZE * (PvPScreen.NUMBER_OF_WIDTH_TILE - 1) || bullet.getY() < 0){
                 --i;
                 this.bullets.remove(bullet);
             }

@@ -3,7 +3,8 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 
 public class TankShootingGame extends Game {
-	GameScreen gameScreen;
+	//GameScreen gameScreen;
+	PvPScreen pvPScreen;
 	FirebaseInterface myFb;
 
 	public TankShootingGame(FirebaseInterface fb) {
@@ -12,8 +13,10 @@ public class TankShootingGame extends Game {
 
 	@Override
 	public void create() {
-		this.gameScreen = new GameScreen(myFb);
-		setScreen(this.gameScreen);
+		//this.gameScreen = new GameScreen(myFb);
+		//setScreen(this.gameScreen);
+		this.pvPScreen = new PvPScreen(myFb);
+		setScreen(this.pvPScreen);
 	}
 
 	@Override
@@ -23,11 +26,13 @@ public class TankShootingGame extends Game {
 
 	@Override
 	public void dispose() {
-		gameScreen.dispose();
+		//gameScreen.dispose();
+		pvPScreen.dispose();
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		gameScreen.resize(width, height);
+		//gameScreen.resize(width, height);
+		pvPScreen.resize(width, height);
 	}
 }

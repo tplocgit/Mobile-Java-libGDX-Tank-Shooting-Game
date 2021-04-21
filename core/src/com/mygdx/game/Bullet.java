@@ -14,10 +14,14 @@ public class Bullet extends GameObject implements Movable {
     public static final int BULLET_HEIGHT = 15;
 
     public static final TextureRegion[] DEFAULT_TEXTURE_REGIONS = {
-            GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_left"),
+            /*GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_left"),
             GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_right"),
             GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_up"),
-            GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_down"),
+            GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_down"),*/
+            PvPScreen.TEXTURE_ATLAS.findRegion("bulletRed2_left"),
+            PvPScreen.TEXTURE_ATLAS.findRegion("bulletRed2_right"),
+            PvPScreen.TEXTURE_ATLAS.findRegion("bulletRed2_up"),
+            PvPScreen.TEXTURE_ATLAS.findRegion("bulletRed2_down"),
     };
 
     //graphic

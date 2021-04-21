@@ -24,8 +24,8 @@ public class VirtualController {
     public VirtualController() {
         cam = new OrthographicCamera();
         viewport = new FitViewport(800, 480, cam);
-        stage = new Stage(viewport, GameScreen.batch);
-
+        //stage = new Stage(viewport, GameScreen.batch);
+        stage = new Stage(viewport, PvPScreen.batch);
         stage.addListener(new InputListener(){
 
             @Override

@@ -169,6 +169,14 @@ public class PvPScreen implements Screen {
                 PLAYER_BULLET_SAMPLE, PLAYER1_TANK_TEXTURE_REGIONS);
         playerTank.life = 100;
 
+        enemyTank = new Tank(
+                PLAYER_INITIAL_POSITION_X * 6, PLAYER_INITIAL_POSITION_Y * 2, PLAYER_WIDTH, PLAYER_HEIGHT,
+                PLAYER_HIT_BOX_WIDTH, PLAYER_HIT_BOX_HEIGHT,
+                PLAYER_INITIAL_BULLET_MAG, 1000 ,PLAYER_INITIAL_MOVEMENT_SPEED, PLAYER_FIREPOWER, PLAYER_INITIAL_SHIELD,
+                PLAYER_TIME_BETWEEN_SHOT, PLAYER_INITIAL_DIRECTION,
+                PLAYER_BULLET_SAMPLE, PLAYER1_TANK_TEXTURE_REGIONS);
+        enemyTank.life = 100;
+
         /*enemyTank = new EnemyTank(TILE_SIZE * (WORLD_TILE_WIDTH - 2),
                 TILE_SIZE * (WORLD_TILE_HEIGHT - 2),
                 PLAYER_WIDTH, PLAYER_HEIGHT, TILE_SIZE * 5,
@@ -201,7 +209,8 @@ public class PvPScreen implements Screen {
         my_hud = new HUD(score, playerTank.life, playerTank.firepower,
                 playerTank.shield, playerTank.movementSpeed / 64,
                 enemyCount, new Vector2(playerTank.getX(), playerTank.getY()), true);
-
+        my_hud.enemyCount = 1;
+        my_hud.isPvp = true;
         //position to spawn enemies
         spawnPos = new ArrayList<>();
         spawnPos.add(new Vector2(700, 450));
@@ -238,12 +247,13 @@ public class PvPScreen implements Screen {
         //System.out.println(playerTank.getX() + " " + playerTank.getY());
 
         playerTank.update(delta);
-        
+        enemyTank.update(delta);
 
         
 
         //game objects
         playerTank.draw(batch, delta);
+        enemyTank.draw(batch, delta);
 
         //bullet stuff
         renderBullets(delta);
@@ -316,7 +326,7 @@ public class PvPScreen implements Screen {
         for (int i = 0; i < playerTank.getBullets().size(); i++) {
             if (enemyTank != null) {
                 if (enemyTank.isColliding(playerTank.getBullets().get(i).getHitBox())) {
-                    playerTank.getBullets().remove(i);
+                    playerTank.bulletCollision(i);
                     if (enemyTank.life > PLAYER_FIREPOWER) {
                         enemyTank.life -= PLAYER_FIREPOWER;
                     } else {
@@ -325,15 +335,21 @@ public class PvPScreen implements Screen {
                                 enemyTank.getWidth(), enemyTank.getHeight(),
                                 explosionTextureRegion);
                         explosion.draw(batch);
+                        TextureRegion[] deadStateTextureRegionArr = {deadStateTextureRegion, deadStateTextureRegion, deadStateTextureRegion, deadStateTextureRegion};
+
                         my_hud.score += enemyTank.getScore();
                         my_hud.enemyCount -= 1;
+                        enemyTank.tankTextureRegions = deadStateTextureRegionArr;
+                        enemyTank.setX(TILE_SIZE * -50);
+                        enemyTank.setY(TILE_SIZE * -50);
+
                         deadState = true;
-                        playerTank.setX(TILE_SIZE * -50);
-                        playerTank.setY(TILE_SIZE * -50);
-                        my_hud.life -= ENEMY_FIREPOWER;
-                        if (my_hud.life < 0)
-                            my_hud.life = 0;
-                        System.out.println("Game over");
+                        playerTank.tankTextureRegions = deadStateTextureRegionArr;
+                        deadState = true;
+                        playerTank.shield = 0;
+                        playerTank.setX(TILE_SIZE * -55);
+                        playerTank.setY(TILE_SIZE * -55);
+                        System.out.println("You win");
                     }
                     --i; //safeguard
                     break;
