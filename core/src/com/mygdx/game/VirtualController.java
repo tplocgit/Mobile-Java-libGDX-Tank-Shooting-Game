@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -30,11 +31,11 @@ public class VirtualController {
 
 
 
-    public VirtualController() {
+    public VirtualController(SpriteBatch batch) {
         cam = new OrthographicCamera();
         viewport = new FitViewport(800, 480, cam);
         //stage = new Stage(viewport, GameScreen.batch);
-        stage = new Stage(viewport, PvPScreen.batch);
+        stage = new Stage(viewport, batch);
         stage.addListener(new InputListener(){
 
             @Override
