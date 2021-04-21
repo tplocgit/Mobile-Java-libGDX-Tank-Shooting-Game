@@ -20,18 +20,16 @@ public class AndroidInterface implements FirebaseInterface {
     }
 
     @Override
-    public void writePlayerTankVal(String userId, Tank playerTank) {
+    public void writePlayerTankVal(String room, String userId, Tank playerTank) {
         Tank pT = playerTank;
         // Write a message to the database
         //myDbRef.child("player1").child(userId).setValue(playerTank);
         myDbRef = database.getReference();
-        myDbRef.child("Player").child(userId).child("hitBox").setValue(pT.hitBox);
-        myDbRef.child("Player").child(userId).child("firepower").setValue(pT.firepower);
-        myDbRef.child("Player").child(userId).child("shield").setValue(pT.shield);
-        myDbRef.child("Player").child(userId).child("bulletMag").setValue(pT.bulletMag);
-        myDbRef.child("Player").child(userId).child("movementSpeed").setValue(pT.movementSpeed);
-        myDbRef.child("Player").child(userId).child("timeBetweenShots").setValue(pT.timeBetweenShots);
-        myDbRef.child("Player").child(userId).child("direction").setValue(pT.direction);
+        myDbRef.child("TankGame").child(room).child("Player").child(userId).child("hitBox").setValue(pT.hitBox);
+        myDbRef.child("TankGame").child(room).child("Player").child(userId).child("firepower").setValue(pT.firepower);
+        myDbRef.child("TankGame").child(room).child("Player").child(userId).child("shield").setValue(pT.shield);
+        myDbRef.child("TankGame").child(room).child("Player").child(userId).child("bulletMag").setValue(pT.bulletMag);
+        myDbRef.child("TankGame").child(room).child("Player").child(userId).child("direction").setValue(pT.direction);
         //myDbRef.child("player1").child(userId).child("currentTankTextureRegion").setValue(pT.currentTankTextureRegion);
         /*for (TextureRegion textureRegion : pT.tankTextureRegions) {
             myDbRef.child("player1").child(userId).child("currentTankTextureRegion").child("textureRegion").setValue(textureRegion);
@@ -56,7 +54,7 @@ public class AndroidInterface implements FirebaseInterface {
                 // whenever data at this location is updated.
                 Tank value = dataSnapshot.getValue(Tank.class);
                 Log.d(TAG, "Key of target " + target + " is: " + key);
-                Log.d(TAG, "Value of target " + target + " is: " + value);
+                //Log.d(TAG, "Value of target " + target + " is: " + value);
                 Log.d(TAG, "x of target " + target + " is: " + value.hitBox.x);
                 Log.d(TAG, "y of target " + target + " is: " + value.hitBox.y);
                 Log.d(TAG, "height of target " + target + " is: " + value.hitBox.height);

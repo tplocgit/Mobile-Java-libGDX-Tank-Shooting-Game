@@ -3,7 +3,7 @@ package com.mygdx.game;
 public class CoreInterface implements FirebaseInterface{
 
     @Override
-    public void writePlayerTankVal(String userId, Tank playerTank) {
+    public void writePlayerTankVal(String room, String userId, Tank playerTank) {
 
     }
 

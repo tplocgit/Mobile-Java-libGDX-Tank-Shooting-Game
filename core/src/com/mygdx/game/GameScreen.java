@@ -214,7 +214,7 @@ public class GameScreen implements Screen {
         //firebase stuff
         myFb = fb;
 
-        myFb.writePlayerTankVal("P1", playerTank);
+        myFb.writePlayerTankVal("room0", "P1", playerTank);
         //fb.readPlayerTankVal("P1");
         //myFb.readPlayerTankVal("Player/P1");
     }
