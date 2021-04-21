@@ -223,8 +223,24 @@ public class PvPScreen implements Screen {
         myFb = fb;
 
         myFb.writePlayerTankVal("P1", playerTank);
+        myFb.setValEventListener("room0/P2", enemyTank);
+
+        /*
+        myFb.writePlayerTankVal("P2", playerTank);
+        myFb.setValEventListener("room0/P1", enemyTank);
+        */
+
         //fb.readPlayerTankVal("P1");
         //myFb.readPlayerTankVal("Player/P1");
+    }
+
+    public void readData(Tank tank) {
+        System.out.println("Hit box: "  + tank.hitBox.x + " " + tank.hitBox.y + " " +
+                tank.hitBox.width + " " + tank.hitBox.height);
+        System.out.println("Firepower:" + tank.firepower);
+        System.out.println("Direction:" + tank.direction);
+        System.out.println("BulletMag:" + tank.bulletMag);
+        System.out.println("Shield:" + tank.shield);
     }
 
     @Override
@@ -265,6 +281,14 @@ public class PvPScreen implements Screen {
 
         controller.draw();
         my_hud.draw(batch);
+
+        myFb.writePlayerTankVal("P1", playerTank);
+
+        /*
+        myFb.writePlayerTankVal("P2", playerTank);
+        */
+
+        readData(enemyTank);
     }
 
     private void renderBullets(float deltaTime) {

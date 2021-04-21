@@ -46,7 +46,7 @@ public class AndroidInterface implements FirebaseInterface {
 
     @Override
     // Read from the database
-    public void readPlayerTankVal(final String target) {
+    public void setValEventListener(final String target, final Tank tank) {
         myDbRef = database.getReference(target);
         myDbRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -64,9 +64,12 @@ public class AndroidInterface implements FirebaseInterface {
                 Log.d(TAG, "firepower of target " + target + " is: " + value.firepower);
                 Log.d(TAG, "direction of target " + target + " is: " + value.direction);
                 Log.d(TAG, "bulletMag of target " + target + " is: " + value.bulletMag);
-                Log.d(TAG, "movementSpeed of target " + target + " is: " + value.movementSpeed);
                 Log.d(TAG, "shield of target " + target + " is: " + value.shield);
-                Log.d(TAG, "timeBetweenShots of target " + target + " is: " + value.timeBetweenShots);
+                tank.hitBox = value.hitBox;
+                tank.firepower = value.firepower;
+                tank.direction = value.direction;
+                tank.bulletMag = value.bulletMag;
+                tank.shield = value.shield;
             }
 
             @Override
