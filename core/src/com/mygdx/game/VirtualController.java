@@ -20,6 +20,7 @@ public class VirtualController {
     Stage stage;
     boolean upPressed, downPressed, leftPressed, rightPressed, crossHairPressed, arrowPressed;
     OrthographicCamera cam;
+    public static final int CONTROLLER_BUTTON_DEFAULT_SIZE = 70;
 
     public VirtualController() {
         cam = new OrthographicCamera();
@@ -87,7 +88,7 @@ public class VirtualController {
         table.left().bottom();
 
         Image upImg = new Image(new Texture("Controller/up.png"));
-        upImg.setSize(50, 50);
+        upImg.setSize(CONTROLLER_BUTTON_DEFAULT_SIZE, CONTROLLER_BUTTON_DEFAULT_SIZE);
         upImg.addListener(new InputListener() {
 
             @Override
@@ -103,7 +104,7 @@ public class VirtualController {
         });
 
         Image downImg = new Image(new Texture("Controller/down.png"));
-        downImg.setSize(50, 50);
+        downImg.setSize(CONTROLLER_BUTTON_DEFAULT_SIZE, CONTROLLER_BUTTON_DEFAULT_SIZE);
         downImg.addListener(new InputListener() {
 
             @Override
@@ -119,7 +120,7 @@ public class VirtualController {
         });
 
         Image rightImg = new Image(new Texture("Controller/right.png"));
-        rightImg.setSize(50, 50);
+        rightImg.setSize(CONTROLLER_BUTTON_DEFAULT_SIZE, CONTROLLER_BUTTON_DEFAULT_SIZE);
         rightImg.addListener(new InputListener() {
 
             @Override
@@ -135,7 +136,7 @@ public class VirtualController {
         });
 
         Image leftImg = new Image(new Texture("Controller/left.png"));
-        leftImg.setSize(50, 50);
+        leftImg.setSize(CONTROLLER_BUTTON_DEFAULT_SIZE, CONTROLLER_BUTTON_DEFAULT_SIZE);
         leftImg.addListener(new InputListener() {
 
             @Override
