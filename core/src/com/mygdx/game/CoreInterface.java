@@ -8,7 +8,7 @@ public class CoreInterface implements FirebaseInterface{
     }
 
     @Override
-    public void readPlayerTankVal(String target) {
+    public void setValEventListener(String target, final Tank tank) {
 
     }
 }
