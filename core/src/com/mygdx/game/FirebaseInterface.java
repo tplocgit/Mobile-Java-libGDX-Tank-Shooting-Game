@@ -11,4 +11,6 @@ public interface FirebaseInterface {
     void deleteBullet(String targetKey);
 
     void deleteNode(String parentPath, String targetKey);
+
+    void createRoom(Room room);
 }
