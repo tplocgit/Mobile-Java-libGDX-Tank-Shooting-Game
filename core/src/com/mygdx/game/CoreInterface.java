@@ -11,4 +11,21 @@ public class CoreInterface implements FirebaseInterface{
     public void setValEventListener(String target, final Tank tank) {
 
     }
+
+    @Override
+    public void deletePlayerNode(String targetKey) {
+
+
+    }
+
+    @Override
+    public void deleteBullet(String targetKey) {
+
+    }
+
+    @Override
+    public void deleteNode(String parentPath, String targetKey) {
+
+    }
+
 }

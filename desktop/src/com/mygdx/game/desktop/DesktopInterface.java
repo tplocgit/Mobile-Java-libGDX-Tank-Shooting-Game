@@ -11,6 +11,16 @@ public class DesktopInterface implements FirebaseInterface {
     }
 
     @Override
+    public void deleteBullet(String targetKey) {
+
+    }
+
+    @Override
+    public void deletePlayerNode(String targetKey) {
+
+    }
+
+    @Override
     public void setValEventListener(String target, final Tank tank) {
 
     }

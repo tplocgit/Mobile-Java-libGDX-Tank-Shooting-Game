@@ -6,4 +6,9 @@ public interface FirebaseInterface {
 
     void setValEventListener(final String target, final Tank tank);
 
+    void deletePlayerNode(String targetKey);
+
+    void deleteBullet(String targetKey);
+
+    void deleteNode(String parentPath, String targetKey);
 }

@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -111,10 +113,44 @@ public class AndroidInterface implements FirebaseInterface {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
                 // Failed to read value
                 Log.w(TAG, "Failed to read value of target" + target, error.toException());
             }
         });
-    };
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void deletePlayerNode(final String key) {
+        deleteNode(database.getReference().child("Player").getPath().toString(), key);
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void deleteBullet(final String targetKey) {
+        deleteNode(database.getReference().child("Player").child("bulletList").getPath().toString(), targetKey);
+    }
+
+    @Override
+    public void deleteNode(final String parentPath, final String targetKey) {
+        final DatabaseReference ref = database.getReference().child(parentPath);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.hasChild(targetKey)) {
+                    // run some code
+                    Log.w(TAG, "Key \"" + targetKey + "\" not found.");
+                    return;
+                }
+                Log.w(TAG, "OK");
+                ref.child(targetKey).setValue(null);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to delete \"" + targetKey + "\n of path \"" + parentPath + "\".", error.toException());
+            }
+        });
+    }
 }
