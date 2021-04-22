@@ -112,6 +112,8 @@ public class PvPScreen implements Screen {
 
 
     // other stuff
+    private Item item_star;
+
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
@@ -232,6 +234,7 @@ public class PvPScreen implements Screen {
 
         //fb.readPlayerTankVal("P1");
         //myFb.readPlayerTankVal("Player/P1");
+        item_star = new Item();
     }
 
     public void readData(Tank tank) {
@@ -268,6 +271,7 @@ public class PvPScreen implements Screen {
         //game objects
         playerTank.draw(batch, delta);
         enemyTank.draw(batch, delta);
+        item_star.draw(batch);
 
         //bullet stuff
         renderBullets(delta);

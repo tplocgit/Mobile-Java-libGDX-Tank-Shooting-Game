@@ -28,6 +28,7 @@ public class Bullet extends GameObject implements Movable {
     protected TextureRegion[] bulletTextureRegions;
     private TextureRegion currentTextureRegion;
 
+    public Bullet(){}
 
     public Bullet(float xPos, float yPos, float width, float height, float movementSpeed,
                   int direction, TextureRegion[] textureRegions) {

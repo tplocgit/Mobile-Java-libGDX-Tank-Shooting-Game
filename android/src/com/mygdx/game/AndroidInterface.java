@@ -48,11 +48,11 @@ public class AndroidInterface implements FirebaseInterface {
         for (int i = 0; i < bulletArrayList.size(); i++) {
             if (bulletArrayList.get(i).x < Graphic.TILE_SIZE * (Graphic.NUMBER_OF_HEIGHT_TILE - 1) && bulletArrayList.get(i).x > 0 &&
                     bulletArrayList.get(i).y < Graphic.TILE_SIZE * (Graphic.NUMBER_OF_WIDTH_TILE - 1) && bulletArrayList.get(i).y > 0) {
-                myDbRef.child("TankGame").child(room).child("Player").child(userId).child("bulletList")
+                myDbRef.child("TankGame").child(room).child("Player").child(userId).child("bullets")
                         .child(Integer.toString(i)).child("x").setValue(bulletArrayList.get(i).x);
-                myDbRef.child("TankGame").child(room).child("Player").child(userId).child("bulletList")
+                myDbRef.child("TankGame").child(room).child("Player").child(userId).child("bullets")
                         .child(Integer.toString(i)).child("y").setValue(bulletArrayList.get(i).y);
-                myDbRef.child("TankGame").child(room).child("Player").child(userId).child("bulletList")
+                myDbRef.child("TankGame").child(room).child("Player").child(userId).child("bullets")
                         .child(Integer.toString(i)).child("direction").setValue(bulletArrayList.get(i).getDirection());
             }
             /*else {
@@ -105,9 +105,11 @@ public class AndroidInterface implements FirebaseInterface {
                 tank.x = value.x;
                 tank.y = value.y;
                 //tank.hitBox = value.hitBox;
-
+                tank.setBullets(value.getBullets());
                 tank.firepower = value.firepower;
                 tank.direction = value.direction;
+                ArrayList<Bullet> bulletArrayList = value.getBullets();
+                tank.setBullets(bulletArrayList);
                 //tank.bulletMag = value.bulletMag;
                 tank.shield = value.shield;
             }
