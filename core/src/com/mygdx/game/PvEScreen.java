@@ -24,7 +24,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GameScreen implements Screen {
+public class PvEScreen implements Screen {
 
     //screen
     //private Camera  camera;
@@ -132,7 +132,7 @@ public class GameScreen implements Screen {
     //firebase stuff
     FirebaseInterface myFb;
 
-    GameScreen(FirebaseInterface fb) {
+    PvEScreen(FirebaseInterface fb) {
 
         camera = new OrthographicCamera();
         // make sure the camera always shows us an area of our game world that is

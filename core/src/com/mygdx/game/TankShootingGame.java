@@ -8,11 +8,9 @@ public class TankShootingGame extends Game {
 	public static final int MENU_SCREEN = 1;
 	public static final int PVE_SCREEN = 2;
 	public static final int PVP_SCREEN = 3;
-	public static final int NUMBER_OF_SCREEN = 4;
+	public static final int CREATE_ROOM_SCREEN = 4;
+	public static final int NUMBER_OF_SCREEN = 5;
 	Screen oldScreen;
-	GameScreen pveScreen;
-	PvPScreen pvpScreen;
-	MainMenuScreen menuScreen;
 	FirebaseInterface myFb;
 
 	public TankShootingGame(FirebaseInterface fb) {
@@ -21,8 +19,8 @@ public class TankShootingGame extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new MainMenuScreen(this));
-//
+//		setScreen(new MainMenuScreen(this));
+		this.changeScreen(CREATE_ROOM_SCREEN);
 	}
 
 	public void changeScreen(int screen) {
@@ -33,16 +31,16 @@ public class TankShootingGame extends Game {
 
 		switch (screen){
 			case MENU_SCREEN:
-				if (menuScreen == null) menuScreen = new MainMenuScreen(this);
-				this.setScreen(menuScreen);
+				this.setScreen(new MainMenuScreen(this));
 				break;
 			case PVE_SCREEN:
-				if(pveScreen == null) pveScreen = new GameScreen(myFb);
-				this.setScreen(pveScreen);
+				this.setScreen(new PvEScreen(myFb));
 				break;
 			case PVP_SCREEN:
-				if(pvpScreen == null) pvpScreen = new PvPScreen(myFb);
-				this.setScreen(pvpScreen);
+				this.setScreen(new PvPScreen(myFb));
+				break;
+			case CREATE_ROOM_SCREEN:
+				this.setScreen(new CreateRoomScreen(this));
 				break;
 		}
 	}
@@ -55,12 +53,12 @@ public class TankShootingGame extends Game {
 	@Override
 	public void dispose() {
 		//gameScreen.dispose();
-		this.screen.dispose();
+//		this.screen.dispose();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		//gameScreen.resize(width, height);
-		this.screen.resize(width, height);
+//		this.screen.resize(width, height);
 	}
 }

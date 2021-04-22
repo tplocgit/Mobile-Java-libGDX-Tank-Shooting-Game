@@ -82,7 +82,6 @@ public class Tank extends GameObject implements Movable {
         this.updateHitBox();
 
         if(Direction.validateDirection(this.direction)) {
-
             if (this.tankTextureRegions[this.direction] != null)
                 this.currentTankTextureRegion = this.tankTextureRegions[this.direction];
         }

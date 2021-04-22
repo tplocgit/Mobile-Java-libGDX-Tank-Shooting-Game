@@ -41,7 +41,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(container);
 
         // temporary until we have asset manager in
-        Skin skin = new Skin(Gdx.files.internal("skin/glassy/skin/glassy-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal(Graphic.SKIN_PATH));
 
 
         Label tile = new Label("Tank Shooting Game", skin);

@@ -9,7 +9,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 
 
 public class AndroidInterface implements FirebaseInterface {
-
+    public static String FIREBASE_GAME_ROOT_PATH = "TankGame";
     private FirebaseDatabase database;
     private DatabaseReference myDbRef;
     public String TAG = "Android Interface";
@@ -154,5 +153,12 @@ public class AndroidInterface implements FirebaseInterface {
                 Log.w(TAG, "Failed to delete \"" + targetKey + "\n of path \"" + parentPath + "\".", error.toException());
             }
         });
+    }
+
+    @Override
+    public void createRoom(Room room) {
+        DatabaseReference ref = database.getReference().child(FIREBASE_GAME_ROOT_PATH);
+        DatabaseReference pushedRef = ref.push();
+        pushedRef.setValue(room);
     }
 }
