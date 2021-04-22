@@ -18,10 +18,10 @@ public class Bullet extends GameObject implements Movable {
             GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_right"),
             GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_up"),
             GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_down"),*/
-            PvPScreen.TEXTURE_ATLAS.findRegion("bulletRed2_left"),
-            PvPScreen.TEXTURE_ATLAS.findRegion("bulletRed2_right"),
-            PvPScreen.TEXTURE_ATLAS.findRegion("bulletRed2_up"),
-            PvPScreen.TEXTURE_ATLAS.findRegion("bulletRed2_down"),
+            Graphic.TEXTURE_ATLAS.findRegion("bulletRed2_left"),
+            Graphic.TEXTURE_ATLAS.findRegion("bulletRed2_right"),
+            Graphic.TEXTURE_ATLAS.findRegion("bulletRed2_up"),
+            Graphic.TEXTURE_ATLAS.findRegion("bulletRed2_down"),
     };
 
     //graphic

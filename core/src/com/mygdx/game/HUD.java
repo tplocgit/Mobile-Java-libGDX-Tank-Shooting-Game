@@ -25,11 +25,11 @@ public class HUD {
     boolean isPvp = false;
 
     public HUD(int score, float life, int firepower, int shield, float movementSpeed, int enemyCount,
-               Vector2 initPosition, boolean debugMode) {
+               Vector2 initPosition, boolean debugMode, SpriteBatch batch) {
         cam = new OrthographicCamera();
         viewport = new FitViewport(800, 480, cam);
         //stage = new Stage(viewport, GameScreen.batch);
-        stage = new Stage(viewport, PvPScreen.batch);
+        stage = new Stage(viewport, batch);
         this.debugMode = debugMode;
         this.score = score;
         this.life = life;

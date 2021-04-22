@@ -186,7 +186,6 @@ public class GameScreen implements Screen {
 //        player.height = PLAYER_HEIGHT;
 
         batch = new SpriteBatch();
-        controller = new VirtualController();
 
         layer = map.getLayers().get(OBJECTS_LAYER_INDEX);
         mapObjects = layer.getObjects();
@@ -197,11 +196,11 @@ public class GameScreen implements Screen {
             System.out.println(object.getProperties().get("width"));
             System.out.println(object.getProperties().get("height"));
         }*/
-        controller = new VirtualController();
+        controller = new VirtualController(batch);
 
         my_hud = new HUD(score, playerTank.life, playerTank.firepower,
                 playerTank.shield, playerTank.movementSpeed / 64,
-                enemyCount, new Vector2(playerTank.getX(), playerTank.getY()), true);
+                enemyCount, new Vector2(playerTank.getX(), playerTank.getY()), true, batch);
 
         //position to spawn enemies
         spawnPos = new ArrayList<>();

@@ -193,7 +193,6 @@ public class PvPScreen implements Screen {
 //        player.height = PLAYER_HEIGHT;
 
         batch = new SpriteBatch();
-        controller = new VirtualController();
 
         layer = map.getLayers().get(OBJECTS_LAYER_INDEX);
         mapObjects = layer.getObjects();
@@ -204,11 +203,11 @@ public class PvPScreen implements Screen {
             System.out.println(object.getProperties().get("width"));
             System.out.println(object.getProperties().get("height"));
         }*/
-        controller = new VirtualController();
+        controller = new VirtualController(batch);
 
         my_hud = new HUD(score, playerTank.life, playerTank.firepower,
                 playerTank.shield, playerTank.movementSpeed / 64,
-                enemyCount, new Vector2(playerTank.getX(), playerTank.getY()), true);
+                enemyCount, new Vector2(playerTank.getX(), playerTank.getY()), true, batch);
         my_hud.enemyCount = 1;
         my_hud.isPvp = true;
         //position to spawn enemies
@@ -224,7 +223,7 @@ public class PvPScreen implements Screen {
 
         myFb.writePlayerTankVal("room0", "P1", playerTank);
         myFb.writePlayerTankVal("room0", "P2", enemyTank);
-        myFb.setValEventListener("TankGame/room0/Player/P1", enemyTank);
+        myFb.setValEventListener("TankGame/room0/Player/P2", enemyTank);
 
         /*
         myFb.writePlayerTankVal("P2", playerTank);
@@ -266,8 +265,6 @@ public class PvPScreen implements Screen {
         playerTank.update(delta);
         enemyTank.update(delta);
 
-        
-
         //game objects
         playerTank.draw(batch, delta);
         enemyTank.draw(batch, delta);
@@ -283,13 +280,13 @@ public class PvPScreen implements Screen {
         controller.draw();
         my_hud.draw(batch);
 
-        myFb.writePlayerTankVal("room0", "P2", playerTank);
+        myFb.writePlayerTankVal("room0", "P1", playerTank);
 
         /*
         myFb.writePlayerTankVal("P2", playerTank);
         */
 
-        readData(enemyTank);
+        //readData(enemyTank);
     }
 
     private void renderBullets(float deltaTime) {
