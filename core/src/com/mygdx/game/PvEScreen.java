@@ -134,9 +134,11 @@ public class PvEScreen extends GameScreen {
         layer = map.getLayers().get(OBJECTS_LAYER_INDEX);
         mapObjects = layer.getObjects();
 
+
         my_hud = new HUD(score, playerTank.getLife(), playerTank.getFirepower(),
                 playerTank.getShield(), playerTank.getSpeed() / 64,
                 enemyCount, new Vector2(playerTank.getPosition().x, playerTank.getPosition().y), true);
+
 
         //position to spawn enemies
         spawnPos = new ArrayList<>();
@@ -159,7 +161,6 @@ public class PvEScreen extends GameScreen {
 
     @Override
     public void show() {
-
     }
 
     public static PvEScreen getInstance(){

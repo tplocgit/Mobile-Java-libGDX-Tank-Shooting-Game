@@ -99,4 +99,13 @@ public class HUD {
     public void resize(int width, int height){
         viewport.update(width, height);
     }
+
+    void update(Tank tank) {
+        this.movementSpeed = tank.movementSpeed;
+        this.life = tank.life;
+        this.position.x = tank.getX();
+        this.position.y = tank.getY();
+        this.firepower = tank.firepower;
+        this.shield = tank.shield;
+    }
 }

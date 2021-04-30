@@ -11,13 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+import static com.mygdx.game.Graphic.*;
 public class MainMenuScreen implements Screen {
-    public static final int BUTTON_DEFAULT_PAD_VERTICAL = 20;
-    public static final int BUTTON_DEFAULT_PAD_HORIZONTAL = 110;
-    public static final int TABLE_ROW_DEFAULT_PAD_VERTICAL = 30;
-    public static final float LABEL_TITLE_FONT_SCALE = 10;
-    public static final int LABEL_TITLE_PAD_BOTTOM = 50;
-    public static final float BUTTON_LABEL_FONT_SCALE = 2.5f;
     private TankShootingGame parent;
     private Stage stage;
 
@@ -44,8 +39,8 @@ public class MainMenuScreen implements Screen {
         Skin skin = new Skin(Gdx.files.internal(Graphic.SKIN_PATH));
 
 
-        Label tile = new Label("Tank Shooting Game", skin);
-        tile.setFontScale(LABEL_TITLE_FONT_SCALE);
+        Label title = new Label("Tank Shooting Game", skin);
+        title.setFontScale(LABEL_TITLE_FONT_SCALE);
         //create buttons
         TextButton pveButton = new TextButton("PVE", skin);
         TextButton pvpButton = new TextButton("PVP", skin);
@@ -74,7 +69,7 @@ public class MainMenuScreen implements Screen {
         buttonsTable.row().padTop(TABLE_ROW_DEFAULT_PAD_VERTICAL);
         buttonsTable.add(exitButton).uniform().fillX();
 
-        container.add(tile).padBottom(LABEL_TITLE_PAD_BOTTOM);
+        container.add(title).padBottom(LABEL_TITLE_PAD_BOTTOM);
         container.row();
         container.add(buttonsTable);
 
