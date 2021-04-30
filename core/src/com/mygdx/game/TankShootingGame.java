@@ -20,7 +20,7 @@ public class TankShootingGame extends Game {
 	@Override
 	public void create() {
 //		setScreen(new MainMenuScreen(this));
-		this.changeScreen(CREATE_ROOM_SCREEN);
+		this.changeScreen(MENU_SCREEN);
 	}
 
 	public void changeScreen(int screen) {
@@ -36,9 +36,9 @@ public class TankShootingGame extends Game {
 			case PVE_SCREEN:
 				this.setScreen(new PvEScreen(myFb));
 				break;
-			case PVP_SCREEN:
-				this.setScreen(new PvPScreen(myFb));
-				break;
+//			case PVP_SCREEN:
+//				this.setScreen(new PvPScreen(myFb));
+//				break;
 			case CREATE_ROOM_SCREEN:
 				this.setScreen(new CreateRoomScreen(this));
 				break;

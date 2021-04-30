@@ -1,9 +1,11 @@
 package com.mygdx.game;
 
+import com.mygdx.game.objects.Tank;
+
 public class CoreInterface implements FirebaseInterface{
 
     @Override
-    public void writePlayerTankVal(String room, String userId, Tank playerTank) {
+    public void writePlayerTankVal(String room, String userId, com.mygdx.game.objects.Tank playerTank) {
 
     }
 
