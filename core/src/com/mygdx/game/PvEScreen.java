@@ -199,7 +199,7 @@ public class PvEScreen implements Screen {
         controller = new VirtualController(batch);
 
         my_hud = new HUD(score, playerTank.life, playerTank.firepower,
-                playerTank.shield, playerTank.movementSpeed / 64,
+                playerTank.shield, playerTank.movementSpeed / Graphic.TILE_SIZE,
                 enemyCount, new Vector2(playerTank.getX(), playerTank.getY()), true, batch);
 
         //position to spawn enemies
@@ -268,6 +268,8 @@ public class PvEScreen implements Screen {
         batch.end();
 
         controller.draw();
+
+        my_hud.update(playerTank);
         my_hud.draw(batch);
     }
 
