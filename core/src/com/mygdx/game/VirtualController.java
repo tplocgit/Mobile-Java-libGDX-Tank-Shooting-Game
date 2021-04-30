@@ -28,8 +28,14 @@ public class VirtualController {
     public static final Image LEFT__IMAGE = new Image(new Texture("Controller/left-arrow.png"));
     public static final Image RIGHT_IMAGE = new Image(new Texture("Controller/right-arrow.png"));
     public static final Image CROSSHAIR__IMAGE = new Image(new Texture("Controller/focus.png"));
+    private static VirtualController instance = null;
 
-
+    public static VirtualController getInstance(){
+        if(instance == null){
+            instance = new VirtualController(PvEScreen.getInstance().getBatch());
+        }
+        return instance;
+    }
 
     public VirtualController(SpriteBatch batch) {
         cam = new OrthographicCamera();
@@ -217,6 +223,10 @@ public class VirtualController {
 
     public boolean isRightPressed() {
         return rightPressed;
+    }
+
+    public boolean isCrossHairPressed() {
+        return crossHairPressed;
     }
 
     public void resize(int width, int height){

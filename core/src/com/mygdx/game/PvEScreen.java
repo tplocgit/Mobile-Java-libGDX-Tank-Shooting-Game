@@ -1,14 +1,12 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
@@ -19,30 +17,26 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.items.Item;
+
+import com.mygdx.game.items.Star;
+import com.mygdx.game.objects.PlayerTank;
+import com.mygdx.game.objects.Tank;
+import com.mygdx.game.objects.TankAI;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
-public class PvEScreen implements Screen {
+public class PvEScreen extends GameScreen {
 
-    //screen
-    //private Camera  camera;
-    private OrthographicCamera  camera;
-    private Viewport viewport;
+    public static PvEScreen instance = null;
 
     public static final Random GENERATOR = new Random();
-    
+
     //graphic
-    static public SpriteBatch batch;
-    private TextureRegion background;
-
-    public static final TextureAtlas TEXTURE_ATLAS = new TextureAtlas("images.atlas");;
-    private TextureRegion enemyTankTextureRegion, enemyBigTankTextureRegion,
-            barrelRedTextureRegion, barrelGreenTextureRegion, enemyBulletTextureRegion;
-
-    private TextureRegion explosionTextureRegion, deadStateTextureRegion, shieldTextureRegion;
-
+    private SpriteBatch batch;
 
     public static final TextureRegion[] PLAYER1_TANK_TEXTURE_REGIONS = {
             TEXTURE_ATLAS.findRegion("tank_blue_left"),
@@ -51,53 +45,19 @@ public class PvEScreen implements Screen {
             TEXTURE_ATLAS.findRegion("tank_blue_down"),
     };
 
-    public static final TextureRegion[] PLAYER1_BULLET_TEXTURE_REGIONS = {
-            TEXTURE_ATLAS.findRegion("bulletBlue2_left"),
-            TEXTURE_ATLAS.findRegion("bulletBlue2_right"),
-            TEXTURE_ATLAS.findRegion("bulletBlue2_up"),
-            TEXTURE_ATLAS.findRegion("bulletBlue2_down"),
-    };
-
     //timing
     private float spawnTimers = 0;
     private float spawnerDownTime = 4;
     private int normalEnemyCounter = 0;
     private int bigEnemyThreshold = 6;
 
-    //world parameters
-    public static final int OBJECTS_LAYER_INDEX = 2;
 
-    public static final int TILE_SIZE = 64;
-    public static final int NUMBER_OF_WIDTH_TILE = 40;
-    public static final int NUMBER_OF_HEIGHT_TILE = 40;
 
-    //player parameters
-    public static final int PLAYER_HEIGHT = 64;
-    public static final int PLAYER_WIDTH = 64;
-    public static final int PLAYER_BULLET_WIDTH = 10;
-    public static final int PLAYER_BULLET_HEIGHT = 15;
-    public static final int PLAYER_BULLET_SPEED = TILE_SIZE * 7;
-    public static final int PLAYER_INITIAL_BULLET_MAG = 3;
-    public static final float PLAYER_TIME_BETWEEN_SHOT = 0.5f;
-    public static final int PLAYER_FIREPOWER = 10;
-    public static final int PLAYER_INITIAL_MOVEMENT_SPEED = TILE_SIZE * 6;
-    public static final float PLAYER_INITIAL_POSITION_X = 64;
-    public static final float PLAYER_INITIAL_POSITION_Y = 64;
-    public static final int PLAYER_INITIAL_SHIELD = 50;
-    public static final float PLAYER_HIT_BOX_WIDTH = 60;
-    public static final float PLAYER_HIT_BOX_HEIGHT = 60;
-    public static final int PLAYER_INITIAL_DIRECTION = Direction.RIGHT;
-    public static final Bullet PLAYER_BULLET_SAMPLE = new Bullet(
-            0, 0, PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT,
-            PLAYER_BULLET_SPEED, Direction.UP , PLAYER1_BULLET_TEXTURE_REGIONS);
+
 
     public static final int ENEMY_QUANTITY = 10;
     public static final int ENEMY_FIREPOWER = 10;
-    public static final int   ENEMY_BULLET_SPEED = TILE_SIZE * 6;
-    public static final Bullet ENEMY_BULLET_SAMPLE = new Bullet(
-            0, 0, PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT,
-            ENEMY_BULLET_SPEED, Direction.UP, Bullet.DEFAULT_TEXTURE_REGIONS
-    );
+    public static final int   ENEMY_BULLET_SPEED = 8;
     public static final float ENEMY_TIME_BETWEEN_SHOT = 0.8f;
     public static final TextureRegion[] BIG_TANK_TEXTURE_REGIONS = {
             TEXTURE_ATLAS.findRegion("tank_huge_left"),
@@ -105,40 +65,33 @@ public class PvEScreen implements Screen {
             TEXTURE_ATLAS.findRegion("tank_huge_up"),
             TEXTURE_ATLAS.findRegion("tank_huge_down")
     };
+    public static final TextureRegion[] DEFAULT_TANK_TEXTURE_REGIONS = {
+            Graphic.TEXTURE_ATLAS.findRegion("tank_bigRed_left"),
+            Graphic.TEXTURE_ATLAS.findRegion("tank_bigRed_right"),
+            Graphic.TEXTURE_ATLAS.findRegion("tank_bigRed_up"),
+            Graphic.TEXTURE_ATLAS.findRegion("tank_bigRed_down"),
+    };
 
-    //game objects
-    private Tank playerTank;
-    private ArrayList<Tank> enemyTankList;
+
 
 
     // other stuff
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
-    private VirtualController controller;
-
-
     private MapLayer layer;
-    private MapObjects mapObjects;
+    public MapObjects mapObjects;
 
     private BitmapFont font;
     private HUD my_hud;
     private int score = 0, enemyCount = 0;
 
     private ArrayList<Vector2> spawnPos;
-    boolean deadState = false;
-    boolean shieldState = false;
-
-    //firebase stuff
-    FirebaseInterface myFb;
 
     PvEScreen(FirebaseInterface fb) {
-
+        instance = this;
         camera = new OrthographicCamera();
-        // make sure the camera always shows us an area of our game world that is
-        // WORLD_HEIGHTxWORLD_WIDTH units wide
-        //camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
-        //viewport = new StretchViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
+        // make sure the chViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
         viewport = new FitViewport(20 * TILE_SIZE, 10 * TILE_SIZE, camera);
         map = new TmxMapLoader().load("beta_01.tmx");
         renderer = new OrthogonalTiledMapRenderer(this.map);
@@ -147,11 +100,11 @@ public class PvEScreen implements Screen {
         //background = TEXTURE_ATLAS.findRegion("bg_prison");
 
 
-        enemyTankTextureRegion = Tank.DEFAULT_TANK_TEXTURE_REGIONS[Direction.UP];
-        enemyBigTankTextureRegion = TEXTURE_ATLAS.findRegion("tank_huge_up");
-        explosionTextureRegion = TEXTURE_ATLAS.findRegion("explosion4");
-        deadStateTextureRegion = new TextureRegion(new Texture("dead_state.png"));
-        shieldTextureRegion = new TextureRegion(new Texture("Shield/shieldBlue.png"));
+//        enemyTankTextureRegion = Tank.DEFAULT_TANK_TEXTURE_REGIONS[Direction.UP];
+//        enemyBigTankTextureRegion = TEXTURE_ATLAS.findRegion("tank_huge_up");
+//        explosionTextureRegion = TEXTURE_ATLAS.findRegion("explosion4");
+//        deadStateTextureRegion = new TextureRegion(new Texture("dead_state.png"));
+//        shieldTextureRegion = new TextureRegion(new Texture("Shield/shieldBlue.png"));
 
         //backgroundOffset = 0;
         font = new BitmapFont();
@@ -161,46 +114,31 @@ public class PvEScreen implements Screen {
 
         //set up game objects
 
-        playerTank = new Tank(
-                PLAYER_INITIAL_POSITION_X, PLAYER_INITIAL_POSITION_Y, PLAYER_WIDTH, PLAYER_HEIGHT,
-                PLAYER_HIT_BOX_WIDTH, PLAYER_HIT_BOX_HEIGHT,
-                PLAYER_INITIAL_BULLET_MAG, 1000 ,PLAYER_INITIAL_MOVEMENT_SPEED, PLAYER_FIREPOWER, PLAYER_INITIAL_SHIELD,
-                PLAYER_TIME_BETWEEN_SHOT, PLAYER_INITIAL_DIRECTION, 
-                PLAYER_BULLET_SAMPLE, PLAYER1_TANK_TEXTURE_REGIONS);
-        playerTank.life = 100;
+        playerTank = new com.mygdx.game.objects.PlayerTank(PLAYER1_TANK_TEXTURE_REGIONS,
+                new Vector2(PLAYER_INITIAL_POSITION_X, PLAYER_INITIAL_POSITION_Y));
 
-        /*enemyTank = new EnemyTank(TILE_SIZE * (WORLD_TILE_WIDTH - 2),
-                TILE_SIZE * (WORLD_TILE_HEIGHT - 2),
-                PLAYER_WIDTH, PLAYER_HEIGHT, TILE_SIZE * 5,
-                PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT,
-                PLAYER_BULLET_SPEED, PLAYER_TIME_BETWEEN_SHOT,
-                enemyTankTextureRegion, enemyBulletTextureRegion);*/
-        enemyTankList = new ArrayList<>();
-
-
-
-//        player = new Rectangle();
-//        player.x = WORLD_WIDTH / 2 - WORLD_HEIGHT / 4;
-//        player.y = 50;
-//        player.width = PLAYER_WIDTH;
-//        player.height = PLAYER_HEIGHT;
+        playerTank.setHitBox(new Rectangle(0, 0, PLAYER_HIT_BOX_WIDTH, PLAYER_HIT_BOX_HEIGHT));
+        playerTank.setBulletMag(PLAYER_INITIAL_BULLET_MAG);
+        playerTank.setScore(1000);
+        playerTank.setSpeed(PLAYER_INITIAL_MOVEMENT_SPEED);
+        playerTank.setBaseSpeed(PLAYER_INITIAL_MOVEMENT_SPEED);
+        playerTank.setFirepower(PLAYER_FIREPOWER);
+        playerTank.setShield(PLAYER_INITIAL_SHIELD);
+        playerTank.setTimeBetweenShots(PLAYER_TIME_BETWEEN_SHOT);
+        playerTank.setDirection(PLAYER_INITIAL_DIRECTION);
+        playerTank.setLife(100);
+        playerTank.setTankTextureRegions(PLAYER1_TANK_TEXTURE_REGIONS);
 
         batch = new SpriteBatch();
 
         layer = map.getLayers().get(OBJECTS_LAYER_INDEX);
         mapObjects = layer.getObjects();
-        /*for (MapObject object : my_objects_map) {
-            System.out.println(object.getProperties().get("type"));
-            System.out.println(object.getProperties().get("x"));
-            System.out.println(object.getProperties().get("y"));
-            System.out.println(object.getProperties().get("width"));
-            System.out.println(object.getProperties().get("height"));
-        }*/
-        controller = new VirtualController(batch);
 
-        my_hud = new HUD(score, playerTank.life, playerTank.firepower,
-                playerTank.shield, playerTank.movementSpeed / Graphic.TILE_SIZE,
-                enemyCount, new Vector2(playerTank.getX(), playerTank.getY()), true, batch);
+
+        my_hud = new HUD(score, playerTank.getLife(), playerTank.getFirepower(),
+                playerTank.getShield(), playerTank.getSpeed() / 64,
+                enemyCount, new Vector2(playerTank.getPosition().x, playerTank.getPosition().y), true);
+
 
         //position to spawn enemies
         spawnPos = new ArrayList<>();
@@ -210,253 +148,103 @@ public class PvEScreen implements Screen {
         spawnPos.add(new Vector2(624, 2122));
         spawnPos.add(new Vector2(225, 1520));
 
-        //firebase stuff
-        myFb = fb;
+        SpawnItem();
+        SpawnItem();
+        SpawnItem();
+        SpawnItem();
+        SpawnItem();
+        SpawnItem();
+        SpawnItem();
+        SpawnItem();
 
-        myFb.writePlayerTankVal("room0", "P1", playerTank);
-        //fb.readPlayerTankVal("P1");
-        //myFb.readPlayerTankVal("Player/P1");
     }
 
     @Override
     public void show() {
-
     }
 
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0 ,0, 0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.update();
-
-        renderer.setView(camera);
-
-        batch.begin();
-        renderer.render();
-//        font.draw(batch, "Hi there", 100, 100);
-        detectInput(delta);
-        //System.out.println(playerTank.getX() + " " + playerTank.getY());
-
-        playerTank.update(delta);
-
-        int x = GENERATOR.nextInt(10);
-        int y = GENERATOR.nextInt(10);
-        // change direction later maybe
-        int direction = GENERATOR.nextInt(4);
-        int pos = GENERATOR.nextInt(5);
-        if (enemyTankList.size() < ENEMY_QUANTITY && !deadState)
-            spawnEnemies(spawnPos.get(pos).x, spawnPos.get(pos).y, direction, delta);
-
-        for (Tank tank : enemyTankList) {
-            moveEnemy(tank, delta);
-            tank.update(delta);
-            tank.draw(batch, delta);
-        }
-
-        //background
-        //batch.draw(background, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
-
-        //game objects
-        playerTank.draw(batch, delta);
-
-        //bullet stuff
-        renderBullets(delta);
-        detectBulletCollisions();
-
-        //in render method
-
-        batch.end();
-
-        controller.draw();
-
-        my_hud.update(playerTank);
-        my_hud.draw(batch);
+    public static PvEScreen getInstance(){
+        return instance;
     }
 
-    private void renderBullets(float deltaTime) {
-        if (playerTank.canFire() && controller.crossHairPressed && !deadState) {
-            playerTank.fireBullet();
-        }
-
-        for (int i = 0; i < enemyTankList.size(); i++) {
-            if (enemyTankList.get(i).canFire()) {
-                enemyTankList.get(i).fireBullet();
-            }
-        }
-    }
 
     private void spawnEnemies(float x, float y, int direction, float deltaTime) {
         spawnTimers += deltaTime;
 
         if (spawnTimers > spawnerDownTime) {
             if (normalEnemyCounter > bigEnemyThreshold) {
-                Tank enemyBigTank = new Tank(
-                        x, y, PLAYER_WIDTH * 1.5f, PLAYER_HEIGHT * 1.5f,
-                        PLAYER_HIT_BOX_WIDTH * 1.5f, PLAYER_HIT_BOX_HEIGHT * 1.5f, 3,
-                        200, TILE_SIZE * 2, ENEMY_FIREPOWER * 2, 0,
-                        ENEMY_TIME_BETWEEN_SHOT * 0.7f, Direction.UP,
-                        ENEMY_BULLET_SAMPLE, BIG_TANK_TEXTURE_REGIONS);
-                enemyBigTank.life = 80;
-                enemyTankList.add(enemyBigTank);
+                TankAI enemyBigTank = new TankAI(BIG_TANK_TEXTURE_REGIONS,
+                        new Vector2(x, y));
+
+                enemyBigTank.setHitBox(new Rectangle(x - (PLAYER_HIT_BOX_WIDTH * 1.5f) / 2f,
+                        y -(PLAYER_HIT_BOX_WIDTH * 1.5f) / 2f, PLAYER_HIT_BOX_WIDTH * 1.5f,  PLAYER_HIT_BOX_HEIGHT * 1.5f));
+                enemyBigTank.setBulletMag(3);
+                enemyBigTank.setScore(200);
+                enemyBigTank.setSpeed(3);
+                enemyBigTank.setFirepower(ENEMY_FIREPOWER * 2);
+                enemyBigTank.setShield(0);
+                enemyBigTank.setTimeBetweenShots(ENEMY_TIME_BETWEEN_SHOT * 0.7f);
+                enemyBigTank.setDirection(Direction.UP);
+                enemyBigTank.setLife(80);
+                enemyBigTank.setTankTextureRegions(BIG_TANK_TEXTURE_REGIONS);
+                
                 my_hud.enemyCount += 1;
                 normalEnemyCounter = 0;
             }
 
-            Tank enemyTank = new Tank(
-                    x, y, PLAYER_WIDTH, PLAYER_HEIGHT,
-                    PLAYER_HIT_BOX_WIDTH, PLAYER_HIT_BOX_HEIGHT,
-                    2, 100,TILE_SIZE * 3, ENEMY_FIREPOWER, 0,
-                    ENEMY_TIME_BETWEEN_SHOT, direction, ENEMY_BULLET_SAMPLE ,Tank.DEFAULT_TANK_TEXTURE_REGIONS
-            );
+            TankAI enemyTank = new TankAI(DEFAULT_TANK_TEXTURE_REGIONS,
+                    new Vector2(x, y));
 
-            enemyTank.life = 30;
-            enemyTankList.add(enemyTank);
+            enemyTank.setHitBox(new Rectangle(x, y, PLAYER_HIT_BOX_WIDTH ,  PLAYER_HIT_BOX_HEIGHT ));
+            enemyTank.setBulletMag(2);
+            enemyTank.setScore(100);
+            enemyTank.setSpeed(3);
+            enemyTank.setFirepower(ENEMY_FIREPOWER);
+            enemyTank.setShield(0);
+            enemyTank.setTimeBetweenShots(ENEMY_TIME_BETWEEN_SHOT);
+            enemyTank.setDirection(direction);
+            enemyTank.setLife(30);
+            enemyTank.setTankTextureRegions(DEFAULT_TANK_TEXTURE_REGIONS);
+
             my_hud.enemyCount += 1;
             spawnTimers -= spawnerDownTime;
             normalEnemyCounter += 1;
         }
+
+
+
     }
 
     private void moveEnemy(Tank enemyTank, float deltaTime) {
-        if (enemyTank != null) {
-            boolean[] collisionDetected = detectCollisions(enemyTank, deltaTime);
-            int trigger = 0;
-            while(collisionDetected[trigger]) ++trigger;
-
-            if(collisionDetected[trigger]) return;
-
-            enemyTank.timeSinceLastDirChange += deltaTime;
-            if (enemyTank.timeSinceLastDirChange > enemyTank.dirChangeFreq){
-                int i = GENERATOR.nextInt(4);
-                //while(collisionDetected[i]) GENERATOR.nextInt(4);
-
-                enemyTank.direction = i;
-                enemyTank.timeSinceLastDirChange -= enemyTank.dirChangeFreq;
-            }
-
-            if (!collisionDetected[enemyTank.direction]) {
-                enemyTank.move(deltaTime);
-            }
-        }
+//        if (enemyTank != null) {
+//            boolean[] collisionDetected = detectCollisions(enemyTank, deltaTime);
+//            int trigger = 0;
+//            while(collisionDetected[trigger]) ++trigger;
+//
+//            if(collisionDetected[trigger]) return; //??
+//
+//            enemyTank.timeSinceLastDirChange += deltaTime;
+//            if (enemyTank.timeSinceLastDirChange > enemyTank.dirChangeFreq){
+//                int i = GENERATOR.nextInt(4);
+//                //while(collisionDetected[i]) GENERATOR.nextInt(4);
+//
+//                enemyTank.direction = i;
+//                enemyTank.timeSinceLastDirChange -= enemyTank.dirChangeFreq;
+//            }
+//
+//            if (!collisionDetected[enemyTank.direction]) {
+//                enemyTank.move(deltaTime);
+//            }
+//        }
     }
 
-    private void detectInput(float deltaTime) {
-        if (!deadState) {
-            boolean[] collisionDetected = detectCollisions(playerTank, deltaTime);
-
-            //keyboard input
-            if (controller.leftPressed) {
-                playerTank.direction = Direction.LEFT;
-                if (!collisionDetected[playerTank.direction])
-                    playerTank.move(deltaTime);
-            }
-
-            if (controller.rightPressed) {
-                playerTank.direction = Direction.RIGHT;
-                if (!collisionDetected[playerTank.direction])
-                    playerTank.move(deltaTime);
-            }
-
-            if (controller.upPressed) {
-                playerTank.direction = Direction.UP;
-                if (!collisionDetected[playerTank.direction])
-                    playerTank.move(deltaTime);
-            }
-
-            if (controller.downPressed) {
-                playerTank.direction = Direction.DOWN;
-                if (!collisionDetected[playerTank.direction])
-                    playerTank.move(deltaTime);
-            }
-        }
-
-        camera.position.set(playerTank.getX() + playerTank.getWidth() / 2f, playerTank.getY() + playerTank.getHeight() / 2f, 0);
-    }
-
-    private boolean[] detectCollisions(Tank tank, float dt) {
-        boolean[] collisionMap = new boolean[4];
-        for(RectangleMapObject objectRectangle : mapObjects.getByType(RectangleMapObject.class)) {
-            Rectangle objectBounds = objectRectangle.getRectangle();
-            for(int i = 0; i < 4; ++i)
-                if(tank.getNextMoveHitBox(i, dt).overlaps(objectBounds)) {
-                    collisionMap[i] = true;
-                    break;
-                }
-        }
-        return collisionMap;
-    }
-
-    // check if bullet hit anything
-    private void detectBulletCollisions() {
-        //check player's bullet collision
-        for (int i = 0; i < playerTank.getBullets().size(); i++) {
-            if (enemyTankList != null) {
-                for (int j = 0; j < enemyTankList.size(); j++) {
-                    if (enemyTankList.get(j).isColliding(playerTank.getBullets().get(i).getHitBox())) {
-                        playerTank.bulletCollision(i);
-                        if (enemyTankList.get(j).life > PLAYER_FIREPOWER) {
-                            enemyTankList.get(j).life -= PLAYER_FIREPOWER;
-                        } else {
-                            Explosion explosion = new Explosion(enemyTankList.get(j).getX(),
-                                    enemyTankList.get(j).getY(),
-                                    enemyTankList.get(j).getWidth(), enemyTankList.get(j).getHeight(),
-                                    explosionTextureRegion);
-                            explosion.draw(batch);
-                            my_hud.score += enemyTankList.get(j).getScore();
-                            enemyTankList.remove(j);
-                            my_hud.enemyCount -= 1;
-                        }
-                        --i; //safeguard
-                        break;
-                    }
-                }
-            }
-        }
-
-
-        //check enemy's bullet collision
-        for (int i = 0; i < enemyTankList.size(); i++) {
-            for(int j = 0; j < enemyTankList.get(i).getBullets().size(); ++j) {
-                if (playerTank.isColliding(enemyTankList.get(i).getBullets().get(j).getHitBox())) {
-                    enemyTankList.get(i).bulletCollision(j);
-                    --j;
-                    shieldState = playerTank.shield > 0;
-                    if (shieldState) {
-                        playerTank.shield -= ENEMY_FIREPOWER;
-                        my_hud.shield -= ENEMY_FIREPOWER;
-                        if (my_hud.shield < 0)
-                            my_hud.shield = 0;
-                    }
-                    else {
-                        if (playerTank.life > ENEMY_FIREPOWER) {
-                            playerTank.life -= ENEMY_FIREPOWER;
-                            my_hud.life -= ENEMY_FIREPOWER;
-                        } else {
-                            Explosion explosion = new Explosion(playerTank.getX(), playerTank.getY(),
-                                    playerTank.getWidth(), playerTank.getHeight(), explosionTextureRegion);
-                            explosion.draw(batch);
-                            TextureRegion[] deadStateTextureRegionArr = {deadStateTextureRegion, deadStateTextureRegion, deadStateTextureRegion, deadStateTextureRegion};
-                            playerTank.tankTextureRegions = deadStateTextureRegionArr;
-                            deadState = true;
-                            playerTank.setX(TILE_SIZE * -50);
-                            playerTank.setY(TILE_SIZE * -50);
-                            my_hud.life -= ENEMY_FIREPOWER;
-                            if (my_hud.life < 0)
-                                my_hud.life = 0;
-                            System.out.println("Game over");
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
-        camera.position.set(playerTank.getX(), playerTank.getY(), 0);
+        camera.position.set(playerTank.getPosition().x, playerTank.getPosition().y, 0);
         batch.setProjectionMatrix(camera.combined);
-        controller.resize(width, height);
+        VirtualController.getInstance().resize(width, height);
     }
 
     @Override
@@ -481,5 +269,83 @@ public class PvEScreen implements Screen {
         map.dispose();
         font.dispose();
         batch.dispose();
+    }
+
+    //loop game here
+
+
+    public MapObjects getMapObjects() {
+        return mapObjects;
+    }
+
+
+    private List<GameObject> getTankAIList(){
+        List<GameObject> gameObjects = new ArrayList<>();
+        for( GameObject gameObject : getGameObjectList()){
+            if(gameObject instanceof TankAI){
+                gameObjects.add(gameObject);
+            }
+        }
+        return gameObjects;
+    }
+
+    private boolean isCollideMap(Rectangle rec){
+        for(RectangleMapObject objectRectangle : PvEScreen.getInstance().mapObjects.getByType(RectangleMapObject.class)) {
+            Rectangle objectBounds = objectRectangle.getRectangle();
+            if(rec.overlaps(objectBounds)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void SpawnItem(){
+        Star star = new Star(Star.STAR_TEXTURE_REGION);
+        star.setScale(new Vector2(0.1f, 0.1f));
+        star.setHitBox(new Rectangle(0, 0, 64, 64));
+        star.setCollidable(true);
+        while (isCollideMap(star.getHitBox())){
+            star.setPosition(new Vector2(GENERATOR.nextInt(Graphic.NUMBER_OF_WIDTH_TILE*64),
+                    GENERATOR.nextInt(Graphic.NUMBER_OF_HEIGHT_TILE*64)));
+        }
+    }
+
+    @Override
+    public void render(float delta) {
+        //set super
+        super.render(delta);
+
+        Gdx.gl.glClearColor(0 ,0, 0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        camera.update();
+
+        renderer.setView(camera);
+
+        batch.setProjectionMatrix(camera.combined);
+
+        batch.begin();
+        renderer.render();
+//        out.println(playerTank.getX() + " " + playerTank.getY());
+
+
+        int x = GENERATOR.nextInt(10);
+        int y = GENERATOR.nextInt(10);
+        // change direction later maybe
+        int direction = GENERATOR.nextInt(4);
+        int pos = GENERATOR.nextInt(5);
+        if(getTankAIList().size() < ENEMY_QUANTITY){
+            spawnEnemies(spawnPos.get(pos).x, spawnPos.get(pos).y, direction, delta);
+        }
+
+        for(GameObject ob : getGameObjectList()){
+            ob.update();
+            ob.draw(batch);
+        }
+
+        batch.end();
+
+        VirtualController.getInstance().draw();
+        my_hud.draw();
+
     }
 }

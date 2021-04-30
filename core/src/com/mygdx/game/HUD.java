@@ -3,8 +3,11 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.PolygonBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
@@ -23,9 +26,12 @@ public class HUD {
     Vector2 position;
     boolean debugMode = true;
     boolean isPvp = false;
+    SpriteBatch batch = new SpriteBatch();
+
 
     public HUD(int score, float life, int firepower, int shield, float movementSpeed, int enemyCount,
-               Vector2 initPosition, boolean debugMode, SpriteBatch batch) {
+               Vector2 initPosition, boolean debugMode) {
+
         cam = new OrthographicCamera();
         viewport = new FitViewport(800, 480, cam);
         //stage = new Stage(viewport, GameScreen.batch);
@@ -45,8 +51,8 @@ public class HUD {
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
-    public void draw(SpriteBatch batch){
-        //stage.draw();
+    public void draw(){
+//        stage.draw();
         batch.begin();
 
         font.draw(batch, "Enemy", 100, 475, 20, Align.left, false);
@@ -55,7 +61,7 @@ public class HUD {
 
         if(debugMode) {
             font.draw(batch, "Position", 100, 350, 20, Align.left, false);
-            font.draw(batch, this.position.toString(), 100, 300,
+            font.draw(batch, PvEScreen.getInstance().getPlayerTank().getPosition().toString(), 100, 300,
                     20, Align.left, false);
         }
 
@@ -86,6 +92,7 @@ public class HUD {
 
         if (isPvp && enemyCount <= 0)
             font.draw(batch, "YOU WIN", 400, 200, 20, Align.center, false);
+
         batch.end();
     }
 
