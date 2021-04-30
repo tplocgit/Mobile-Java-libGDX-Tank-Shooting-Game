@@ -46,7 +46,7 @@ public class GameObject {
 
 
     private Vector2 position = new Vector2();
-    private Vector2 scale = new Vector2();
+    private Vector2 scale = new Vector2(1,1);
     private Vector2 origin = new Vector2();
     private Vector2 velocity = new Vector2();
     private float speed = 0;
@@ -78,6 +78,7 @@ public class GameObject {
         if(sprite != null){
             sprite.setBounds(position.x - sprite.getWidth() / 2f, position.y - sprite.getHeight() / 2f,
                     sprite.getWidth(), sprite.getHeight());
+            sprite.setScale(scale.x, scale.y);
             sprite.draw(batch);
         }
     }

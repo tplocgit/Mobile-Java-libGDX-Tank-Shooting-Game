@@ -31,27 +31,24 @@ public class PlayerTank extends Tank {
             //keyboard input
             if (VirtualController.getInstance().isLeftPressed()) {
                 this.setDirection(Direction.LEFT);
-                this.getVelocity().x = -1;
             }
 
             if (VirtualController.getInstance().isRightPressed()) {
                 this.setDirection(Direction.RIGHT);
-                this.getVelocity().x = 1;
             }
 
             if (VirtualController.getInstance().isUpPressed()) {
                 this.setDirection(Direction.UP);
-                this.getVelocity().y = 1;
             }
 
             if (VirtualController.getInstance().isDownPressed()) {
                 this.setDirection(Direction.DOWN);
-                this.getVelocity().y = -1;
             }
         }
 
         PvEScreen.getInstance().getCamera().position.set(this.getPosition().x , this.getPosition().y , 0);
     }
+
 
 
 }

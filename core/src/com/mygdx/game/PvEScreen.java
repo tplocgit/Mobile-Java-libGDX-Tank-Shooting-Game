@@ -19,6 +19,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.items.Item;
 
+import com.mygdx.game.items.Star;
 import com.mygdx.game.objects.PlayerTank;
 import com.mygdx.game.objects.Tank;
 import com.mygdx.game.objects.TankAI;
@@ -33,7 +34,7 @@ public class PvEScreen extends GameScreen {
     public static PvEScreen instance = null;
 
     public static final Random GENERATOR = new Random();
-    
+
     //graphic
     private SpriteBatch batch;
 
@@ -120,6 +121,7 @@ public class PvEScreen extends GameScreen {
         playerTank.setBulletMag(PLAYER_INITIAL_BULLET_MAG);
         playerTank.setScore(1000);
         playerTank.setSpeed(PLAYER_INITIAL_MOVEMENT_SPEED);
+        playerTank.setBaseSpeed(PLAYER_INITIAL_MOVEMENT_SPEED);
         playerTank.setFirepower(PLAYER_FIREPOWER);
         playerTank.setShield(PLAYER_INITIAL_SHIELD);
         playerTank.setTimeBetweenShots(PLAYER_TIME_BETWEEN_SHOT);
@@ -143,6 +145,15 @@ public class PvEScreen extends GameScreen {
         spawnPos.add(new Vector2(1400, 2048));
         spawnPos.add(new Vector2(624, 2122));
         spawnPos.add(new Vector2(225, 1520));
+
+        SpawnItem();
+        SpawnItem();
+        SpawnItem();
+        SpawnItem();
+        SpawnItem();
+        SpawnItem();
+        SpawnItem();
+        SpawnItem();
 
     }
 
@@ -168,7 +179,7 @@ public class PvEScreen extends GameScreen {
                         y -(PLAYER_HIT_BOX_WIDTH * 1.5f) / 2f, PLAYER_HIT_BOX_WIDTH * 1.5f,  PLAYER_HIT_BOX_HEIGHT * 1.5f));
                 enemyBigTank.setBulletMag(3);
                 enemyBigTank.setScore(200);
-                enemyBigTank.setSpeed(TILE_SIZE * 2);
+                enemyBigTank.setSpeed(3);
                 enemyBigTank.setFirepower(ENEMY_FIREPOWER * 2);
                 enemyBigTank.setShield(0);
                 enemyBigTank.setTimeBetweenShots(ENEMY_TIME_BETWEEN_SHOT * 0.7f);
@@ -186,7 +197,7 @@ public class PvEScreen extends GameScreen {
             enemyTank.setHitBox(new Rectangle(x, y, PLAYER_HIT_BOX_WIDTH ,  PLAYER_HIT_BOX_HEIGHT ));
             enemyTank.setBulletMag(2);
             enemyTank.setScore(100);
-            enemyTank.setSpeed(TILE_SIZE * 3);
+            enemyTank.setSpeed(3);
             enemyTank.setFirepower(ENEMY_FIREPOWER);
             enemyTank.setShield(0);
             enemyTank.setTimeBetweenShots(ENEMY_TIME_BETWEEN_SHOT);
@@ -198,6 +209,9 @@ public class PvEScreen extends GameScreen {
             spawnTimers -= spawnerDownTime;
             normalEnemyCounter += 1;
         }
+
+
+
     }
 
     private void moveEnemy(Tank enemyTank, float deltaTime) {
@@ -272,6 +286,27 @@ public class PvEScreen extends GameScreen {
             }
         }
         return gameObjects;
+    }
+
+    private boolean isCollideMap(Rectangle rec){
+        for(RectangleMapObject objectRectangle : PvEScreen.getInstance().mapObjects.getByType(RectangleMapObject.class)) {
+            Rectangle objectBounds = objectRectangle.getRectangle();
+            if(rec.overlaps(objectBounds)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void SpawnItem(){
+        Star star = new Star(Star.STAR_TEXTURE_REGION);
+        star.setScale(new Vector2(0.1f, 0.1f));
+        star.setHitBox(new Rectangle(0, 0, 64, 64));
+        star.setCollidable(true);
+        while (isCollideMap(star.getHitBox())){
+            star.setPosition(new Vector2(GENERATOR.nextInt(Graphic.NUMBER_OF_WIDTH_TILE*64),
+                    GENERATOR.nextInt(Graphic.NUMBER_OF_HEIGHT_TILE*64)));
+        }
     }
 
     @Override

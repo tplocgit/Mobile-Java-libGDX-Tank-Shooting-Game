@@ -5,8 +5,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameObject;
 import com.mygdx.game.Graphic;
+import com.mygdx.game.PvEScreen;
 
 public class Bullet extends GameObject {
+
+    private float lifeTime = 3;
+    private float timeSinceSpawn;
+
     public static final TextureRegion[] DEFAULT_TEXTURE_REGIONS = {
             /*GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_left"),
             GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_right"),
@@ -30,6 +35,7 @@ public class Bullet extends GameObject {
         setCollidable(true);
         setBlockable(false);
         this.ownerTank = ownerTank;
+        timeSinceSpawn = PvEScreen.time_line;
     }
 
     @Override
@@ -52,5 +58,13 @@ public class Bullet extends GameObject {
 
     public void setOwnerTank(Tank ownerTank) {
         this.ownerTank = ownerTank;
+    }
+
+    @Override
+    public void update(){
+        super.update();
+        if(PvEScreen.time_line - timeSinceSpawn >= lifeTime){
+            GameObject.Destroy(this);
+        }
     }
 }

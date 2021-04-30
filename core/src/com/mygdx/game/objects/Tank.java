@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Direction;
 import com.mygdx.game.GameObject;
 import com.mygdx.game.GameScreen;
+import com.mygdx.game.PvEScreen;
 
 import java.util.ArrayList;
 
@@ -22,8 +23,10 @@ public class Tank extends GameObject {
     private int direction;
     private int score = 100;
     private TextureRegion[] tankTextureRegions;
+    private float baseSpeed = 0;
 
-
+    private float boostedSpeed = 0;
+    private float lastBoostedSpeedTime = 0;
 
     public Tank(TextureRegion[] textureRegions, Vector2 position){
         super();
@@ -32,6 +35,7 @@ public class Tank extends GameObject {
         setPosition(position);
         setCollidable(true);
         setBlockable(true);
+
     }
 
     public int getBulletMag() {
@@ -104,6 +108,20 @@ public class Tank extends GameObject {
 
     public void setDirection(int direction) {
         this.direction = direction;
+        switch (direction){
+            case Direction.UP :
+                this.setVelocity(new Vector2(0, 1));
+                break;
+            case Direction.DOWN :
+                this.setVelocity(new Vector2(0, -1));
+                break;
+            case Direction.LEFT :
+                this.setVelocity(new Vector2(-1, 0));
+                break;
+            case Direction.RIGHT :
+                this.setVelocity(new Vector2(1, 0));
+                break;
+        }
         setImage(tankTextureRegions[direction]);
     }
 
@@ -113,6 +131,14 @@ public class Tank extends GameObject {
 
     public void setCanFire(boolean canFire) {
         this.canFire = canFire;
+    }
+
+    public float getBaseSpeed() {
+        return baseSpeed;
+    }
+
+    public void setBaseSpeed(float baseSpeed) {
+        this.baseSpeed = baseSpeed;
     }
 
     //-----------------------------------
@@ -127,11 +153,13 @@ public class Tank extends GameObject {
 
     @Override
     public void update(){
+        super.update();
         if(GameScreen.time_line - timeSinceLastShot >= timeBetweenShots){
             canFire = true;
         }
-
-        super.update();
+        if(boostedSpeed != 0 && GameScreen.time_line - lastBoostedSpeedTime >= 4){
+            setSpeed(baseSpeed);
+        }
     }
 
     public void fireBullet() {
@@ -153,6 +181,10 @@ public class Tank extends GameObject {
         }
     }
 
-
+    public void setBoostedSpeed(float boostedSpeed){
+        this.boostedSpeed = boostedSpeed;
+        setSpeed(baseSpeed + boostedSpeed);
+        lastBoostedSpeedTime = PvEScreen.time_line;
+    }
 
 }
