@@ -20,7 +20,7 @@ public class TankShootingGame extends Game {
 	@Override
 	public void create() {
 //		setScreen(new MainMenuScreen(this));
-		this.changeScreen(CREATE_ROOM_SCREEN);
+		this.changeScreen(MENU_SCREEN);
 	}
 
 	public void changeScreen(int screen) {
