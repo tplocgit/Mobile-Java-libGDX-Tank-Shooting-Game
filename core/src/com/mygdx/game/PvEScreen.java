@@ -134,11 +134,7 @@ public class PvEScreen extends GameScreen {
         layer = map.getLayers().get(OBJECTS_LAYER_INDEX);
         mapObjects = layer.getObjects();
 
-
-        my_hud = new HUD(score, playerTank.getLife(), playerTank.getFirepower(),
-                playerTank.getShield(), playerTank.getSpeed() / 64,
-                enemyCount, new Vector2(playerTank.getPosition().x, playerTank.getPosition().y), true);
-
+        my_hud = new HUD();
 
         //position to spawn enemies
         spawnPos = new ArrayList<>();
@@ -327,9 +323,6 @@ public class PvEScreen extends GameScreen {
         renderer.render();
 //        out.println(playerTank.getX() + " " + playerTank.getY());
 
-
-        int x = GENERATOR.nextInt(10);
-        int y = GENERATOR.nextInt(10);
         // change direction later maybe
         int direction = GENERATOR.nextInt(4);
         int pos = GENERATOR.nextInt(5);
@@ -345,6 +338,7 @@ public class PvEScreen extends GameScreen {
         batch.end();
 
         VirtualController.getInstance().draw();
+        my_hud.update();
         my_hud.draw();
 
     }

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.objects.PlayerTank;
 
 import java.util.Locale;
 
@@ -29,21 +30,16 @@ public class HUD {
     SpriteBatch batch = new SpriteBatch();
 
 
-    public HUD(int score, float life, int firepower, int shield, float movementSpeed, int enemyCount,
-               Vector2 initPosition, boolean debugMode) {
-
-        cam = new OrthographicCamera();
+    public HUD() {
+        batch = PvEScreen.getInstance().getBatch();
+        cam = PvEScreen.getInstance().getCamera();
         viewport = new FitViewport(800, 480, cam);
         //stage = new Stage(viewport, GameScreen.batch);
         stage = new Stage(viewport, batch);
-        this.debugMode = debugMode;
-        this.score = score;
-        this.life = life;
-        this.movementSpeed = movementSpeed;
-        this.firepower = firepower;
-        this.shield = shield;
-        this.enemyCount = enemyCount;
-        this.position = initPosition;
+        this.debugMode = true;
+        this.score = 0;
+        this.update();
+        this.enemyCount = 0;
 
         font = new BitmapFont();
         font.setColor(Color.WHITE);
@@ -55,13 +51,15 @@ public class HUD {
 //        stage.draw();
         batch.begin();
 
+        PlayerTank pTank = PvEScreen.getInstance().getPlayerTank();
+
         font.draw(batch, "Enemy", 100, 475, 20, Align.left, false);
         font.draw(batch, String.format(Locale.getDefault(), "%02d", enemyCount), 100, 435,
                 20, Align.left, false);
 
         if(debugMode) {
             font.draw(batch, "Position", 100, 350, 20, Align.left, false);
-            font.draw(batch, PvEScreen.getInstance().getPlayerTank().getPosition().toString(), 100, 300,
+            font.draw(batch, this.position.toString(), 100, 300,
                     20, Align.left, false);
         }
 
@@ -100,12 +98,11 @@ public class HUD {
         viewport.update(width, height);
     }
 
-    void update(Tank tank) {
-        this.movementSpeed = tank.movementSpeed;
-        this.life = tank.life;
-        this.position.x = tank.getX();
-        this.position.y = tank.getY();
-        this.firepower = tank.firepower;
-        this.shield = tank.shield;
+    void update() {
+        this.movementSpeed = PvEScreen.getInstance().getPlayerTank().getSpeed();
+        this.life = PvEScreen.getInstance().getPlayerTank().getLife();
+        this.position = PvEScreen.getInstance().getPlayerTank().getPosition();
+        this.firepower = PvEScreen.getInstance().getPlayerTank().getFirepower();
+        this.shield = PvEScreen.getInstance().getPlayerTank().getShield();
     }
 }
