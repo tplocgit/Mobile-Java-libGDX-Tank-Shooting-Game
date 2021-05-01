@@ -2,6 +2,7 @@ package com.mygdx.game.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameObject;
 import com.mygdx.game.Graphic;
@@ -13,10 +14,6 @@ public class Bullet extends GameObject {
     private float timeSinceSpawn;
 
     public static final TextureRegion[] DEFAULT_TEXTURE_REGIONS = {
-            /*GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_left"),
-            GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_right"),
-            GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_up"),
-            GameScreen.TEXTURE_ATLAS.findRegion("bulletRed2_down"),*/
             Graphic.TEXTURE_ATLAS.findRegion("bulletRed2_left"),
             Graphic.TEXTURE_ATLAS.findRegion("bulletRed2_right"),
             Graphic.TEXTURE_ATLAS.findRegion("bulletRed2_up"),
@@ -38,13 +35,26 @@ public class Bullet extends GameObject {
         timeSinceSpawn = PvEScreen.time_line;
     }
 
+    //bullet meet map (wall)
+    @Override
+    protected void onMapCollided(Rectangle mapRec) {
+        GameObject.Destroy(this);
+    }
+
+    //bullet meet tank
     @Override
     protected void onCollided(GameObject gameObject){
         if(gameObject instanceof Tank ){
             Tank targetTank = (Tank)gameObject;
             if (!targetTank.equals(ownerTank)){
                 GameObject.Destroy(this);
-                targetTank.setLife(targetTank.getLife() - ownerTank.getFirepower());
+                if (targetTank.getShield() >= ownerTank.getFirepower()){
+                    targetTank.setShield(targetTank.getShield() - ownerTank.getFirepower());
+                }
+                else {
+                    targetTank.setLife(targetTank.getLife() + targetTank.getShield() - ownerTank.getFirepower());
+                }
+
                 if(targetTank.getLife() <= 0){
                     GameObject.Destroy(targetTank);
                 }
@@ -67,4 +77,6 @@ public class Bullet extends GameObject {
             GameObject.Destroy(this);
         }
     }
+
+
 }

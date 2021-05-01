@@ -53,8 +53,6 @@ public class PvEScreen extends GameScreen {
 
 
 
-
-
     public static final int ENEMY_QUANTITY = 10;
     public static final int ENEMY_FIREPOWER = 10;
     public static final int   ENEMY_BULLET_SPEED = 8;
@@ -211,29 +209,6 @@ public class PvEScreen extends GameScreen {
 
     }
 
-    private void moveEnemy(Tank enemyTank, float deltaTime) {
-//        if (enemyTank != null) {
-//            boolean[] collisionDetected = detectCollisions(enemyTank, deltaTime);
-//            int trigger = 0;
-//            while(collisionDetected[trigger]) ++trigger;
-//
-//            if(collisionDetected[trigger]) return; //??
-//
-//            enemyTank.timeSinceLastDirChange += deltaTime;
-//            if (enemyTank.timeSinceLastDirChange > enemyTank.dirChangeFreq){
-//                int i = GENERATOR.nextInt(4);
-//                //while(collisionDetected[i]) GENERATOR.nextInt(4);
-//
-//                enemyTank.direction = i;
-//                enemyTank.timeSinceLastDirChange -= enemyTank.dirChangeFreq;
-//            }
-//
-//            if (!collisionDetected[enemyTank.direction]) {
-//                enemyTank.move(deltaTime);
-//            }
-//        }
-    }
-
 
     @Override
     public void resize(int width, int height) {
@@ -297,7 +272,7 @@ public class PvEScreen extends GameScreen {
 
     private void SpawnItem(){
         Star star = new Star(Star.STAR_TEXTURE_REGION);
-        star.setScale(new Vector2(0.1f, 0.1f));
+        star.setSize(64, 64);
         star.setHitBox(new Rectangle(0, 0, 64, 64));
         star.setCollidable(true);
         while (isCollideMap(star.getHitBox())){
