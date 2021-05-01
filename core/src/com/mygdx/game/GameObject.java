@@ -14,36 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameObject {
-//    protected Rectangle hitBox;
-
-
-
-//    public GameObject(float xPos, float yPos, float width, float height) {
-//        super(xPos, yPos, width, height);
-//        this.hitBox = new Rectangle(this);
-//    }
-//
-//    public GameObject(Rectangle hitBox) {
-//        super(hitBox);
-//        this.hitBox = new Rectangle(this);
-//
-//    }
-
-//    public static Rectangle calculateHitBox(Tank texture, float hbWidth, float hbHeight) {
-//        float hbX, hbY;
-//        hbX = texture.getX() + (texture.getWidth() - hbWidth) / 2f;
-//        hbY = texture.getY() + (texture.getHeight() - hbHeight) / 2f;
-//        return new Rectangle(hbX, hbY, hbWidth, hbHeight);
-//    }
-
-
-
-//    public void rotateHitBox90Deg() {
-//        float prevWidth = this.hitBox.getWidth(), prevHeight = this.hitBox.getHeight();
-//        this.hitBox.setWidth(prevHeight);
-//        this.hitBox.setHeight(prevWidth);
-//    }
-
 
     private Vector2 position = new Vector2();
     private Vector2 scale = new Vector2(1,1);
@@ -53,12 +23,14 @@ public class GameObject {
     private boolean collidable = false;
     private boolean blockable = false;
     private boolean isBlocked = false;
+    private boolean movable = false;
 
     private Rectangle hitBox = new Rectangle();
 
     private float rotation = 0;
 
     private Sprite sprite = null;
+
 
     //contructor
 
@@ -84,11 +56,11 @@ public class GameObject {
     }
 
     public void update(){
-        if(movable()){
+        UpdateCollideGameObject();
+        if(movable){
             position.x += speed * velocity.x;
             position.y += speed * velocity.y;
         }
-        CheckCollideGameObject();
     }
 
     public void setImage(TextureRegion textureRegion) {
@@ -97,6 +69,12 @@ public class GameObject {
         hitBox.setHeight(textureRegion.getRegionHeight());
         origin.x = hitBox.width / 2f;
         origin.y = hitBox.height / 2f;
+    }
+
+    public void setSize(float width, float height){
+        if (sprite != null) {
+            sprite.setSize(width, height);
+        }
     }
 
     public Vector2 getPosition() {
@@ -173,22 +151,6 @@ public class GameObject {
         this.blockable = blockable;
     }
 
-    //    public Rectangle getNextLeftHitBox(float dt) {
-//        return new Rectangle(this.getHitBox().x - this.getSpeed() * dt, this.getHitBox().y, this.getHitBox().width, this.getHitBox().height);
-//    }
-//
-//    public Rectangle getNextRightHitBox(float dt) {
-//        return new Rectangle(this.getHitBox().x + this.getSpeed() * dt, this.getHitBox().y, this.getHitBox().width, this.getHitBox().height);
-//    }
-//
-//    public Rectangle getNextUpHitBox(float dt) {
-//        return new Rectangle(this.getHitBox().x, this.getHitBox().y + this.getSpeed() * dt, this.getHitBox().width, this.getHitBox().height);
-//    }
-//
-//    public Rectangle getNextDownHitBox(float dt) {
-//        return new Rectangle(this.getHitBox().x, this.getHitBox().y - this.getSpeed() * dt, this.getHitBox().width, this.getHitBox().height);
-//    }
-
     public Rectangle getNextMoveHitBox() {
 
         this.hitBox.x = position.x - hitBox.width/2f ;
@@ -198,37 +160,39 @@ public class GameObject {
                 this.hitBox.width, this.hitBox.height);
     }
 
-    private boolean movable(){
-        if(this.blockable){
-            //colli wall
-            for(RectangleMapObject objectRectangle : PvEScreen.getInstance().mapObjects.getByType(RectangleMapObject.class)) {
-                Rectangle objectBounds = objectRectangle.getRectangle();
-                if(getNextMoveHitBox().overlaps(objectBounds)) {
-                    return false;
-                }
-            }
-            //check tank colli
-            for (GameObject gameObject : PvEScreen.getInstance().getGameObjectList()){
-                if(gameObject.isBlockable() && getNextMoveHitBox().overlaps(gameObject.getHitBox()) && !gameObject.equals(this)){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
     protected void onCollided(GameObject gameObject){
 
     }
 
-    private void CheckCollideGameObject(){
+    protected void onMapCollided(Rectangle mapRec) {
+
+    }
+
+    private void UpdateCollideGameObject(){
 //        check tank colli
+        movable = true;
         if(collidable){
+
+            for(RectangleMapObject objectRectangle : PvEScreen.getInstance().mapObjects.getByType(RectangleMapObject.class)) {
+                Rectangle objectBounds = objectRectangle.getRectangle();
+                if(getNextMoveHitBox().overlaps(objectBounds)) {
+                    if (blockable){
+                        movable = false;
+                    }
+                    onMapCollided(objectBounds);
+                }
+            }
+
             for (GameObject gameObject : PvEScreen.getInstance().getGameObjectList()){
                 if(gameObject.isCollidable() && getNextMoveHitBox().overlaps(gameObject.getHitBox()) && !gameObject.equals(this)){
+                    if (blockable && gameObject.isBlockable()) {
+                        movable = false;
+                    }
                     onCollided(gameObject);
                 }
             }
+
         }
 
     }

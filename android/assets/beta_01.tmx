@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="40" height="40"
-tilewidth="64" tileheight="64" infinite="0" nextlayerid="7" nextobjectid="147">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="64" tileheight="64" infinite="0" nextlayerid="7" nextobjectid="147">
  <tileset firstgid="1" source="terrainTiles_default.tsx"/>
  <tileset firstgid="41" source="object.tsx"/>
  <tileset firstgid="228" source="watergrass.tsx"/>
@@ -99,7 +98,7 @@ tilewidth="64" tileheight="64" infinite="0" nextlayerid="7" nextobjectid="147">
   <object id="8" type="Wall" x="577" y="769" width="63.5" height="61.5"/>
   <object id="14" type="Wall" x="768.5" y="703.5" width="63.5" height="64.5"/>
   <object id="18" type="Wall" x="833" y="958.5" width="127" height="65.5"/>
-  <object id="19" type="Wall" x="833" y="1023" width="126.5" height="128"/>
+  <object id="19" type="Water" x="833" y="1023" width="126.5" height="128"/>
   <object id="20" type="Wall" x="960" y="959.5" width="64.5" height="129.5"/>
   <object id="21" type="Wall" x="768" y="959" width="64.5" height="129.5"/>
   <object id="22" type="Wall" x="896.5" y="702" width="192" height="65.5"/>
@@ -129,23 +128,23 @@ tilewidth="64" tileheight="64" infinite="0" nextlayerid="7" nextobjectid="147">
   <object id="58" type="Wall" x="2048" y="1472" width="64" height="192"/>
   <object id="59" type="Wall" x="2048" y="1728" width="64" height="192"/>
   <object id="60" type="Wall" x="1984" y="1792" width="64" height="128"/>
-  <object id="61" type="Wall" x="1856" y="1536" width="64" height="192"/>
+  <object id="61" type="Water" x="1856" y="1536" width="64" height="192"/>
   <object id="62" type="Wall" x="1792" y="1344" width="128" height="64"/>
-  <object id="63" type="Wall" x="1792" y="1024" width="64" height="128"/>
-  <object id="64" type="Wall" x="1856" y="1088" width="128" height="64"/>
-  <object id="65" type="Wall" x="1920" y="1152" width="64" height="64"/>
+  <object id="63" type="Water" x="1792" y="1024" width="64" height="128"/>
+  <object id="64" type="Water" x="1856" y="1088" width="128" height="64"/>
+  <object id="65" type="Water" x="1920" y="1152" width="64" height="64"/>
   <object id="66" type="Wall" x="1856" y="960" width="64" height="128"/>
   <object id="67" type="Wall" x="1600" y="960" width="64" height="128"/>
   <object id="68" type="Wall" x="1664" y="960" width="64" height="64"/>
   <object id="69" type="Wall" x="1664" y="1024" height="64"/>
-  <object id="70" type="Wall" x="1664" y="1024" width="64" height="128"/>
-  <object id="71" type="Wall" x="1536" y="1088" width="128" height="64"/>
-  <object id="72" type="Wall" x="1536" y="1152" width="64" height="64"/>
+  <object id="70" type="Water" x="1664" y="1024" width="64" height="128"/>
+  <object id="71" type="Water" x="1536" y="1088" width="128" height="64"/>
+  <object id="72" type="Water" x="1536" y="1152" width="64" height="64"/>
   <object id="73" type="Wall" x="1408" y="1024" width="128" height="64"/>
   <object id="74" type="Wall" x="1472" y="1088" width="64" height="64"/>
-  <object id="75" type="Wall" x="1408" y="1088" width="64" height="64"/>
-  <object id="76" type="Wall" x="1216" y="1024" width="128" height="64"/>
-  <object id="77" type="Wall" x="1216" y="896" width="64" height="128"/>
+  <object id="75" type="Water" x="1408" y="1088" width="64" height="64"/>
+  <object id="76" type="Water" x="1216" y="1024" width="128" height="64"/>
+  <object id="77" type="Water" x="1216" y="896" width="64" height="128"/>
   <object id="78" type="Wall" x="1792" y="1856" width="128" height="64"/>
   <object id="79" type="Wall" x="1792" y="1984" width="64" height="64"/>
   <object id="80" type="Wall" x="1664" y="1856" width="64" height="192"/>
@@ -183,9 +182,9 @@ tilewidth="64" tileheight="64" infinite="0" nextlayerid="7" nextobjectid="147">
   <object id="117" type="Wall" x="576" y="1792" width="64" height="64"/>
   <object id="118" type="Wall" x="640" y="1472" width="64" height="128"/>
   <object id="119" type="Wall" x="704" y="1536" width="64" height="64"/>
-  <object id="120" type="Wall" x="704" y="1472" width="128" height="64"/>
-  <object id="121" type="Wall" x="768" y="1536" width="64" height="128"/>
-  <object id="122" type="Wall" x="704" y="1600" width="64" height="64"/>
+  <object id="120" type="Water" x="704" y="1472" width="128" height="64"/>
+  <object id="121" type="Water" x="768" y="1536" width="64" height="128"/>
+  <object id="122" type="Water" x="704" y="1600" width="64" height="64"/>
   <object id="123" type="Wall" x="640" y="1344" width="128" height="64"/>
   <object id="124" type="Wall" x="832" y="1536" width="192" height="64"/>
   <object id="125" type="Wall" x="960" y="1600" width="64" height="64"/>

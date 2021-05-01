@@ -23,12 +23,14 @@ public class PlayerTank extends Tank {
 
     private void detectInput() {
         if (!deadState) {
+
+            //if nothing press then velocity is 0 --> cant move
             this.setVelocity(new Vector2(0,0));
 
             if (this.isCanFire() && VirtualController.getInstance().isCrossHairPressed() && !deadState) {
                 this.fireBullet();
             }
-            //keyboard input
+            //keyboard input -- if move button press then  velocity != 0 --> move
             if (VirtualController.getInstance().isLeftPressed()) {
                 this.setDirection(Direction.LEFT);
             }
