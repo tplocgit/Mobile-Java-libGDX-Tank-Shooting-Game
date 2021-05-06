@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option java_outer_classname = "GameService";
+package gameservice;
+
+enum Command{
+  UNKNOWN = 0;
+
+  FIND_SERVER = 1;
+
+  FIRE_BULLET = 10;
+}
+
+message MainMessage {
+  Command command = 1;
+  Data data = 2;
+}
+
+message Data {
+  ServerInfo serverInfo = 1;
+  TankData tankData = 2;
+  GameObjectList objectList = 3;
+}
+
+message ServerInfo{
+  string serverName = 1;
+}
+
+message Vector2{
+  float x = 1;
+  float y = 2;
+}
+
+message GameObject{
+  Vector2 position = 1;
+  Vector2 scale = 2;
+  Vector2 origin = 3;
+  Vector2 velocity = 4;
+  float speed = 5;
+}
+
+message TankData{
+  uint64 tankID = 5;
+  GameObject gameObject = 1;
+  float life = 2;
+  float shield = 3;
+  string name = 4;
+}
+
+message GameObjectList{
+  repeated GameObject gameObjectList = 1;
+}
+
