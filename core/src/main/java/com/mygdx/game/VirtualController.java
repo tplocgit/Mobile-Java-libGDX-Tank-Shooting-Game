@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.network.AssetManager;
 
 /**
  * Created by brentaureli on 10/23/15.
@@ -24,25 +25,21 @@ public class VirtualController {
     OrthographicCamera cam;
     public static final int CONTROLLER_BUTTON_DEFAULT_SIZE = 70;
     public static final int CONTROLLER_BUTTON_MEDIUM_SIZE = 120;
-    public static final Image UP_IMAGE = new Image(new Texture("Controller/up-arrow.png"));
-    public static final Image DOWN_IMAGE = new Image(new Texture("Controller/down-arrow.png"));
-    public static final Image LEFT__IMAGE = new Image(new Texture("Controller/left-arrow.png"));
-    public static final Image RIGHT_IMAGE = new Image(new Texture("Controller/right-arrow.png"));
-    public static final Image CROSSHAIR__IMAGE = new Image(new Texture("Controller/focus.png"));
+
     private static VirtualController instance = null;
 
     public static VirtualController getInstance(){
         if(instance == null){
-            instance = new VirtualController(PvEScreen.getInstance().getBatch());
+            instance = new VirtualController();
         }
         return instance;
     }
 
-    public VirtualController(SpriteBatch batch) {
+    public VirtualController() {
         cam = new OrthographicCamera();
         viewport = new FitViewport(800, 480, cam);
         //stage = new Stage(viewport, GameScreen.batch);
-        stage = new Stage(viewport, batch);
+        stage = new Stage(viewport, GameScreen.getInstance().batch);
         stage.addListener(new InputListener(){
 
             @Override
@@ -103,7 +100,7 @@ public class VirtualController {
         Table table = new Table();
         table.left().bottom();
 
-        Image upImg = UP_IMAGE;
+        Image upImg = AssetManager.getInstance().UP_IMAGE;
         upImg.setSize(CONTROLLER_BUTTON_DEFAULT_SIZE, CONTROLLER_BUTTON_DEFAULT_SIZE);
         upImg.addListener(new InputListener() {
 
@@ -119,7 +116,7 @@ public class VirtualController {
             }
         });
 
-        Image downImg = DOWN_IMAGE;
+        Image downImg = AssetManager.getInstance().DOWN_IMAGE;
         downImg.setSize(CONTROLLER_BUTTON_DEFAULT_SIZE, CONTROLLER_BUTTON_DEFAULT_SIZE);
         downImg.addListener(new InputListener() {
 
@@ -135,7 +132,7 @@ public class VirtualController {
             }
         });
 
-        Image rightImg = RIGHT_IMAGE;
+        Image rightImg = AssetManager.getInstance().RIGHT_IMAGE;
         rightImg.setSize(CONTROLLER_BUTTON_DEFAULT_SIZE, CONTROLLER_BUTTON_DEFAULT_SIZE);
         rightImg.addListener(new InputListener() {
 
@@ -151,7 +148,7 @@ public class VirtualController {
             }
         });
 
-        Image leftImg = LEFT__IMAGE;
+        Image leftImg = AssetManager.getInstance().LEFT__IMAGE;
         leftImg.setSize(CONTROLLER_BUTTON_DEFAULT_SIZE, CONTROLLER_BUTTON_DEFAULT_SIZE);
         leftImg.addListener(new InputListener() {
 
@@ -167,7 +164,7 @@ public class VirtualController {
             }
         });
 
-        Image crossHairImage = CROSSHAIR__IMAGE;
+        Image crossHairImage = AssetManager.getInstance().CROSSHAIR__IMAGE;
         crossHairImage.setSize(CONTROLLER_BUTTON_MEDIUM_SIZE, CONTROLLER_BUTTON_MEDIUM_SIZE);
         crossHairImage.addListener(new InputListener() {
 

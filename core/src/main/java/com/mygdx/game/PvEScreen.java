@@ -18,6 +18,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.items.Star;
+import com.mygdx.game.network.AssetManager;
+import com.mygdx.game.network.GameServer;
 import com.mygdx.game.objects.PlayerTank;
 import com.mygdx.game.objects.TankAI;
 
@@ -28,50 +30,20 @@ import java.util.Random;
 
 public class PvEScreen extends GameScreen {
 
-
     public static final Random GENERATOR = new Random();
-
     private String roomName = "default_room_name";
-
     //graphic
-    private SpriteBatch batch;
-
-    public static final TextureRegion[] PLAYER1_TANK_TEXTURE_REGIONS = {
-            TEXTURE_ATLAS.findRegion("tank_blue_left"),
-            TEXTURE_ATLAS.findRegion("tank_blue_right"),
-            TEXTURE_ATLAS.findRegion("tank_blue_up"),
-            TEXTURE_ATLAS.findRegion("tank_blue_down"),
-    };
-
     //timing
     private float spawnTimers = 0;
     private float spawnerDownTime = 4;
     private int normalEnemyCounter = 0;
     private int bigEnemyThreshold = 6;
-
     private float timeToNextItemSpawn = 0;
-
-
 
     public static final int ENEMY_QUANTITY = 10;
     public static final int ENEMY_FIREPOWER = 10;
     public static final int   ENEMY_BULLET_SPEED = 8;
     public static final float ENEMY_TIME_BETWEEN_SHOT = 0.8f;
-    public static final TextureRegion[] BIG_TANK_TEXTURE_REGIONS = {
-            TEXTURE_ATLAS.findRegion("tank_huge_left"),
-            TEXTURE_ATLAS.findRegion("tank_huge_right"),
-            TEXTURE_ATLAS.findRegion("tank_huge_up"),
-            TEXTURE_ATLAS.findRegion("tank_huge_down")
-    };
-    public static final TextureRegion[] DEFAULT_TANK_TEXTURE_REGIONS = {
-            Graphic.TEXTURE_ATLAS.findRegion("tank_bigRed_left"),
-            Graphic.TEXTURE_ATLAS.findRegion("tank_bigRed_right"),
-            Graphic.TEXTURE_ATLAS.findRegion("tank_bigRed_up"),
-            Graphic.TEXTURE_ATLAS.findRegion("tank_bigRed_down"),
-    };
-
-
-
 
     // other stuff
     private TiledMap map;
@@ -86,18 +58,12 @@ public class PvEScreen extends GameScreen {
 
     PvEScreen() {
         instance = this;
+        GameObject.ClearObjectList();
         camera = new OrthographicCamera();
         // make sure the chViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
         viewport = new FitViewport(20 * TILE_SIZE, 10 * TILE_SIZE, camera);
         map = new TmxMapLoader().load("beta_01.tmx");
         renderer = new OrthogonalTiledMapRenderer(this.map);
-
-
-//        enemyTankTextureRegion = Tank.DEFAULT_TANK_TEXTURE_REGIONS[Direction.UP];
-//        enemyBigTankTextureRegion = TEXTURE_ATLAS.findRegion("tank_huge_up");
-//        explosionTextureRegion = TEXTURE_ATLAS.findRegion("explosion4");
-//        deadStateTextureRegion = new TextureRegion(new Texture("dead_state.png"));
-//        shieldTextureRegion = new TextureRegion(new Texture("Shield/shieldBlue.png"));
 
         //backgroundOffset = 0;
         font = new BitmapFont();
@@ -106,8 +72,7 @@ public class PvEScreen extends GameScreen {
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
         //set up game objects
-
-        playerTank = new PlayerTank(PLAYER1_TANK_TEXTURE_REGIONS,
+        playerTank = new PlayerTank(AssetManager.getInstance().PLAYER1_TANK_TEXTURE_REGIONS,
                 new Vector2(PLAYER_INITIAL_POSITION_X, PLAYER_INITIAL_POSITION_Y));
 
         playerTank.setHitBox(new Rectangle(0, 0, PLAYER_HIT_BOX_WIDTH, PLAYER_HIT_BOX_HEIGHT));
@@ -120,14 +85,14 @@ public class PvEScreen extends GameScreen {
         playerTank.setTimeBetweenShots(PLAYER_TIME_BETWEEN_SHOT);
         playerTank.setDirection(PLAYER_INITIAL_DIRECTION);
         playerTank.setLife(100);
-        playerTank.setTankTextureRegions(PLAYER1_TANK_TEXTURE_REGIONS);
+        playerTank.setTankTextureRegions(AssetManager.getInstance().PLAYER1_TANK_TEXTURE_REGIONS);
 
         batch = new SpriteBatch();
 
         layer = map.getLayers().get(OBJECTS_LAYER_INDEX);
         mapObjects = layer.getObjects();
 
-        my_hud = new HUD();
+        my_hud = new HUD(this);
 
         //position to spawn enemies
         spawnPos = new ArrayList<>();
@@ -136,25 +101,22 @@ public class PvEScreen extends GameScreen {
         spawnPos.add(new Vector2(1400, 2048));
         spawnPos.add(new Vector2(624, 2122));
         spawnPos.add(new Vector2(225, 1520));
-
     }
 
     @Override
     public void show() {
     }
 
+    private void spawnEnemies(float x, float y, int direction) {
 
-
-    private void spawnEnemies(float x, float y, int direction, float deltaTime) {
-        spawnTimers += deltaTime;
-
-        if (spawnTimers > spawnerDownTime) {
+        if (GameScreen.time_line - spawnTimers > spawnerDownTime) {
             if (normalEnemyCounter > bigEnemyThreshold) {
-                TankAI enemyBigTank = new TankAI(BIG_TANK_TEXTURE_REGIONS,
+                TankAI enemyBigTank = new TankAI(AssetManager.getInstance().BIG_TANK_TEXTURE_REGIONS,
                         new Vector2(x, y));
 
-                enemyBigTank.setHitBox(new Rectangle(x - (PLAYER_HIT_BOX_WIDTH * 1.5f) / 2f,
-                        y -(PLAYER_HIT_BOX_WIDTH * 1.5f) / 2f, PLAYER_HIT_BOX_WIDTH * 1.5f,  PLAYER_HIT_BOX_HEIGHT * 1.5f));
+                enemyBigTank.setHitBox(new Rectangle(x - (GameScreen.PLAYER_HIT_BOX_WIDTH * 1.5f) / 2f,
+                        y - (GameScreen.PLAYER_HIT_BOX_WIDTH * 1.5f) / 2f, GameScreen.PLAYER_HIT_BOX_WIDTH * 1.5f,
+                        GameScreen.PLAYER_HIT_BOX_HEIGHT * 1.5f));
                 enemyBigTank.setBulletMag(3);
                 enemyBigTank.setScore(200);
                 enemyBigTank.setSpeed(3);
@@ -163,16 +125,15 @@ public class PvEScreen extends GameScreen {
                 enemyBigTank.setTimeBetweenShots(ENEMY_TIME_BETWEEN_SHOT * 0.7f);
                 enemyBigTank.setDirection(Direction.UP);
                 enemyBigTank.setLife(80);
-                enemyBigTank.setTankTextureRegions(BIG_TANK_TEXTURE_REGIONS);
-                
-                my_hud.enemyCount += 1;
+                enemyBigTank.setTankTextureRegions(AssetManager.getInstance().BIG_TANK_TEXTURE_REGIONS);
+
                 normalEnemyCounter = 0;
             }
 
-            TankAI enemyTank = new TankAI(DEFAULT_TANK_TEXTURE_REGIONS,
+            TankAI enemyTank = new TankAI(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS,
                     new Vector2(x, y));
 
-            enemyTank.setHitBox(new Rectangle(x, y, PLAYER_HIT_BOX_WIDTH ,  PLAYER_HIT_BOX_HEIGHT ));
+            enemyTank.setHitBox(new Rectangle(x, y, GameScreen.PLAYER_HIT_BOX_WIDTH, GameScreen.PLAYER_HIT_BOX_HEIGHT));
             enemyTank.setBulletMag(2);
             enemyTank.setScore(100);
             enemyTank.setSpeed(3);
@@ -181,10 +142,9 @@ public class PvEScreen extends GameScreen {
             enemyTank.setTimeBetweenShots(ENEMY_TIME_BETWEEN_SHOT);
             enemyTank.setDirection(direction);
             enemyTank.setLife(30);
-            enemyTank.setTankTextureRegions(DEFAULT_TANK_TEXTURE_REGIONS);
+            enemyTank.setTankTextureRegions(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS);
 
-            my_hud.enemyCount += 1;
-            spawnTimers -= spawnerDownTime;
+            spawnTimers = GameScreen.time_line;
             normalEnemyCounter += 1;
         }
     }
@@ -239,7 +199,7 @@ public class PvEScreen extends GameScreen {
 
     private List<GameObject> getTankAIList(){
         List<GameObject> gameObjects = new ArrayList<>();
-        for( GameObject gameObject : getGameObjectList()){
+        for( GameObject gameObject : GameObject.gameObjectList){
             if(gameObject instanceof TankAI){
                 gameObjects.add(gameObject);
             }
@@ -258,7 +218,7 @@ public class PvEScreen extends GameScreen {
     }
 
     private void SpawnItem(){
-        Star star = new Star(Star.STAR_TEXTURE_REGION);
+        Star star = new Star(AssetManager.getInstance().STAR_TEXTURE_REGION);
         star.setSize(64, 64);
         star.setHitBox(new Rectangle(0, 0, 64, 64));
         star.setCollidable(true);
@@ -286,16 +246,16 @@ public class PvEScreen extends GameScreen {
         if(getTankAIList().size() < ENEMY_QUANTITY){
             int direction = GENERATOR.nextInt(4);
             int pos = GENERATOR.nextInt(5);
-            spawnEnemies(spawnPos.get(pos).x, spawnPos.get(pos).y, direction, delta);
+            spawnEnemies(spawnPos.get(pos).x, spawnPos.get(pos).y, direction);
         }
 
-        if(time_line >= timeToNextItemSpawn){
-            timeToNextItemSpawn = 1 + GENERATOR.nextInt(3) + time_line;
+        if(GameScreen.time_line >= timeToNextItemSpawn){
+            timeToNextItemSpawn = 1 + GENERATOR.nextInt(3) + GameScreen.time_line;
             SpawnItem();
         }
 
         playerTank.detectInput();
-        for(GameObject ob : getGameObjectList()){
+        for(GameObject ob : GameObject.gameObjectList){
             ob.update();
             ob.draw(batch);
         }

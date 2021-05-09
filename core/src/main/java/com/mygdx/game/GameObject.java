@@ -4,11 +4,20 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.network.AssetManager;
+import com.mygdx.game.network.GameServer;
+import com.mygdx.game.network.PvPScreen;
+import gameservice.GameService;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameObject {
+
+    public static CopyOnWriteArrayList<GameObject> gameObjectList = new CopyOnWriteArrayList<>();
 
     private Vector2 position = new Vector2();
     private Vector2 scale = new Vector2(1,1);
@@ -17,8 +26,9 @@ public class GameObject {
     private float speed = 0;
     private boolean collidable = false;
     private boolean blockable = false;
-    private boolean isBlocked = false;
     private boolean movable = false;
+
+    private GameService.Texture textureID = GameService.Texture.TEXTURE_ATLAS;
 
     private Rectangle hitBox = new Rectangle();
 
@@ -26,19 +36,19 @@ public class GameObject {
 
     private Sprite sprite = null;
 
-
-
     //contructor
 
     public GameObject() {
-        GameScreen.getInstance().getGameObjectList().add(this);
+        gameObjectList.add(this);
     }
 
     public static void Destroy(GameObject gameObject){
-        GameScreen.getInstance().getGameObjectList().remove(gameObject);
+        gameObjectList.remove(gameObject);
     }
 
-
+    public static void ClearObjectList() {
+        gameObjectList.clear();
+    }
 
 //    Graphic.TILE_SIZE, Graphic.TILE_SIZE
     public void draw(Batch batch){
@@ -65,6 +75,7 @@ public class GameObject {
         hitBox.setHeight(textureRegion.getRegionHeight());
         origin.x = hitBox.width / 2f;
         origin.y = hitBox.height / 2f;
+        this.textureID = AssetManager.getInstance().getIDFromTexture(textureRegion);
     }
 
     public void setSize(float width, float height){
@@ -147,6 +158,14 @@ public class GameObject {
         this.blockable = blockable;
     }
 
+    public GameService.Texture getTextureID() {
+        return textureID;
+    }
+
+    public void setTextureID(GameService.Texture textureID) {
+        this.textureID = textureID;
+    }
+
     public Rectangle getNextMoveHitBox() {
 
         this.hitBox.x = position.x - hitBox.width/2f ;
@@ -169,8 +188,14 @@ public class GameObject {
     private void UpdateCollideGameObject(){
 //        check tank colli
         movable = true;
+        MapObjects currentMapObjects = GameScreen.getInstance().mapObjects;
+
+        if(GameScreen.getInstance() instanceof PvPScreen) {
+            currentMapObjects = GameServer.getInstance().getMapObjects();
+        }
+
         if(collidable){
-            for(RectangleMapObject objectRectangle : GameScreen.getInstance().mapObjects.getByType(RectangleMapObject.class)) {
+            for(RectangleMapObject objectRectangle : currentMapObjects.getByType(RectangleMapObject.class)) {
                 Rectangle objectBounds = objectRectangle.getRectangle();
                 if(getNextMoveHitBox().overlaps(objectBounds)) {
                     if (blockable){
@@ -180,7 +205,7 @@ public class GameObject {
                 }
             }
 
-            for (GameObject gameObject : PvEScreen.getInstance().getGameObjectList()){
+            for (GameObject gameObject : gameObjectList){
                 if(gameObject.isCollidable() && getNextMoveHitBox().overlaps(gameObject.getHitBox()) && !gameObject.equals(this)){
                     if (blockable && gameObject.isBlockable()) {
                         movable = false;
@@ -192,4 +217,28 @@ public class GameObject {
         }
 
     }
+
+    public GameService.GameObject getServiceObject(){
+        GameService.GameObject.Builder gameObjectBuilder = GameService.GameObject.newBuilder()
+                .setPosition(GameService.Vector2.newBuilder()
+                    .setX(position.x)
+                    .setY(position.y))
+                .setScale(GameService.Vector2.newBuilder()
+                    .setX(scale.x)
+                    .setY(scale.y))
+                .setOrigin(GameService.Vector2.newBuilder()
+                    .setX(origin.x)
+                    .setY(origin.y))
+                .setVelocity(GameService.Vector2.newBuilder()
+                    .setX(velocity.x)
+                    .setY(velocity.y))
+                .setSpeed(speed);
+
+        if(textureID != null) {
+            gameObjectBuilder.setTexture(textureID);
+        }
+
+        return gameObjectBuilder.build();
+    }
+
 }

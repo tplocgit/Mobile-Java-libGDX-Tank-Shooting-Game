@@ -4,22 +4,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameObject;
+import com.mygdx.game.GameScreen;
 import com.mygdx.game.PvEScreen;
 import com.mygdx.game.objects.Tank;
 import com.mygdx.game.objects.TankAI;
+import gameservice.GameService;
 
 
 public class Star extends GameObject implements Item {
     private float lifeTime = 10;
     private float timeSinceSpawn;
 
-    public static final TextureRegion STAR_TEXTURE_REGION = new TextureRegion(
-            new Texture("item/star.png"));
-
     public Star(TextureRegion textureRegion){
         super();
         setImage(textureRegion);
-        timeSinceSpawn = PvEScreen.time_line;
+        timeSinceSpawn = GameScreen.time_line;
     }
 
     public Star(TextureRegion textureRegion, Vector2 position){
@@ -39,7 +38,7 @@ public class Star extends GameObject implements Item {
     @Override
     public void update() {
         super.update();
-        if (PvEScreen.time_line - timeSinceSpawn >= lifeTime){
+        if (GameScreen.time_line - timeSinceSpawn >= lifeTime){
             GameObject.Destroy(this);
         }
     }

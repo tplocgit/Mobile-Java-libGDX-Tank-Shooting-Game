@@ -24,12 +24,13 @@ public class HUD {
     Vector2 position;
     boolean debugMode = true;
     boolean isPvp = false;
-    SpriteBatch batch = new SpriteBatch();
+    SpriteBatch batch;
+    private GameScreen gameScreen;
 
-
-    public HUD() {
-        batch = PvEScreen.getInstance().getBatch();
-        cam = PvEScreen.getInstance().getCamera();
+    public HUD(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
+        batch = gameScreen.getBatch();
+        cam = gameScreen.getCamera();
         viewport = new FitViewport(800, 480, cam);
         //stage = new Stage(viewport, GameScreen.batch);
         stage = new Stage(viewport, batch);
@@ -48,7 +49,7 @@ public class HUD {
 //        stage.draw();
         batch.begin();
 
-        PlayerTank pTank = PvEScreen.getInstance().getPlayerTank();
+        PlayerTank pTank = gameScreen.getPlayerTank();
 
         font.draw(batch, "Enemy", 100, 475, 20, Align.left, false);
         font.draw(batch, String.format(Locale.getDefault(), "%02d", enemyCount), 100, 435,
@@ -96,10 +97,10 @@ public class HUD {
     }
 
     public void update() {
-        this.movementSpeed = PvEScreen.getInstance().getPlayerTank().getSpeed();
-        this.life = PvEScreen.getInstance().getPlayerTank().getLife();
-        this.position = PvEScreen.getInstance().getPlayerTank().getPosition();
-        this.firepower = PvEScreen.getInstance().getPlayerTank().getFirepower();
-        this.shield = PvEScreen.getInstance().getPlayerTank().getShield();
+        this.movementSpeed = gameScreen.getPlayerTank().getSpeed();
+        this.life = gameScreen.getPlayerTank().getLife();
+        this.position = gameScreen.getPlayerTank().getPosition();
+        this.firepower = gameScreen.getPlayerTank().getFirepower();
+        this.shield = gameScreen.getPlayerTank().getShield();
     }
 }

@@ -12,9 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.mygdx.game.network.GameClient;
-import com.mygdx.game.network.GameServer;
-import com.mygdx.game.network.GameServerListener;
+import com.mygdx.game.network.*;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -32,7 +30,7 @@ public class CreateRoomScreen implements Screen {
 
         // Components
         Table layout = new Table();
-        Skin skin = new Skin(Gdx.files.internal(Graphic.SKIN_PATH));
+        Skin skin = new Skin(Gdx.files.internal(AssetManager.getInstance().SKIN_PATH));
         Label title = new Label("Create Room", skin);
         Table optionTable = new Table();
         Label nameLabel = new Label("Name: ", skin);
@@ -102,14 +100,14 @@ public class CreateRoomScreen implements Screen {
         createButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                GameServerListener gameServerListener = new GameServerListener() {
-                    @Override
-                    public void onReady(int port) {
-                        System.out.println("Server online at port: " + port);
-                    }
-                };
 
-                GameServer gameServer = new GameServer(nameTextField.getText(), gameServerListener);
+                GameServer gameServer = new GameServer(nameTextField.getText());
+                System.out.println("Server online at port TCP: " + GameServer.TCP_PORT);
+                try {
+                    GameClient.getInstance().connectToServer("127.0.0.1", GameServer.TCP_PORT, parent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

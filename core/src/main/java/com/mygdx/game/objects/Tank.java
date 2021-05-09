@@ -7,6 +7,8 @@ import com.mygdx.game.Direction;
 import com.mygdx.game.GameObject;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.PvEScreen;
+import com.mygdx.game.network.AssetManager;
+import gameservice.GameService;
 
 
 public class Tank extends GameObject {
@@ -162,7 +164,7 @@ public class Tank extends GameObject {
 
     public void fireBullet() {
         if (canFire) {
-            Bullet bullet = new Bullet(Bullet.DEFAULT_TEXTURE_REGIONS[direction],
+            Bullet bullet = new Bullet(AssetManager.getInstance().DEFAULT_TEXTURE_REGIONS[direction],
                     this, new Vector2(getPosition()), new Vector2(0,0), 10);
             if(direction == Direction.UP){
                 bullet.setVelocity(new Vector2(0, 1));
@@ -182,7 +184,36 @@ public class Tank extends GameObject {
     public void setBoostedSpeed(float boostedSpeed){
         this.boostedSpeed = boostedSpeed;
         setSpeed(baseSpeed + boostedSpeed);
-        lastBoostedSpeedTime = PvEScreen.time_line;
+        lastBoostedSpeedTime = GameScreen.time_line;
+    }
+
+    @Override
+    public GameService.GameObject getServiceObject(){
+        GameService.GameObject.Builder gameObjectBuilder = GameService.GameObject.newBuilder()
+                .setPosition(GameService.Vector2.newBuilder()
+                        .setX(getPosition().x)
+                        .setY(getPosition().y))
+                .setScale(GameService.Vector2.newBuilder()
+                        .setX(getScale().x)
+                        .setY(getScale().y))
+                .setOrigin(GameService.Vector2.newBuilder()
+                        .setX(getOrigin().x)
+                        .setY(getOrigin().y))
+                .setVelocity(GameService.Vector2.newBuilder()
+                        .setX(getVelocity().x)
+                        .setY(getVelocity().y))
+                .setSpeed(getSpeed())
+                .setTankData(GameService.TankData.newBuilder()
+                        .setLife(getLife())
+                        .setShield(getShield())
+                        .setDirection(getDirection())
+                );
+
+        if(getTextureID() != null) {
+            gameObjectBuilder.setTexture(getTextureID());
+        }
+
+        return gameObjectBuilder.build();
     }
 
 }
