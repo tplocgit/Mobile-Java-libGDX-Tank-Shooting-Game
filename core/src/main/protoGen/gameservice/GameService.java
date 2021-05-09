@@ -15,6 +15,248 @@ public final class GameService {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   /**
+   * Protobuf enum {@code gameservice.Texture}
+   */
+  public enum Texture
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>TEXTURE_ATLAS = 0;</code>
+     */
+    TEXTURE_ATLAS(0),
+    /**
+     * <code>DEFAULT_TEXTURE_REGIONS_L = 1;</code>
+     */
+    DEFAULT_TEXTURE_REGIONS_L(1),
+    /**
+     * <code>DEFAULT_TEXTURE_REGIONS_R = 2;</code>
+     */
+    DEFAULT_TEXTURE_REGIONS_R(2),
+    /**
+     * <code>DEFAULT_TEXTURE_REGIONS_U = 3;</code>
+     */
+    DEFAULT_TEXTURE_REGIONS_U(3),
+    /**
+     * <code>DEFAULT_TEXTURE_REGIONS_D = 4;</code>
+     */
+    DEFAULT_TEXTURE_REGIONS_D(4),
+    /**
+     * <code>STAR_TEXTURE_REGION = 5;</code>
+     */
+    STAR_TEXTURE_REGION(5),
+    /**
+     * <code>PLAYER1_TANK_TEXTURE_REGIONS_L = 6;</code>
+     */
+    PLAYER1_TANK_TEXTURE_REGIONS_L(6),
+    /**
+     * <code>PLAYER1_TANK_TEXTURE_REGIONS_R = 7;</code>
+     */
+    PLAYER1_TANK_TEXTURE_REGIONS_R(7),
+    /**
+     * <code>PLAYER1_TANK_TEXTURE_REGIONS_U = 8;</code>
+     */
+    PLAYER1_TANK_TEXTURE_REGIONS_U(8),
+    /**
+     * <code>PLAYER1_TANK_TEXTURE_REGIONS_D = 9;</code>
+     */
+    PLAYER1_TANK_TEXTURE_REGIONS_D(9),
+    /**
+     * <code>BIG_TANK_TEXTURE_REGIONS_L = 10;</code>
+     */
+    BIG_TANK_TEXTURE_REGIONS_L(10),
+    /**
+     * <code>BIG_TANK_TEXTURE_REGIONS_R = 11;</code>
+     */
+    BIG_TANK_TEXTURE_REGIONS_R(11),
+    /**
+     * <code>BIG_TANK_TEXTURE_REGIONS_U = 12;</code>
+     */
+    BIG_TANK_TEXTURE_REGIONS_U(12),
+    /**
+     * <code>BIG_TANK_TEXTURE_REGIONS_D = 13;</code>
+     */
+    BIG_TANK_TEXTURE_REGIONS_D(13),
+    /**
+     * <code>DEFAULT_TANK_TEXTURE_REGIONS_L = 14;</code>
+     */
+    DEFAULT_TANK_TEXTURE_REGIONS_L(14),
+    /**
+     * <code>DEFAULT_TANK_TEXTURE_REGIONS_R = 15;</code>
+     */
+    DEFAULT_TANK_TEXTURE_REGIONS_R(15),
+    /**
+     * <code>DEFAULT_TANK_TEXTURE_REGIONS_U = 16;</code>
+     */
+    DEFAULT_TANK_TEXTURE_REGIONS_U(16),
+    /**
+     * <code>DEFAULT_TANK_TEXTURE_REGIONS_D = 17;</code>
+     */
+    DEFAULT_TANK_TEXTURE_REGIONS_D(17),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>TEXTURE_ATLAS = 0;</code>
+     */
+    public static final int TEXTURE_ATLAS_VALUE = 0;
+    /**
+     * <code>DEFAULT_TEXTURE_REGIONS_L = 1;</code>
+     */
+    public static final int DEFAULT_TEXTURE_REGIONS_L_VALUE = 1;
+    /**
+     * <code>DEFAULT_TEXTURE_REGIONS_R = 2;</code>
+     */
+    public static final int DEFAULT_TEXTURE_REGIONS_R_VALUE = 2;
+    /**
+     * <code>DEFAULT_TEXTURE_REGIONS_U = 3;</code>
+     */
+    public static final int DEFAULT_TEXTURE_REGIONS_U_VALUE = 3;
+    /**
+     * <code>DEFAULT_TEXTURE_REGIONS_D = 4;</code>
+     */
+    public static final int DEFAULT_TEXTURE_REGIONS_D_VALUE = 4;
+    /**
+     * <code>STAR_TEXTURE_REGION = 5;</code>
+     */
+    public static final int STAR_TEXTURE_REGION_VALUE = 5;
+    /**
+     * <code>PLAYER1_TANK_TEXTURE_REGIONS_L = 6;</code>
+     */
+    public static final int PLAYER1_TANK_TEXTURE_REGIONS_L_VALUE = 6;
+    /**
+     * <code>PLAYER1_TANK_TEXTURE_REGIONS_R = 7;</code>
+     */
+    public static final int PLAYER1_TANK_TEXTURE_REGIONS_R_VALUE = 7;
+    /**
+     * <code>PLAYER1_TANK_TEXTURE_REGIONS_U = 8;</code>
+     */
+    public static final int PLAYER1_TANK_TEXTURE_REGIONS_U_VALUE = 8;
+    /**
+     * <code>PLAYER1_TANK_TEXTURE_REGIONS_D = 9;</code>
+     */
+    public static final int PLAYER1_TANK_TEXTURE_REGIONS_D_VALUE = 9;
+    /**
+     * <code>BIG_TANK_TEXTURE_REGIONS_L = 10;</code>
+     */
+    public static final int BIG_TANK_TEXTURE_REGIONS_L_VALUE = 10;
+    /**
+     * <code>BIG_TANK_TEXTURE_REGIONS_R = 11;</code>
+     */
+    public static final int BIG_TANK_TEXTURE_REGIONS_R_VALUE = 11;
+    /**
+     * <code>BIG_TANK_TEXTURE_REGIONS_U = 12;</code>
+     */
+    public static final int BIG_TANK_TEXTURE_REGIONS_U_VALUE = 12;
+    /**
+     * <code>BIG_TANK_TEXTURE_REGIONS_D = 13;</code>
+     */
+    public static final int BIG_TANK_TEXTURE_REGIONS_D_VALUE = 13;
+    /**
+     * <code>DEFAULT_TANK_TEXTURE_REGIONS_L = 14;</code>
+     */
+    public static final int DEFAULT_TANK_TEXTURE_REGIONS_L_VALUE = 14;
+    /**
+     * <code>DEFAULT_TANK_TEXTURE_REGIONS_R = 15;</code>
+     */
+    public static final int DEFAULT_TANK_TEXTURE_REGIONS_R_VALUE = 15;
+    /**
+     * <code>DEFAULT_TANK_TEXTURE_REGIONS_U = 16;</code>
+     */
+    public static final int DEFAULT_TANK_TEXTURE_REGIONS_U_VALUE = 16;
+    /**
+     * <code>DEFAULT_TANK_TEXTURE_REGIONS_D = 17;</code>
+     */
+    public static final int DEFAULT_TANK_TEXTURE_REGIONS_D_VALUE = 17;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static Texture valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static Texture forNumber(int value) {
+      switch (value) {
+        case 0: return TEXTURE_ATLAS;
+        case 1: return DEFAULT_TEXTURE_REGIONS_L;
+        case 2: return DEFAULT_TEXTURE_REGIONS_R;
+        case 3: return DEFAULT_TEXTURE_REGIONS_U;
+        case 4: return DEFAULT_TEXTURE_REGIONS_D;
+        case 5: return STAR_TEXTURE_REGION;
+        case 6: return PLAYER1_TANK_TEXTURE_REGIONS_L;
+        case 7: return PLAYER1_TANK_TEXTURE_REGIONS_R;
+        case 8: return PLAYER1_TANK_TEXTURE_REGIONS_U;
+        case 9: return PLAYER1_TANK_TEXTURE_REGIONS_D;
+        case 10: return BIG_TANK_TEXTURE_REGIONS_L;
+        case 11: return BIG_TANK_TEXTURE_REGIONS_R;
+        case 12: return BIG_TANK_TEXTURE_REGIONS_U;
+        case 13: return BIG_TANK_TEXTURE_REGIONS_D;
+        case 14: return DEFAULT_TANK_TEXTURE_REGIONS_L;
+        case 15: return DEFAULT_TANK_TEXTURE_REGIONS_R;
+        case 16: return DEFAULT_TANK_TEXTURE_REGIONS_U;
+        case 17: return DEFAULT_TANK_TEXTURE_REGIONS_D;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<Texture>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        Texture> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<Texture>() {
+            public Texture findValueByNumber(int number) {
+              return Texture.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return gameservice.GameService.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final Texture[] VALUES = values();
+
+    public static Texture valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private Texture(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:gameservice.Texture)
+  }
+
+  /**
    * Protobuf enum {@code gameservice.Command}
    */
   public enum Command
@@ -27,6 +269,30 @@ public final class GameService {
      * <code>FIND_SERVER = 1;</code>
      */
     FIND_SERVER(1),
+    /**
+     * <code>UPDATE = 2;</code>
+     */
+    UPDATE(2),
+    /**
+     * <code>MOVE_NONE = 5;</code>
+     */
+    MOVE_NONE(5),
+    /**
+     * <code>MOVE_UP = 6;</code>
+     */
+    MOVE_UP(6),
+    /**
+     * <code>MOVE_DOWN = 7;</code>
+     */
+    MOVE_DOWN(7),
+    /**
+     * <code>MOVE_LEFT = 8;</code>
+     */
+    MOVE_LEFT(8),
+    /**
+     * <code>MOVE_RIGHT = 9;</code>
+     */
+    MOVE_RIGHT(9),
     /**
      * <code>FIRE_BULLET = 10;</code>
      */
@@ -42,6 +308,30 @@ public final class GameService {
      * <code>FIND_SERVER = 1;</code>
      */
     public static final int FIND_SERVER_VALUE = 1;
+    /**
+     * <code>UPDATE = 2;</code>
+     */
+    public static final int UPDATE_VALUE = 2;
+    /**
+     * <code>MOVE_NONE = 5;</code>
+     */
+    public static final int MOVE_NONE_VALUE = 5;
+    /**
+     * <code>MOVE_UP = 6;</code>
+     */
+    public static final int MOVE_UP_VALUE = 6;
+    /**
+     * <code>MOVE_DOWN = 7;</code>
+     */
+    public static final int MOVE_DOWN_VALUE = 7;
+    /**
+     * <code>MOVE_LEFT = 8;</code>
+     */
+    public static final int MOVE_LEFT_VALUE = 8;
+    /**
+     * <code>MOVE_RIGHT = 9;</code>
+     */
+    public static final int MOVE_RIGHT_VALUE = 9;
     /**
      * <code>FIRE_BULLET = 10;</code>
      */
@@ -68,6 +358,12 @@ public final class GameService {
       switch (value) {
         case 0: return UNKNOWN;
         case 1: return FIND_SERVER;
+        case 2: return UPDATE;
+        case 5: return MOVE_NONE;
+        case 6: return MOVE_UP;
+        case 7: return MOVE_DOWN;
+        case 8: return MOVE_LEFT;
+        case 9: return MOVE_RIGHT;
         case 10: return FIRE_BULLET;
         default: return null;
       }
@@ -95,7 +391,7 @@ public final class GameService {
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return gameservice.GameService.getDescriptor().getEnumTypes().get(0);
+      return gameservice.GameService.getDescriptor().getEnumTypes().get(1);
     }
 
     private static final Command[] VALUES = values();
@@ -813,28 +1109,15 @@ public final class GameService {
     gameservice.GameService.ServerInfoOrBuilder getServerInfoOrBuilder();
 
     /**
-     * <code>.gameservice.TankData tankData = 2;</code>
-     */
-    boolean hasTankData();
-    /**
-     * <code>.gameservice.TankData tankData = 2;</code>
-     */
-    gameservice.GameService.TankData getTankData();
-    /**
-     * <code>.gameservice.TankData tankData = 2;</code>
-     */
-    gameservice.GameService.TankDataOrBuilder getTankDataOrBuilder();
-
-    /**
-     * <code>.gameservice.GameObjectList objectList = 3;</code>
+     * <code>.gameservice.GameObjectList objectList = 2;</code>
      */
     boolean hasObjectList();
     /**
-     * <code>.gameservice.GameObjectList objectList = 3;</code>
+     * <code>.gameservice.GameObjectList objectList = 2;</code>
      */
     gameservice.GameService.GameObjectList getObjectList();
     /**
-     * <code>.gameservice.GameObjectList objectList = 3;</code>
+     * <code>.gameservice.GameObjectList objectList = 2;</code>
      */
     gameservice.GameService.GameObjectListOrBuilder getObjectListOrBuilder();
   }
@@ -898,19 +1181,6 @@ public final class GameService {
               break;
             }
             case 18: {
-              gameservice.GameService.TankData.Builder subBuilder = null;
-              if (tankData_ != null) {
-                subBuilder = tankData_.toBuilder();
-              }
-              tankData_ = input.readMessage(gameservice.GameService.TankData.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(tankData_);
-                tankData_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            case 26: {
               gameservice.GameService.GameObjectList.Builder subBuilder = null;
               if (objectList_ != null) {
                 subBuilder = objectList_.toBuilder();
@@ -968,43 +1238,22 @@ public final class GameService {
       return getServerInfo();
     }
 
-    public static final int TANKDATA_FIELD_NUMBER = 2;
-    private gameservice.GameService.TankData tankData_;
-    /**
-     * <code>.gameservice.TankData tankData = 2;</code>
-     */
-    public boolean hasTankData() {
-      return tankData_ != null;
-    }
-    /**
-     * <code>.gameservice.TankData tankData = 2;</code>
-     */
-    public gameservice.GameService.TankData getTankData() {
-      return tankData_ == null ? gameservice.GameService.TankData.getDefaultInstance() : tankData_;
-    }
-    /**
-     * <code>.gameservice.TankData tankData = 2;</code>
-     */
-    public gameservice.GameService.TankDataOrBuilder getTankDataOrBuilder() {
-      return getTankData();
-    }
-
-    public static final int OBJECTLIST_FIELD_NUMBER = 3;
+    public static final int OBJECTLIST_FIELD_NUMBER = 2;
     private gameservice.GameService.GameObjectList objectList_;
     /**
-     * <code>.gameservice.GameObjectList objectList = 3;</code>
+     * <code>.gameservice.GameObjectList objectList = 2;</code>
      */
     public boolean hasObjectList() {
       return objectList_ != null;
     }
     /**
-     * <code>.gameservice.GameObjectList objectList = 3;</code>
+     * <code>.gameservice.GameObjectList objectList = 2;</code>
      */
     public gameservice.GameService.GameObjectList getObjectList() {
       return objectList_ == null ? gameservice.GameService.GameObjectList.getDefaultInstance() : objectList_;
     }
     /**
-     * <code>.gameservice.GameObjectList objectList = 3;</code>
+     * <code>.gameservice.GameObjectList objectList = 2;</code>
      */
     public gameservice.GameService.GameObjectListOrBuilder getObjectListOrBuilder() {
       return getObjectList();
@@ -1025,11 +1274,8 @@ public final class GameService {
       if (serverInfo_ != null) {
         output.writeMessage(1, getServerInfo());
       }
-      if (tankData_ != null) {
-        output.writeMessage(2, getTankData());
-      }
       if (objectList_ != null) {
-        output.writeMessage(3, getObjectList());
+        output.writeMessage(2, getObjectList());
       }
       unknownFields.writeTo(output);
     }
@@ -1043,13 +1289,9 @@ public final class GameService {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getServerInfo());
       }
-      if (tankData_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getTankData());
-      }
       if (objectList_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getObjectList());
+          .computeMessageSize(2, getObjectList());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1072,11 +1314,6 @@ public final class GameService {
         result = result && getServerInfo()
             .equals(other.getServerInfo());
       }
-      result = result && (hasTankData() == other.hasTankData());
-      if (hasTankData()) {
-        result = result && getTankData()
-            .equals(other.getTankData());
-      }
       result = result && (hasObjectList() == other.hasObjectList());
       if (hasObjectList()) {
         result = result && getObjectList()
@@ -1096,10 +1333,6 @@ public final class GameService {
       if (hasServerInfo()) {
         hash = (37 * hash) + SERVERINFO_FIELD_NUMBER;
         hash = (53 * hash) + getServerInfo().hashCode();
-      }
-      if (hasTankData()) {
-        hash = (37 * hash) + TANKDATA_FIELD_NUMBER;
-        hash = (53 * hash) + getTankData().hashCode();
       }
       if (hasObjectList()) {
         hash = (37 * hash) + OBJECTLIST_FIELD_NUMBER;
@@ -1240,12 +1473,6 @@ public final class GameService {
           serverInfo_ = null;
           serverInfoBuilder_ = null;
         }
-        if (tankDataBuilder_ == null) {
-          tankData_ = null;
-        } else {
-          tankData_ = null;
-          tankDataBuilder_ = null;
-        }
         if (objectListBuilder_ == null) {
           objectList_ = null;
         } else {
@@ -1278,11 +1505,6 @@ public final class GameService {
           result.serverInfo_ = serverInfo_;
         } else {
           result.serverInfo_ = serverInfoBuilder_.build();
-        }
-        if (tankDataBuilder_ == null) {
-          result.tankData_ = tankData_;
-        } else {
-          result.tankData_ = tankDataBuilder_.build();
         }
         if (objectListBuilder_ == null) {
           result.objectList_ = objectList_;
@@ -1332,9 +1554,6 @@ public final class GameService {
         if (other == gameservice.GameService.Data.getDefaultInstance()) return this;
         if (other.hasServerInfo()) {
           mergeServerInfo(other.getServerInfo());
-        }
-        if (other.hasTankData()) {
-          mergeTankData(other.getTankData());
         }
         if (other.hasObjectList()) {
           mergeObjectList(other.getObjectList());
@@ -1483,134 +1702,17 @@ public final class GameService {
         return serverInfoBuilder_;
       }
 
-      private gameservice.GameService.TankData tankData_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          gameservice.GameService.TankData, gameservice.GameService.TankData.Builder, gameservice.GameService.TankDataOrBuilder> tankDataBuilder_;
-      /**
-       * <code>.gameservice.TankData tankData = 2;</code>
-       */
-      public boolean hasTankData() {
-        return tankDataBuilder_ != null || tankData_ != null;
-      }
-      /**
-       * <code>.gameservice.TankData tankData = 2;</code>
-       */
-      public gameservice.GameService.TankData getTankData() {
-        if (tankDataBuilder_ == null) {
-          return tankData_ == null ? gameservice.GameService.TankData.getDefaultInstance() : tankData_;
-        } else {
-          return tankDataBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.gameservice.TankData tankData = 2;</code>
-       */
-      public Builder setTankData(gameservice.GameService.TankData value) {
-        if (tankDataBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          tankData_ = value;
-          onChanged();
-        } else {
-          tankDataBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.gameservice.TankData tankData = 2;</code>
-       */
-      public Builder setTankData(
-          gameservice.GameService.TankData.Builder builderForValue) {
-        if (tankDataBuilder_ == null) {
-          tankData_ = builderForValue.build();
-          onChanged();
-        } else {
-          tankDataBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.gameservice.TankData tankData = 2;</code>
-       */
-      public Builder mergeTankData(gameservice.GameService.TankData value) {
-        if (tankDataBuilder_ == null) {
-          if (tankData_ != null) {
-            tankData_ =
-              gameservice.GameService.TankData.newBuilder(tankData_).mergeFrom(value).buildPartial();
-          } else {
-            tankData_ = value;
-          }
-          onChanged();
-        } else {
-          tankDataBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.gameservice.TankData tankData = 2;</code>
-       */
-      public Builder clearTankData() {
-        if (tankDataBuilder_ == null) {
-          tankData_ = null;
-          onChanged();
-        } else {
-          tankData_ = null;
-          tankDataBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.gameservice.TankData tankData = 2;</code>
-       */
-      public gameservice.GameService.TankData.Builder getTankDataBuilder() {
-        
-        onChanged();
-        return getTankDataFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.gameservice.TankData tankData = 2;</code>
-       */
-      public gameservice.GameService.TankDataOrBuilder getTankDataOrBuilder() {
-        if (tankDataBuilder_ != null) {
-          return tankDataBuilder_.getMessageOrBuilder();
-        } else {
-          return tankData_ == null ?
-              gameservice.GameService.TankData.getDefaultInstance() : tankData_;
-        }
-      }
-      /**
-       * <code>.gameservice.TankData tankData = 2;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          gameservice.GameService.TankData, gameservice.GameService.TankData.Builder, gameservice.GameService.TankDataOrBuilder> 
-          getTankDataFieldBuilder() {
-        if (tankDataBuilder_ == null) {
-          tankDataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              gameservice.GameService.TankData, gameservice.GameService.TankData.Builder, gameservice.GameService.TankDataOrBuilder>(
-                  getTankData(),
-                  getParentForChildren(),
-                  isClean());
-          tankData_ = null;
-        }
-        return tankDataBuilder_;
-      }
-
       private gameservice.GameService.GameObjectList objectList_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
           gameservice.GameService.GameObjectList, gameservice.GameService.GameObjectList.Builder, gameservice.GameService.GameObjectListOrBuilder> objectListBuilder_;
       /**
-       * <code>.gameservice.GameObjectList objectList = 3;</code>
+       * <code>.gameservice.GameObjectList objectList = 2;</code>
        */
       public boolean hasObjectList() {
         return objectListBuilder_ != null || objectList_ != null;
       }
       /**
-       * <code>.gameservice.GameObjectList objectList = 3;</code>
+       * <code>.gameservice.GameObjectList objectList = 2;</code>
        */
       public gameservice.GameService.GameObjectList getObjectList() {
         if (objectListBuilder_ == null) {
@@ -1620,7 +1722,7 @@ public final class GameService {
         }
       }
       /**
-       * <code>.gameservice.GameObjectList objectList = 3;</code>
+       * <code>.gameservice.GameObjectList objectList = 2;</code>
        */
       public Builder setObjectList(gameservice.GameService.GameObjectList value) {
         if (objectListBuilder_ == null) {
@@ -1636,7 +1738,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>.gameservice.GameObjectList objectList = 3;</code>
+       * <code>.gameservice.GameObjectList objectList = 2;</code>
        */
       public Builder setObjectList(
           gameservice.GameService.GameObjectList.Builder builderForValue) {
@@ -1650,7 +1752,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>.gameservice.GameObjectList objectList = 3;</code>
+       * <code>.gameservice.GameObjectList objectList = 2;</code>
        */
       public Builder mergeObjectList(gameservice.GameService.GameObjectList value) {
         if (objectListBuilder_ == null) {
@@ -1668,7 +1770,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>.gameservice.GameObjectList objectList = 3;</code>
+       * <code>.gameservice.GameObjectList objectList = 2;</code>
        */
       public Builder clearObjectList() {
         if (objectListBuilder_ == null) {
@@ -1682,7 +1784,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>.gameservice.GameObjectList objectList = 3;</code>
+       * <code>.gameservice.GameObjectList objectList = 2;</code>
        */
       public gameservice.GameService.GameObjectList.Builder getObjectListBuilder() {
         
@@ -1690,7 +1792,7 @@ public final class GameService {
         return getObjectListFieldBuilder().getBuilder();
       }
       /**
-       * <code>.gameservice.GameObjectList objectList = 3;</code>
+       * <code>.gameservice.GameObjectList objectList = 2;</code>
        */
       public gameservice.GameService.GameObjectListOrBuilder getObjectListOrBuilder() {
         if (objectListBuilder_ != null) {
@@ -1701,7 +1803,7 @@ public final class GameService {
         }
       }
       /**
-       * <code>.gameservice.GameObjectList objectList = 3;</code>
+       * <code>.gameservice.GameObjectList objectList = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           gameservice.GameService.GameObjectList, gameservice.GameService.GameObjectList.Builder, gameservice.GameService.GameObjectListOrBuilder> 
@@ -2870,6 +2972,28 @@ public final class GameService {
      * <code>float speed = 5;</code>
      */
     float getSpeed();
+
+    /**
+     * <code>.gameservice.Texture texture = 6;</code>
+     */
+    int getTextureValue();
+    /**
+     * <code>.gameservice.Texture texture = 6;</code>
+     */
+    gameservice.GameService.Texture getTexture();
+
+    /**
+     * <code>.gameservice.TankData tankData = 7;</code>
+     */
+    boolean hasTankData();
+    /**
+     * <code>.gameservice.TankData tankData = 7;</code>
+     */
+    gameservice.GameService.TankData getTankData();
+    /**
+     * <code>.gameservice.TankData tankData = 7;</code>
+     */
+    gameservice.GameService.TankDataOrBuilder getTankDataOrBuilder();
   }
   /**
    * Protobuf type {@code gameservice.GameObject}
@@ -2885,6 +3009,7 @@ public final class GameService {
     }
     private GameObject() {
       speed_ = 0F;
+      texture_ = 0;
     }
 
     @java.lang.Override
@@ -2973,6 +3098,25 @@ public final class GameService {
             case 45: {
 
               speed_ = input.readFloat();
+              break;
+            }
+            case 48: {
+              int rawValue = input.readEnum();
+
+              texture_ = rawValue;
+              break;
+            }
+            case 58: {
+              gameservice.GameService.TankData.Builder subBuilder = null;
+              if (tankData_ != null) {
+                subBuilder = tankData_.toBuilder();
+              }
+              tankData_ = input.readMessage(gameservice.GameService.TankData.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(tankData_);
+                tankData_ = subBuilder.buildPartial();
+              }
+
               break;
             }
           }
@@ -3092,6 +3236,43 @@ public final class GameService {
       return speed_;
     }
 
+    public static final int TEXTURE_FIELD_NUMBER = 6;
+    private int texture_;
+    /**
+     * <code>.gameservice.Texture texture = 6;</code>
+     */
+    public int getTextureValue() {
+      return texture_;
+    }
+    /**
+     * <code>.gameservice.Texture texture = 6;</code>
+     */
+    public gameservice.GameService.Texture getTexture() {
+      gameservice.GameService.Texture result = gameservice.GameService.Texture.valueOf(texture_);
+      return result == null ? gameservice.GameService.Texture.UNRECOGNIZED : result;
+    }
+
+    public static final int TANKDATA_FIELD_NUMBER = 7;
+    private gameservice.GameService.TankData tankData_;
+    /**
+     * <code>.gameservice.TankData tankData = 7;</code>
+     */
+    public boolean hasTankData() {
+      return tankData_ != null;
+    }
+    /**
+     * <code>.gameservice.TankData tankData = 7;</code>
+     */
+    public gameservice.GameService.TankData getTankData() {
+      return tankData_ == null ? gameservice.GameService.TankData.getDefaultInstance() : tankData_;
+    }
+    /**
+     * <code>.gameservice.TankData tankData = 7;</code>
+     */
+    public gameservice.GameService.TankDataOrBuilder getTankDataOrBuilder() {
+      return getTankData();
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -3118,6 +3299,12 @@ public final class GameService {
       }
       if (speed_ != 0F) {
         output.writeFloat(5, speed_);
+      }
+      if (texture_ != gameservice.GameService.Texture.TEXTURE_ATLAS.getNumber()) {
+        output.writeEnum(6, texture_);
+      }
+      if (tankData_ != null) {
+        output.writeMessage(7, getTankData());
       }
       unknownFields.writeTo(output);
     }
@@ -3146,6 +3333,14 @@ public final class GameService {
       if (speed_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
           .computeFloatSize(5, speed_);
+      }
+      if (texture_ != gameservice.GameService.Texture.TEXTURE_ATLAS.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(6, texture_);
+      }
+      if (tankData_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, getTankData());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -3187,6 +3382,12 @@ public final class GameService {
           java.lang.Float.floatToIntBits(getSpeed())
           == java.lang.Float.floatToIntBits(
               other.getSpeed()));
+      result = result && texture_ == other.texture_;
+      result = result && (hasTankData() == other.hasTankData());
+      if (hasTankData()) {
+        result = result && getTankData()
+            .equals(other.getTankData());
+      }
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -3217,6 +3418,12 @@ public final class GameService {
       hash = (37 * hash) + SPEED_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
           getSpeed());
+      hash = (37 * hash) + TEXTURE_FIELD_NUMBER;
+      hash = (53 * hash) + texture_;
+      if (hasTankData()) {
+        hash = (37 * hash) + TANKDATA_FIELD_NUMBER;
+        hash = (53 * hash) + getTankData().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3372,6 +3579,14 @@ public final class GameService {
         }
         speed_ = 0F;
 
+        texture_ = 0;
+
+        if (tankDataBuilder_ == null) {
+          tankData_ = null;
+        } else {
+          tankData_ = null;
+          tankDataBuilder_ = null;
+        }
         return this;
       }
 
@@ -3415,6 +3630,12 @@ public final class GameService {
           result.velocity_ = velocityBuilder_.build();
         }
         result.speed_ = speed_;
+        result.texture_ = texture_;
+        if (tankDataBuilder_ == null) {
+          result.tankData_ = tankData_;
+        } else {
+          result.tankData_ = tankDataBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -3470,6 +3691,12 @@ public final class GameService {
         }
         if (other.getSpeed() != 0F) {
           setSpeed(other.getSpeed());
+        }
+        if (other.texture_ != 0) {
+          setTextureValue(other.getTextureValue());
+        }
+        if (other.hasTankData()) {
+          mergeTankData(other.getTankData());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -3991,6 +4218,167 @@ public final class GameService {
         onChanged();
         return this;
       }
+
+      private int texture_ = 0;
+      /**
+       * <code>.gameservice.Texture texture = 6;</code>
+       */
+      public int getTextureValue() {
+        return texture_;
+      }
+      /**
+       * <code>.gameservice.Texture texture = 6;</code>
+       */
+      public Builder setTextureValue(int value) {
+        texture_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.gameservice.Texture texture = 6;</code>
+       */
+      public gameservice.GameService.Texture getTexture() {
+        gameservice.GameService.Texture result = gameservice.GameService.Texture.valueOf(texture_);
+        return result == null ? gameservice.GameService.Texture.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.gameservice.Texture texture = 6;</code>
+       */
+      public Builder setTexture(gameservice.GameService.Texture value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        texture_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.gameservice.Texture texture = 6;</code>
+       */
+      public Builder clearTexture() {
+        
+        texture_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private gameservice.GameService.TankData tankData_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          gameservice.GameService.TankData, gameservice.GameService.TankData.Builder, gameservice.GameService.TankDataOrBuilder> tankDataBuilder_;
+      /**
+       * <code>.gameservice.TankData tankData = 7;</code>
+       */
+      public boolean hasTankData() {
+        return tankDataBuilder_ != null || tankData_ != null;
+      }
+      /**
+       * <code>.gameservice.TankData tankData = 7;</code>
+       */
+      public gameservice.GameService.TankData getTankData() {
+        if (tankDataBuilder_ == null) {
+          return tankData_ == null ? gameservice.GameService.TankData.getDefaultInstance() : tankData_;
+        } else {
+          return tankDataBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.gameservice.TankData tankData = 7;</code>
+       */
+      public Builder setTankData(gameservice.GameService.TankData value) {
+        if (tankDataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          tankData_ = value;
+          onChanged();
+        } else {
+          tankDataBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.gameservice.TankData tankData = 7;</code>
+       */
+      public Builder setTankData(
+          gameservice.GameService.TankData.Builder builderForValue) {
+        if (tankDataBuilder_ == null) {
+          tankData_ = builderForValue.build();
+          onChanged();
+        } else {
+          tankDataBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.gameservice.TankData tankData = 7;</code>
+       */
+      public Builder mergeTankData(gameservice.GameService.TankData value) {
+        if (tankDataBuilder_ == null) {
+          if (tankData_ != null) {
+            tankData_ =
+              gameservice.GameService.TankData.newBuilder(tankData_).mergeFrom(value).buildPartial();
+          } else {
+            tankData_ = value;
+          }
+          onChanged();
+        } else {
+          tankDataBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.gameservice.TankData tankData = 7;</code>
+       */
+      public Builder clearTankData() {
+        if (tankDataBuilder_ == null) {
+          tankData_ = null;
+          onChanged();
+        } else {
+          tankData_ = null;
+          tankDataBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.gameservice.TankData tankData = 7;</code>
+       */
+      public gameservice.GameService.TankData.Builder getTankDataBuilder() {
+        
+        onChanged();
+        return getTankDataFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.gameservice.TankData tankData = 7;</code>
+       */
+      public gameservice.GameService.TankDataOrBuilder getTankDataOrBuilder() {
+        if (tankDataBuilder_ != null) {
+          return tankDataBuilder_.getMessageOrBuilder();
+        } else {
+          return tankData_ == null ?
+              gameservice.GameService.TankData.getDefaultInstance() : tankData_;
+        }
+      }
+      /**
+       * <code>.gameservice.TankData tankData = 7;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          gameservice.GameService.TankData, gameservice.GameService.TankData.Builder, gameservice.GameService.TankDataOrBuilder> 
+          getTankDataFieldBuilder() {
+        if (tankDataBuilder_ == null) {
+          tankDataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              gameservice.GameService.TankData, gameservice.GameService.TankData.Builder, gameservice.GameService.TankDataOrBuilder>(
+                  getTankData(),
+                  getParentForChildren(),
+                  isClean());
+          tankData_ = null;
+        }
+        return tankDataBuilder_;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
@@ -4045,42 +4433,49 @@ public final class GameService {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>uint64 tankID = 5;</code>
-     */
-    long getTankID();
-
-    /**
-     * <code>.gameservice.GameObject gameObject = 1;</code>
-     */
-    boolean hasGameObject();
-    /**
-     * <code>.gameservice.GameObject gameObject = 1;</code>
-     */
-    gameservice.GameService.GameObject getGameObject();
-    /**
-     * <code>.gameservice.GameObject gameObject = 1;</code>
-     */
-    gameservice.GameService.GameObjectOrBuilder getGameObjectOrBuilder();
-
-    /**
-     * <code>float life = 2;</code>
+     * <code>float life = 1;</code>
      */
     float getLife();
 
     /**
-     * <code>float shield = 3;</code>
+     * <code>float shield = 2;</code>
      */
     float getShield();
 
     /**
-     * <code>string name = 4;</code>
+     * <code>string name = 3;</code>
      */
     java.lang.String getName();
     /**
-     * <code>string name = 4;</code>
+     * <code>string name = 3;</code>
      */
     com.google.protobuf.ByteString
         getNameBytes();
+
+    /**
+     * <code>uint64 tankID = 4;</code>
+     */
+    long getTankID();
+
+    /**
+     * <code>int32 direction = 5;</code>
+     */
+    int getDirection();
+
+    /**
+     * <code>bool isPlayer = 6;</code>
+     */
+    boolean getIsPlayer();
+
+    /**
+     * <code>string id = 7;</code>
+     */
+    java.lang.String getId();
+    /**
+     * <code>string id = 7;</code>
+     */
+    com.google.protobuf.ByteString
+        getIdBytes();
   }
   /**
    * Protobuf type {@code gameservice.TankData}
@@ -4095,10 +4490,13 @@ public final class GameService {
       super(builder);
     }
     private TankData() {
-      tankID_ = 0L;
       life_ = 0F;
       shield_ = 0F;
       name_ = "";
+      tankID_ = 0L;
+      direction_ = 0;
+      isPlayer_ = false;
+      id_ = "";
     }
 
     @java.lang.Override
@@ -4132,38 +4530,41 @@ public final class GameService {
               }
               break;
             }
-            case 10: {
-              gameservice.GameService.GameObject.Builder subBuilder = null;
-              if (gameObject_ != null) {
-                subBuilder = gameObject_.toBuilder();
-              }
-              gameObject_ = input.readMessage(gameservice.GameService.GameObject.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(gameObject_);
-                gameObject_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            case 21: {
+            case 13: {
 
               life_ = input.readFloat();
               break;
             }
-            case 29: {
+            case 21: {
 
               shield_ = input.readFloat();
               break;
             }
-            case 34: {
+            case 26: {
               java.lang.String s = input.readStringRequireUtf8();
 
               name_ = s;
               break;
             }
-            case 40: {
+            case 32: {
 
               tankID_ = input.readUInt64();
+              break;
+            }
+            case 40: {
+
+              direction_ = input.readInt32();
+              break;
+            }
+            case 48: {
+
+              isPlayer_ = input.readBool();
+              break;
+            }
+            case 58: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              id_ = s;
               break;
             }
           }
@@ -4190,58 +4591,28 @@ public final class GameService {
               gameservice.GameService.TankData.class, gameservice.GameService.TankData.Builder.class);
     }
 
-    public static final int TANKID_FIELD_NUMBER = 5;
-    private long tankID_;
-    /**
-     * <code>uint64 tankID = 5;</code>
-     */
-    public long getTankID() {
-      return tankID_;
-    }
-
-    public static final int GAMEOBJECT_FIELD_NUMBER = 1;
-    private gameservice.GameService.GameObject gameObject_;
-    /**
-     * <code>.gameservice.GameObject gameObject = 1;</code>
-     */
-    public boolean hasGameObject() {
-      return gameObject_ != null;
-    }
-    /**
-     * <code>.gameservice.GameObject gameObject = 1;</code>
-     */
-    public gameservice.GameService.GameObject getGameObject() {
-      return gameObject_ == null ? gameservice.GameService.GameObject.getDefaultInstance() : gameObject_;
-    }
-    /**
-     * <code>.gameservice.GameObject gameObject = 1;</code>
-     */
-    public gameservice.GameService.GameObjectOrBuilder getGameObjectOrBuilder() {
-      return getGameObject();
-    }
-
-    public static final int LIFE_FIELD_NUMBER = 2;
+    public static final int LIFE_FIELD_NUMBER = 1;
     private float life_;
     /**
-     * <code>float life = 2;</code>
+     * <code>float life = 1;</code>
      */
     public float getLife() {
       return life_;
     }
 
-    public static final int SHIELD_FIELD_NUMBER = 3;
+    public static final int SHIELD_FIELD_NUMBER = 2;
     private float shield_;
     /**
-     * <code>float shield = 3;</code>
+     * <code>float shield = 2;</code>
      */
     public float getShield() {
       return shield_;
     }
 
-    public static final int NAME_FIELD_NUMBER = 4;
+    public static final int NAME_FIELD_NUMBER = 3;
     private volatile java.lang.Object name_;
     /**
-     * <code>string name = 4;</code>
+     * <code>string name = 3;</code>
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -4256,7 +4627,7 @@ public final class GameService {
       }
     }
     /**
-     * <code>string name = 4;</code>
+     * <code>string name = 3;</code>
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -4266,6 +4637,67 @@ public final class GameService {
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TANKID_FIELD_NUMBER = 4;
+    private long tankID_;
+    /**
+     * <code>uint64 tankID = 4;</code>
+     */
+    public long getTankID() {
+      return tankID_;
+    }
+
+    public static final int DIRECTION_FIELD_NUMBER = 5;
+    private int direction_;
+    /**
+     * <code>int32 direction = 5;</code>
+     */
+    public int getDirection() {
+      return direction_;
+    }
+
+    public static final int ISPLAYER_FIELD_NUMBER = 6;
+    private boolean isPlayer_;
+    /**
+     * <code>bool isPlayer = 6;</code>
+     */
+    public boolean getIsPlayer() {
+      return isPlayer_;
+    }
+
+    public static final int ID_FIELD_NUMBER = 7;
+    private volatile java.lang.Object id_;
+    /**
+     * <code>string id = 7;</code>
+     */
+    public java.lang.String getId() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        id_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string id = 7;</code>
+     */
+    public com.google.protobuf.ByteString
+        getIdBytes() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        id_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -4284,20 +4716,26 @@ public final class GameService {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (gameObject_ != null) {
-        output.writeMessage(1, getGameObject());
-      }
       if (life_ != 0F) {
-        output.writeFloat(2, life_);
+        output.writeFloat(1, life_);
       }
       if (shield_ != 0F) {
-        output.writeFloat(3, shield_);
+        output.writeFloat(2, shield_);
       }
       if (!getNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, name_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, name_);
       }
       if (tankID_ != 0L) {
-        output.writeUInt64(5, tankID_);
+        output.writeUInt64(4, tankID_);
+      }
+      if (direction_ != 0) {
+        output.writeInt32(5, direction_);
+      }
+      if (isPlayer_ != false) {
+        output.writeBool(6, isPlayer_);
+      }
+      if (!getIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, id_);
       }
       unknownFields.writeTo(output);
     }
@@ -4307,24 +4745,31 @@ public final class GameService {
       if (size != -1) return size;
 
       size = 0;
-      if (gameObject_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getGameObject());
-      }
       if (life_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(2, life_);
+          .computeFloatSize(1, life_);
       }
       if (shield_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(3, shield_);
+          .computeFloatSize(2, shield_);
       }
       if (!getNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, name_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, name_);
       }
       if (tankID_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(5, tankID_);
+          .computeUInt64Size(4, tankID_);
+      }
+      if (direction_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, direction_);
+      }
+      if (isPlayer_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(6, isPlayer_);
+      }
+      if (!getIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, id_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4342,13 +4787,6 @@ public final class GameService {
       gameservice.GameService.TankData other = (gameservice.GameService.TankData) obj;
 
       boolean result = true;
-      result = result && (getTankID()
-          == other.getTankID());
-      result = result && (hasGameObject() == other.hasGameObject());
-      if (hasGameObject()) {
-        result = result && getGameObject()
-            .equals(other.getGameObject());
-      }
       result = result && (
           java.lang.Float.floatToIntBits(getLife())
           == java.lang.Float.floatToIntBits(
@@ -4359,6 +4797,14 @@ public final class GameService {
               other.getShield()));
       result = result && getName()
           .equals(other.getName());
+      result = result && (getTankID()
+          == other.getTankID());
+      result = result && (getDirection()
+          == other.getDirection());
+      result = result && (getIsPlayer()
+          == other.getIsPlayer());
+      result = result && getId()
+          .equals(other.getId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -4370,13 +4816,6 @@ public final class GameService {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TANKID_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getTankID());
-      if (hasGameObject()) {
-        hash = (37 * hash) + GAMEOBJECT_FIELD_NUMBER;
-        hash = (53 * hash) + getGameObject().hashCode();
-      }
       hash = (37 * hash) + LIFE_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
           getLife());
@@ -4385,6 +4824,16 @@ public final class GameService {
           getShield());
       hash = (37 * hash) + NAME_FIELD_NUMBER;
       hash = (53 * hash) + getName().hashCode();
+      hash = (37 * hash) + TANKID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTankID());
+      hash = (37 * hash) + DIRECTION_FIELD_NUMBER;
+      hash = (53 * hash) + getDirection();
+      hash = (37 * hash) + ISPLAYER_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIsPlayer());
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -4514,19 +4963,19 @@ public final class GameService {
       }
       public Builder clear() {
         super.clear();
-        tankID_ = 0L;
-
-        if (gameObjectBuilder_ == null) {
-          gameObject_ = null;
-        } else {
-          gameObject_ = null;
-          gameObjectBuilder_ = null;
-        }
         life_ = 0F;
 
         shield_ = 0F;
 
         name_ = "";
+
+        tankID_ = 0L;
+
+        direction_ = 0;
+
+        isPlayer_ = false;
+
+        id_ = "";
 
         return this;
       }
@@ -4550,15 +4999,13 @@ public final class GameService {
 
       public gameservice.GameService.TankData buildPartial() {
         gameservice.GameService.TankData result = new gameservice.GameService.TankData(this);
-        result.tankID_ = tankID_;
-        if (gameObjectBuilder_ == null) {
-          result.gameObject_ = gameObject_;
-        } else {
-          result.gameObject_ = gameObjectBuilder_.build();
-        }
         result.life_ = life_;
         result.shield_ = shield_;
         result.name_ = name_;
+        result.tankID_ = tankID_;
+        result.direction_ = direction_;
+        result.isPlayer_ = isPlayer_;
+        result.id_ = id_;
         onBuilt();
         return result;
       }
@@ -4600,12 +5047,6 @@ public final class GameService {
 
       public Builder mergeFrom(gameservice.GameService.TankData other) {
         if (other == gameservice.GameService.TankData.getDefaultInstance()) return this;
-        if (other.getTankID() != 0L) {
-          setTankID(other.getTankID());
-        }
-        if (other.hasGameObject()) {
-          mergeGameObject(other.getGameObject());
-        }
         if (other.getLife() != 0F) {
           setLife(other.getLife());
         }
@@ -4614,6 +5055,19 @@ public final class GameService {
         }
         if (!other.getName().isEmpty()) {
           name_ = other.name_;
+          onChanged();
+        }
+        if (other.getTankID() != 0L) {
+          setTankID(other.getTankID());
+        }
+        if (other.getDirection() != 0) {
+          setDirection(other.getDirection());
+        }
+        if (other.getIsPlayer() != false) {
+          setIsPlayer(other.getIsPlayer());
+        }
+        if (!other.getId().isEmpty()) {
+          id_ = other.id_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -4643,158 +5097,15 @@ public final class GameService {
         return this;
       }
 
-      private long tankID_ ;
-      /**
-       * <code>uint64 tankID = 5;</code>
-       */
-      public long getTankID() {
-        return tankID_;
-      }
-      /**
-       * <code>uint64 tankID = 5;</code>
-       */
-      public Builder setTankID(long value) {
-        
-        tankID_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>uint64 tankID = 5;</code>
-       */
-      public Builder clearTankID() {
-        
-        tankID_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private gameservice.GameService.GameObject gameObject_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          gameservice.GameService.GameObject, gameservice.GameService.GameObject.Builder, gameservice.GameService.GameObjectOrBuilder> gameObjectBuilder_;
-      /**
-       * <code>.gameservice.GameObject gameObject = 1;</code>
-       */
-      public boolean hasGameObject() {
-        return gameObjectBuilder_ != null || gameObject_ != null;
-      }
-      /**
-       * <code>.gameservice.GameObject gameObject = 1;</code>
-       */
-      public gameservice.GameService.GameObject getGameObject() {
-        if (gameObjectBuilder_ == null) {
-          return gameObject_ == null ? gameservice.GameService.GameObject.getDefaultInstance() : gameObject_;
-        } else {
-          return gameObjectBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.gameservice.GameObject gameObject = 1;</code>
-       */
-      public Builder setGameObject(gameservice.GameService.GameObject value) {
-        if (gameObjectBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          gameObject_ = value;
-          onChanged();
-        } else {
-          gameObjectBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.gameservice.GameObject gameObject = 1;</code>
-       */
-      public Builder setGameObject(
-          gameservice.GameService.GameObject.Builder builderForValue) {
-        if (gameObjectBuilder_ == null) {
-          gameObject_ = builderForValue.build();
-          onChanged();
-        } else {
-          gameObjectBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.gameservice.GameObject gameObject = 1;</code>
-       */
-      public Builder mergeGameObject(gameservice.GameService.GameObject value) {
-        if (gameObjectBuilder_ == null) {
-          if (gameObject_ != null) {
-            gameObject_ =
-              gameservice.GameService.GameObject.newBuilder(gameObject_).mergeFrom(value).buildPartial();
-          } else {
-            gameObject_ = value;
-          }
-          onChanged();
-        } else {
-          gameObjectBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.gameservice.GameObject gameObject = 1;</code>
-       */
-      public Builder clearGameObject() {
-        if (gameObjectBuilder_ == null) {
-          gameObject_ = null;
-          onChanged();
-        } else {
-          gameObject_ = null;
-          gameObjectBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.gameservice.GameObject gameObject = 1;</code>
-       */
-      public gameservice.GameService.GameObject.Builder getGameObjectBuilder() {
-        
-        onChanged();
-        return getGameObjectFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.gameservice.GameObject gameObject = 1;</code>
-       */
-      public gameservice.GameService.GameObjectOrBuilder getGameObjectOrBuilder() {
-        if (gameObjectBuilder_ != null) {
-          return gameObjectBuilder_.getMessageOrBuilder();
-        } else {
-          return gameObject_ == null ?
-              gameservice.GameService.GameObject.getDefaultInstance() : gameObject_;
-        }
-      }
-      /**
-       * <code>.gameservice.GameObject gameObject = 1;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          gameservice.GameService.GameObject, gameservice.GameService.GameObject.Builder, gameservice.GameService.GameObjectOrBuilder> 
-          getGameObjectFieldBuilder() {
-        if (gameObjectBuilder_ == null) {
-          gameObjectBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              gameservice.GameService.GameObject, gameservice.GameService.GameObject.Builder, gameservice.GameService.GameObjectOrBuilder>(
-                  getGameObject(),
-                  getParentForChildren(),
-                  isClean());
-          gameObject_ = null;
-        }
-        return gameObjectBuilder_;
-      }
-
       private float life_ ;
       /**
-       * <code>float life = 2;</code>
+       * <code>float life = 1;</code>
        */
       public float getLife() {
         return life_;
       }
       /**
-       * <code>float life = 2;</code>
+       * <code>float life = 1;</code>
        */
       public Builder setLife(float value) {
         
@@ -4803,7 +5114,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>float life = 2;</code>
+       * <code>float life = 1;</code>
        */
       public Builder clearLife() {
         
@@ -4814,13 +5125,13 @@ public final class GameService {
 
       private float shield_ ;
       /**
-       * <code>float shield = 3;</code>
+       * <code>float shield = 2;</code>
        */
       public float getShield() {
         return shield_;
       }
       /**
-       * <code>float shield = 3;</code>
+       * <code>float shield = 2;</code>
        */
       public Builder setShield(float value) {
         
@@ -4829,7 +5140,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>float shield = 3;</code>
+       * <code>float shield = 2;</code>
        */
       public Builder clearShield() {
         
@@ -4840,7 +5151,7 @@ public final class GameService {
 
       private java.lang.Object name_ = "";
       /**
-       * <code>string name = 4;</code>
+       * <code>string name = 3;</code>
        */
       public java.lang.String getName() {
         java.lang.Object ref = name_;
@@ -4855,7 +5166,7 @@ public final class GameService {
         }
       }
       /**
-       * <code>string name = 4;</code>
+       * <code>string name = 3;</code>
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
@@ -4871,7 +5182,7 @@ public final class GameService {
         }
       }
       /**
-       * <code>string name = 4;</code>
+       * <code>string name = 3;</code>
        */
       public Builder setName(
           java.lang.String value) {
@@ -4884,7 +5195,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>string name = 4;</code>
+       * <code>string name = 3;</code>
        */
       public Builder clearName() {
         
@@ -4893,7 +5204,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>string name = 4;</code>
+       * <code>string name = 3;</code>
        */
       public Builder setNameBytes(
           com.google.protobuf.ByteString value) {
@@ -4903,6 +5214,153 @@ public final class GameService {
   checkByteStringIsUtf8(value);
         
         name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private long tankID_ ;
+      /**
+       * <code>uint64 tankID = 4;</code>
+       */
+      public long getTankID() {
+        return tankID_;
+      }
+      /**
+       * <code>uint64 tankID = 4;</code>
+       */
+      public Builder setTankID(long value) {
+        
+        tankID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint64 tankID = 4;</code>
+       */
+      public Builder clearTankID() {
+        
+        tankID_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private int direction_ ;
+      /**
+       * <code>int32 direction = 5;</code>
+       */
+      public int getDirection() {
+        return direction_;
+      }
+      /**
+       * <code>int32 direction = 5;</code>
+       */
+      public Builder setDirection(int value) {
+        
+        direction_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 direction = 5;</code>
+       */
+      public Builder clearDirection() {
+        
+        direction_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private boolean isPlayer_ ;
+      /**
+       * <code>bool isPlayer = 6;</code>
+       */
+      public boolean getIsPlayer() {
+        return isPlayer_;
+      }
+      /**
+       * <code>bool isPlayer = 6;</code>
+       */
+      public Builder setIsPlayer(boolean value) {
+        
+        isPlayer_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool isPlayer = 6;</code>
+       */
+      public Builder clearIsPlayer() {
+        
+        isPlayer_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object id_ = "";
+      /**
+       * <code>string id = 7;</code>
+       */
+      public java.lang.String getId() {
+        java.lang.Object ref = id_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          id_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string id = 7;</code>
+       */
+      public com.google.protobuf.ByteString
+          getIdBytes() {
+        java.lang.Object ref = id_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          id_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string id = 7;</code>
+       */
+      public Builder setId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string id = 7;</code>
+       */
+      public Builder clearId() {
+        
+        id_ = getDefaultInstance().getId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string id = 7;</code>
+       */
+      public Builder setIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        id_ = value;
         onChanged();
         return this;
       }
@@ -5759,23 +6217,41 @@ public final class GameService {
       "\n\022game_service.proto\022\013gameservice\"U\n\013Mai" +
       "nMessage\022%\n\007command\030\001 \001(\0162\024.gameservice." +
       "Command\022\037\n\004data\030\002 \001(\0132\021.gameservice.Data" +
-      "\"\215\001\n\004Data\022+\n\nserverInfo\030\001 \001(\0132\027.gameserv" +
-      "ice.ServerInfo\022\'\n\010tankData\030\002 \001(\0132\025.games" +
-      "ervice.TankData\022/\n\nobjectList\030\003 \001(\0132\033.ga" +
-      "meservice.GameObjectList\" \n\nServerInfo\022\022" +
-      "\n\nserverName\030\001 \001(\t\"\037\n\007Vector2\022\t\n\001x\030\001 \001(\002" +
-      "\022\t\n\001y\030\002 \001(\002\"\266\001\n\nGameObject\022&\n\010position\030\001" +
-      " \001(\0132\024.gameservice.Vector2\022#\n\005scale\030\002 \001(" +
-      "\0132\024.gameservice.Vector2\022$\n\006origin\030\003 \001(\0132" +
-      "\024.gameservice.Vector2\022&\n\010velocity\030\004 \001(\0132" +
-      "\024.gameservice.Vector2\022\r\n\005speed\030\005 \001(\002\"s\n\010" +
-      "TankData\022\016\n\006tankID\030\005 \001(\004\022+\n\ngameObject\030\001" +
-      " \001(\0132\027.gameservice.GameObject\022\014\n\004life\030\002 " +
-      "\001(\002\022\016\n\006shield\030\003 \001(\002\022\014\n\004name\030\004 \001(\t\"A\n\016Gam" +
-      "eObjectList\022/\n\016gameObjectList\030\001 \003(\0132\027.ga" +
-      "meservice.GameObject*8\n\007Command\022\013\n\007UNKNO" +
-      "WN\020\000\022\017\n\013FIND_SERVER\020\001\022\017\n\013FIRE_BULLET\020\nB\r" +
-      "B\013GameServiceb\006proto3"
+      "\"d\n\004Data\022+\n\nserverInfo\030\001 \001(\0132\027.gameservi" +
+      "ce.ServerInfo\022/\n\nobjectList\030\002 \001(\0132\033.game" +
+      "service.GameObjectList\" \n\nServerInfo\022\022\n\n" +
+      "serverName\030\001 \001(\t\"\037\n\007Vector2\022\t\n\001x\030\001 \001(\002\022\t" +
+      "\n\001y\030\002 \001(\002\"\206\002\n\nGameObject\022&\n\010position\030\001 \001" +
+      "(\0132\024.gameservice.Vector2\022#\n\005scale\030\002 \001(\0132" +
+      "\024.gameservice.Vector2\022$\n\006origin\030\003 \001(\0132\024." +
+      "gameservice.Vector2\022&\n\010velocity\030\004 \001(\0132\024." +
+      "gameservice.Vector2\022\r\n\005speed\030\005 \001(\002\022%\n\007te" +
+      "xture\030\006 \001(\0162\024.gameservice.Texture\022\'\n\010tan" +
+      "kData\030\007 \001(\0132\025.gameservice.TankData\"w\n\010Ta" +
+      "nkData\022\014\n\004life\030\001 \001(\002\022\016\n\006shield\030\002 \001(\002\022\014\n\004" +
+      "name\030\003 \001(\t\022\016\n\006tankID\030\004 \001(\004\022\021\n\tdirection\030" +
+      "\005 \001(\005\022\020\n\010isPlayer\030\006 \001(\010\022\n\n\002id\030\007 \001(\t\"A\n\016G" +
+      "ameObjectList\022/\n\016gameObjectList\030\001 \003(\0132\027." +
+      "gameservice.GameObject*\321\004\n\007Texture\022\021\n\rTE" +
+      "XTURE_ATLAS\020\000\022\035\n\031DEFAULT_TEXTURE_REGIONS" +
+      "_L\020\001\022\035\n\031DEFAULT_TEXTURE_REGIONS_R\020\002\022\035\n\031D" +
+      "EFAULT_TEXTURE_REGIONS_U\020\003\022\035\n\031DEFAULT_TE" +
+      "XTURE_REGIONS_D\020\004\022\027\n\023STAR_TEXTURE_REGION" +
+      "\020\005\022\"\n\036PLAYER1_TANK_TEXTURE_REGIONS_L\020\006\022\"" +
+      "\n\036PLAYER1_TANK_TEXTURE_REGIONS_R\020\007\022\"\n\036PL" +
+      "AYER1_TANK_TEXTURE_REGIONS_U\020\010\022\"\n\036PLAYER" +
+      "1_TANK_TEXTURE_REGIONS_D\020\t\022\036\n\032BIG_TANK_T" +
+      "EXTURE_REGIONS_L\020\n\022\036\n\032BIG_TANK_TEXTURE_R" +
+      "EGIONS_R\020\013\022\036\n\032BIG_TANK_TEXTURE_REGIONS_U" +
+      "\020\014\022\036\n\032BIG_TANK_TEXTURE_REGIONS_D\020\r\022\"\n\036DE" +
+      "FAULT_TANK_TEXTURE_REGIONS_L\020\016\022\"\n\036DEFAUL" +
+      "T_TANK_TEXTURE_REGIONS_R\020\017\022\"\n\036DEFAULT_TA" +
+      "NK_TEXTURE_REGIONS_U\020\020\022\"\n\036DEFAULT_TANK_T" +
+      "EXTURE_REGIONS_D\020\021*\216\001\n\007Command\022\013\n\007UNKNOW" +
+      "N\020\000\022\017\n\013FIND_SERVER\020\001\022\n\n\006UPDATE\020\002\022\r\n\tMOVE" +
+      "_NONE\020\005\022\013\n\007MOVE_UP\020\006\022\r\n\tMOVE_DOWN\020\007\022\r\n\tM" +
+      "OVE_LEFT\020\010\022\016\n\nMOVE_RIGHT\020\t\022\017\n\013FIRE_BULLE" +
+      "T\020\nB\rB\013GameServiceb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5800,7 +6276,7 @@ public final class GameService {
     internal_static_gameservice_Data_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_gameservice_Data_descriptor,
-        new java.lang.String[] { "ServerInfo", "TankData", "ObjectList", });
+        new java.lang.String[] { "ServerInfo", "ObjectList", });
     internal_static_gameservice_ServerInfo_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_gameservice_ServerInfo_fieldAccessorTable = new
@@ -5818,13 +6294,13 @@ public final class GameService {
     internal_static_gameservice_GameObject_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_gameservice_GameObject_descriptor,
-        new java.lang.String[] { "Position", "Scale", "Origin", "Velocity", "Speed", });
+        new java.lang.String[] { "Position", "Scale", "Origin", "Velocity", "Speed", "Texture", "TankData", });
     internal_static_gameservice_TankData_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_gameservice_TankData_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_gameservice_TankData_descriptor,
-        new java.lang.String[] { "TankID", "GameObject", "Life", "Shield", "Name", });
+        new java.lang.String[] { "Life", "Shield", "Name", "TankID", "Direction", "IsPlayer", "Id", });
     internal_static_gameservice_GameObjectList_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_gameservice_GameObjectList_fieldAccessorTable = new

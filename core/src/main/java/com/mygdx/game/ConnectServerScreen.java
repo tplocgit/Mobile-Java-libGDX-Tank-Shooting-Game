@@ -8,16 +8,23 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
+import com.mygdx.game.network.AssetManager;
 import com.mygdx.game.network.GameClient;
+import com.mygdx.game.network.GameServer;
+
+import java.io.IOException;
 
 public class ConnectServerScreen implements Screen {
 
     private static ConnectServerScreen instance;
+    private TankShootingGame parent;
     private Stage stage;
     private Table serverButtonTable;
     private ScrollPane scrollPane;
     private Table outerTable;
-    private final Skin buttonSkin = new Skin(Gdx.files.internal(Graphic.SKIN_PATH));;
+    private Table parentTable;
+    private final Skin buttonSkin = new Skin(Gdx.files.internal(AssetManager.getInstance().SKIN_PATH));;
 
     public static ConnectServerScreen getInstance(){
         return instance;
@@ -26,38 +33,44 @@ public class ConnectServerScreen implements Screen {
     @Override
     public void show() {
         // Components
-        Actor actor = new Actor();
-//        ScrollPane layout = new ScrollPane(actor);
-//        layout.setFillParent(true);
-//        layout.cancelTouchFocus();
-//        layout.setFadeScrollBars(true);
-
         serverButtonTable = new Table();
+        parentTable = new Table();
+        parentTable.setFillParent(true);
         outerTable = new Table();
-        outerTable.setFillParent(true);
         scrollPane = new ScrollPane(serverButtonTable);
+//        Table rightSideTable = new Table();
+        stage.addActor(parentTable);
+
+//        parentTable.center();
+        Label title = new Label("Finding server", buttonSkin);
+        title.setFontScale(5);
+        parentTable.add(title).uniform().padBottom(50);
+        parentTable.row();
+
         outerTable.add(scrollPane);
+        parentTable.add(outerTable);
+//        parentTable.row().padBottom(100);
 
-        stage.addActor(outerTable);
+        TextButton backButton = new TextButton("Back", buttonSkin);
+        backButton.setWidth(backButton.getMaxWidth());
+        backButton.setHeight(50);
+        outerTable.add(backButton).height(150).width(300).pad(50);
 
+        //exp
         serverButtonTable.add(createButton("huhuorigin", "haa", 90, buttonSkin)).height(200).width(400);
         serverButtonTable.add(createButton("huhu", "haa", 90, buttonSkin)).height(200).width(400);
         serverButtonTable.add(createButton("huhu", "haa", 90, buttonSkin)).height(200).width(400);
         serverButtonTable.add(createButton("huhu", "haa", 90, buttonSkin)).height(200).width(400);
         serverButtonTable.add(createButton("huhu", "haa", 90, buttonSkin)).height(200).width(400);
 
-//        layout.setActor(serverButtonTable);
 
-//        TextButton textButton2 = new TextButton("okay", buttonSkin);
-//        textButton2.addListener(new ChangeListener() {
-//            @Override
-//            public void changed(ChangeEvent event, Actor actor) {
-//                System.out.println("here ConectSereverScree 44");
-//            }
-//        });
-//
-
-
+        //listener
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(TankShootingGame.MENU_SCREEN);
+            }
+        });
     }
 
     private TextButton createButton(String buttonName, String ip, int port, Skin skin){
@@ -68,7 +81,11 @@ public class ConnectServerScreen implements Screen {
         textButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Connect to " + ip);
+                try {
+                    GameClient.getInstance().connectToServer(ip, GameServer.TCP_PORT, parent);
+                } catch (IOException e) {
+                    System.out.println("Failed to connect to server at: " + ip);
+                }
             }
         });
         return textButton;
@@ -108,14 +125,14 @@ public class ConnectServerScreen implements Screen {
     }
 
     public ConnectServerScreen() {
-        this.stage = new Stage();
-        instance = this;
-        Gdx.input.setInputProcessor(stage);
-        GameClient.getInstance().searchingForServers();
     }
 
     public ConnectServerScreen(TankShootingGame parent) {
-
+        this.stage = new Stage();
+        this.parent = parent;
+        instance = this;
+        Gdx.input.setInputProcessor(stage);
+        GameClient.getInstance().searchingForServers();
     }
 
     public void addServerToList(String serverName, String ip, int port) {

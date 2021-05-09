@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.mygdx.game.network.AssetManager;
 
 public class MainMenuScreen implements Screen {
     private TankShootingGame parent;
@@ -36,7 +37,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(container);
 
         // temporary until we have asset manager in
-        Skin skin = new Skin(Gdx.files.internal(Graphic.SKIN_PATH));
+        Skin skin = new Skin(Gdx.files.internal(AssetManager.getInstance().SKIN_PATH));
 
 
         Label title = new Label("Tank Shooting Game", skin);
@@ -77,7 +78,7 @@ public class MainMenuScreen implements Screen {
         findServerButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(TankShootingGame.PVP_CLIENT_SCREEN);
+                parent.changeScreen(TankShootingGame.CONNECT_SERVER_SCREEN);
     //                Gdx.app.exit();
             }
         });

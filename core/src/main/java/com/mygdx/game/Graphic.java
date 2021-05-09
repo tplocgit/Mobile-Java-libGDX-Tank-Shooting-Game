@@ -6,8 +6,7 @@ public abstract class Graphic {
     public static final int TILE_SIZE = 64;
     public static final int NUMBER_OF_WIDTH_TILE = 40;
     public static final int NUMBER_OF_HEIGHT_TILE = 40;
-    public static final TextureAtlas TEXTURE_ATLAS = new TextureAtlas("images.atlas");
-    public static final String SKIN_PATH = "skin\\commodore64\\skin\\uiskin.json";
+
     public static final int BUTTON_DEFAULT_PAD_VERTICAL = 20;
     public static final int BUTTON_DEFAULT_PAD_HORIZONTAL = 110;
     public static final int TABLE_ROW_DEFAULT_PAD_VERTICAL = 50;

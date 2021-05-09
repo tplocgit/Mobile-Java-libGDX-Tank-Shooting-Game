@@ -3,11 +3,37 @@ syntax = "proto3";
 option java_outer_classname = "GameService";
 package gameservice;
 
+enum Texture{
+    TEXTURE_ATLAS = 0;
+    DEFAULT_TEXTURE_REGIONS_L = 1;
+    DEFAULT_TEXTURE_REGIONS_R = 2;
+    DEFAULT_TEXTURE_REGIONS_U = 3;
+    DEFAULT_TEXTURE_REGIONS_D = 4;
+    STAR_TEXTURE_REGION = 5;
+    PLAYER1_TANK_TEXTURE_REGIONS_L = 6;
+    PLAYER1_TANK_TEXTURE_REGIONS_R = 7;
+    PLAYER1_TANK_TEXTURE_REGIONS_U = 8;
+    PLAYER1_TANK_TEXTURE_REGIONS_D = 9;
+    BIG_TANK_TEXTURE_REGIONS_L = 10;
+    BIG_TANK_TEXTURE_REGIONS_R = 11;
+    BIG_TANK_TEXTURE_REGIONS_U = 12;
+    BIG_TANK_TEXTURE_REGIONS_D = 13;
+    DEFAULT_TANK_TEXTURE_REGIONS_L = 14;
+    DEFAULT_TANK_TEXTURE_REGIONS_R = 15;
+    DEFAULT_TANK_TEXTURE_REGIONS_U = 16;
+    DEFAULT_TANK_TEXTURE_REGIONS_D = 17;
+}
+
 enum Command{
   UNKNOWN = 0;
-
   FIND_SERVER = 1;
+  UPDATE = 2;
 
+  MOVE_NONE = 5;
+  MOVE_UP = 6;
+  MOVE_DOWN = 7;
+  MOVE_LEFT = 8;
+  MOVE_RIGHT = 9;
   FIRE_BULLET = 10;
 }
 
@@ -18,8 +44,7 @@ message MainMessage {
 
 message Data {
   ServerInfo serverInfo = 1;
-  TankData tankData = 2;
-  GameObjectList objectList = 3;
+  GameObjectList objectList = 2;
 }
 
 message ServerInfo{
@@ -37,14 +62,18 @@ message GameObject{
   Vector2 origin = 3;
   Vector2 velocity = 4;
   float speed = 5;
+  Texture texture = 6;
+  TankData tankData = 7;
 }
 
 message TankData{
-  uint64 tankID = 5;
-  GameObject gameObject = 1;
-  float life = 2;
-  float shield = 3;
-  string name = 4;
+  float life = 1;
+  float shield = 2;
+  string name = 3;
+  uint64 tankID = 4;
+  int32 direction = 5;
+  bool isPlayer = 6;
+  string id = 7;
 }
 
 message GameObjectList{

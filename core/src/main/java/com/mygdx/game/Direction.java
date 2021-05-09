@@ -5,6 +5,7 @@ public abstract class Direction {
     public final static int RIGHT = 1;
     public final static int UP = 2;
     public final static int DOWN = 3;
+    public final static int NONE = 4;
 
     public static boolean validateDirection(int direction) {
         return direction >= 0 && direction <= 3;

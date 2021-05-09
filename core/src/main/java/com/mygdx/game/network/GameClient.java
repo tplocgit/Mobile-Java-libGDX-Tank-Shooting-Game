@@ -81,11 +81,16 @@ package com.mygdx.game.network;
 //
 //}
 
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.mygdx.game.ConnectServerScreen;
+import com.mygdx.game.Direction;
+import com.mygdx.game.TankShootingGame;
 import gameservice.GameService;
 import sun.applet.Main;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,9 +102,17 @@ public class GameClient {
     public static final int UDP_PORT = 1235;
     public static GameClient instance;
     private Thread udpThread;
+    private Thread tcpThread;
     private DatagramSocket UDPSocket;
     private String clientName;
     private boolean isCanceled = false;
+
+    private Socket clientSocket;
+    private OutputStream clientTCPOut;
+    private InputStream clientTCPIn;
+    private String serverAddress;
+    private int serverPort;
+
     private List<ServerInfo> serverList = new ArrayList<>();
 
     public GameClient(String clientName) {
@@ -122,10 +135,7 @@ public class GameClient {
                     DatagramPacket respondPackage = new DatagramPacket(buffer, buffer.length);
                     UDPSocket.receive(respondPackage);
 
-                    byte[] receiveBuffer = Arrays.copyOf(respondPackage.getData(), respondPackage.getLength());
-                    System.out.println("begin " + receiveBuffer.length);
-
-                    GameService.MainMessage responseMessage = GameService.MainMessage.parseFrom(receiveBuffer);
+                    GameService.MainMessage responseMessage = getMessageFromData(respondPackage.getData(), respondPackage.getLength());
 
                     if(responseMessage.getCommand() == GameService.Command.FIND_SERVER) {
                         serverList.add(new ServerInfo(
@@ -160,6 +170,35 @@ public class GameClient {
 
     }
 
+    private void createTCPClientThread() {
+        tcpThread = new Thread(() -> {
+            byte[] data = new byte[25600];
+
+            while(clientSocket != null && clientSocket.isConnected()) {
+                try {
+                    int length = clientTCPIn.read(data);
+//                    GameService.MainMessage receivedMessage = getMessageFromData(data, length);
+//
+//                    if(receivedMessage.getCommand() == GameService.Command.UPDATE) {
+//
+//                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            serverAddress = "";
+            serverPort = 0;
+        });
+        tcpThread.start();
+    }
+
+    public GameService.MainMessage getMessageFromData(byte[] data, int length) throws InvalidProtocolBufferException {
+        byte[] newData = Arrays.copyOf(data, length);
+        return GameService.MainMessage.parseFrom(newData);
+    }
+
     public void searchingForServers() {
         serverList.clear();
         new Thread(() -> {
@@ -187,6 +226,66 @@ public class GameClient {
         }).start();
     }
 
+    public void connectToServer(String serverIp, int serverPort, TankShootingGame tankShootingGame) throws IOException {
+        if(clientSocket == null || !clientSocket.isConnected()) {
+            this.serverAddress = serverIp;
+            this.serverPort = serverPort;
+            clientSocket = new Socket(serverIp, serverPort);
+            clientTCPIn = clientSocket.getInputStream();
+            clientTCPOut = clientSocket.getOutputStream();
+            createTCPClientThread();
+            tankShootingGame.changeScreen(TankShootingGame.PVP_SCREEN);
+            System.out.println("Connected to server at: " + serverIp);
+        }
+    }
+
+    public void sendFireCommand() {
+        if(clientSocket != null && clientSocket.isConnected()) {
+            GameService.MainMessage cmd = GameService.MainMessage.newBuilder()
+                    .setCommand(GameService.Command.FIRE_BULLET)
+                    .build();
+
+            try {
+                clientTCPOut.write(cmd.toByteArray());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void sendDirectionCommands(int direction) {
+        if(clientSocket != null && clientSocket.isConnected()) {
+            GameService.Command command = GameService.Command.UNKNOWN;
+            switch (direction) {
+                case Direction.LEFT:
+                    command = GameService.Command.MOVE_LEFT;
+                    break;
+                case Direction.RIGHT:
+                    command = GameService.Command.MOVE_RIGHT;
+                    break;
+                case Direction.UP:
+                    command = GameService.Command.MOVE_UP;
+                    break;
+                case Direction.DOWN:
+                    command = GameService.Command.MOVE_DOWN;
+                    break;
+                case Direction.NONE:
+                    command = GameService.Command.MOVE_NONE;
+                    break;
+            }
+
+            GameService.MainMessage cmd = GameService.MainMessage.newBuilder()
+                    .setCommand(command)
+                    .build();
+
+            try {
+                clientTCPOut.write(cmd.toByteArray());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static String getBroadcast() throws SocketException {
         System.setProperty("java.net.preferIPv4Stack", "true");
         for (Enumeration<NetworkInterface> niEnum = NetworkInterface.getNetworkInterfaces(); niEnum.hasMoreElements();) {
@@ -201,4 +300,5 @@ public class GameClient {
         }
         return null;
     }
+
 }

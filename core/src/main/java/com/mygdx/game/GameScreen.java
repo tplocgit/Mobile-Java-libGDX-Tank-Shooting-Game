@@ -20,22 +20,13 @@ public class GameScreen implements Screen {
 
     public MapObjects mapObjects;
 
-    protected CopyOnWriteArrayList<GameObject> gameObjectList = new CopyOnWriteArrayList<>();
-
-
     //texture map
-    public static final TextureAtlas TEXTURE_ATLAS = new TextureAtlas("images.atlas");
-    public static final TextureRegion[] PLAYER1_BULLET_TEXTURE_REGIONS = {
-            TEXTURE_ATLAS.findRegion("bulletBlue2_left"),
-            TEXTURE_ATLAS.findRegion("bulletBlue2_right"),
-            TEXTURE_ATLAS.findRegion("bulletBlue2_up"),
-            TEXTURE_ATLAS.findRegion("bulletBlue2_down"),
-    };
+
 
 
     protected OrthographicCamera camera;
     protected Viewport viewport;
-    private SpriteBatch batch;
+    protected SpriteBatch batch;
     static public boolean in_power_up_time = false;
 
     //world parameters
@@ -78,11 +69,14 @@ public class GameScreen implements Screen {
 
     public GameScreen(){
         batch = new SpriteBatch();
+        instance = this;
     }
 
     public SpriteBatch getBatch() {
         return batch;
     }
+
+
 
     @Override
     public void show() {
@@ -120,10 +114,6 @@ public class GameScreen implements Screen {
         camera.position.set(playerTank.getPosition().x, playerTank.getPosition().y, 0);
         batch.setProjectionMatrix(camera.combined);
         VirtualController.getInstance().resize(width, height);
-    }
-
-    public List<GameObject> getGameObjectList() {
-        return gameObjectList;
     }
 
     public PlayerTank getPlayerTank() {
