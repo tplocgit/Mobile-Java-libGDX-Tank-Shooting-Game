@@ -1,27 +1,29 @@
 package com.mygdx.game.network;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.*;
-import com.mygdx.game.objects.PlayerTank;
+import gameservice.GameService;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class PvPScreen extends GameScreen {
     private static PvPScreen instance;
-    //graphic
+
+    private CopyOnWriteArrayList<GameService.GameObject> netObjectList = new CopyOnWriteArrayList<>();
 
     // other stuff
     private TiledMap map;
@@ -30,6 +32,7 @@ public class PvPScreen extends GameScreen {
     private BitmapFont font;
     private HUD my_hud;
     private int score = 0, enemyCount = 0;
+    private PlayerNet playerNet;
 
     private ArrayList<Vector2> spawnPos;
 
@@ -42,8 +45,7 @@ public class PvPScreen extends GameScreen {
 
         instance = this;
 
-        playerTank = new PlayerTank(AssetManager.getInstance().PLAYER1_TANK_TEXTURE_REGIONS,
-                new Vector2(PLAYER_INITIAL_POSITION_X, PLAYER_INITIAL_POSITION_Y));
+        playerNet = new PlayerNet();
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(20 * TILE_SIZE, 10 * TILE_SIZE, camera);
@@ -59,7 +61,7 @@ public class PvPScreen extends GameScreen {
         //set up game objects
 
         batch = new SpriteBatch();
-        my_hud = new HUD(this);
+//        my_hud = new HUD(this);
 
         //position to spawn enemies
         spawnPos = new ArrayList<>();
@@ -82,7 +84,9 @@ public class PvPScreen extends GameScreen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
-        camera.position.set(playerTank.getPosition().x, playerTank.getPosition().y, 0);
+        if(playerNet.getPlayerObject() != null) {
+            camera.position.set(playerNet.getPlayerObject().getPosition().getX(), playerNet.getPlayerObject().getPosition().getY(), 0);
+        }
         batch.setProjectionMatrix(camera.combined);
         VirtualController.getInstance().resize(width, height);
     }
@@ -108,6 +112,10 @@ public class PvPScreen extends GameScreen {
         map.dispose();
         font.dispose();
         batch.dispose();
+
+        if(GameServer.getInstance() != null) {
+            GameServer.getInstance().shutdownServer();
+        }
     }
 
     @Override
@@ -127,47 +135,51 @@ public class PvPScreen extends GameScreen {
         batch.begin();
         renderer.render();
 
-        detectInput();
+        playerNet.detectInput();
+//        System.out.println("got data: " + playerNet.getPlayerID());
 
-        for(GameObject ob : GameObject.gameObjectList){
-            ob.draw(batch);
+        for(GameService.GameObject ob : netObjectList){
+            if(ob.getTankData().getTankID() == playerNet.getPlayerID() && playerNet.getPlayerID() != 0) {
+                playerNet.setPlayerObject(ob);
+                camera.position.set(ob.getPosition().getX() , ob.getPosition().getY() , 0);
+            }
+            drawNetObject(ob);
         }
 
         batch.end();
 
         VirtualController.getInstance().draw();
-        my_hud.update();
-        my_hud.draw();
+//        my_hud.update();
+//        my_hud.draw();
     }
 
-    public void detectInput() {
+    private void drawNetObject(GameService.GameObject gameObject) {
 
-        if (VirtualController.getInstance().isCrossHairPressed()) {
-            GameClient.getInstance().sendFireCommand();
-        }
-        //keyboard input -- if move button press then  velocity != 0 --> move
-        if (VirtualController.getInstance().isLeftPressed()) {
-            GameClient.getInstance().sendDirectionCommands(Direction.LEFT);
-        }
+        Sprite sprite = null;
 
-        if (VirtualController.getInstance().isRightPressed()) {
-            GameClient.getInstance().sendDirectionCommands(Direction.RIGHT);
+        if(gameObject.getTexture() != GameService.Texture.TEXTURE_ATLAS) {
+            sprite = new Sprite(AssetManager.getInstance().getTextureFromID(gameObject.getTexture()));
+            sprite.setSize(gameObject.getSize().getX(), gameObject.getSize().getY());
         }
 
-        if (VirtualController.getInstance().isUpPressed()) {
-            GameClient.getInstance().sendDirectionCommands(Direction.UP);
+        if(sprite != null){
+            sprite.setBounds(gameObject.getPosition().getX() - sprite.getWidth() / 2f, gameObject.getPosition().getY() - sprite.getHeight() / 2f,
+                    sprite.getWidth(), sprite.getHeight());
+            sprite.setScale(gameObject.getScale().getX(), gameObject.getScale().getY());
+            sprite.draw(batch);
         }
+    }
 
-        if (VirtualController.getInstance().isDownPressed()) {
-            GameClient.getInstance().sendDirectionCommands(Direction.DOWN);
-        }
+    public PlayerNet getPlayerNet() {
+        return playerNet;
+    }
 
-        if (!VirtualController.getInstance().isLeftPressed()
-                && !VirtualController.getInstance().isRightPressed()
-                && !VirtualController.getInstance().isDownPressed()
-                && !VirtualController.getInstance().isUpPressed()
-        ) {
-            GameClient.getInstance().sendDirectionCommands(Direction.NONE);
-        }
+    public CopyOnWriteArrayList<GameService.GameObject> getNetObjectList() {
+        return netObjectList;
+    }
+
+    public void setNetObjectList(List<GameService.GameObject> netObjectList) {
+        this.netObjectList.clear();
+        this.netObjectList.addAll(netObjectList);
     }
 }

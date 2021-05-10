@@ -274,6 +274,10 @@ public final class GameService {
      */
     UPDATE(2),
     /**
+     * <code>PLAYER_DATA = 3;</code>
+     */
+    PLAYER_DATA(3),
+    /**
      * <code>MOVE_NONE = 5;</code>
      */
     MOVE_NONE(5),
@@ -312,6 +316,10 @@ public final class GameService {
      * <code>UPDATE = 2;</code>
      */
     public static final int UPDATE_VALUE = 2;
+    /**
+     * <code>PLAYER_DATA = 3;</code>
+     */
+    public static final int PLAYER_DATA_VALUE = 3;
     /**
      * <code>MOVE_NONE = 5;</code>
      */
@@ -359,6 +367,7 @@ public final class GameService {
         case 0: return UNKNOWN;
         case 1: return FIND_SERVER;
         case 2: return UPDATE;
+        case 3: return PLAYER_DATA;
         case 5: return MOVE_NONE;
         case 6: return MOVE_UP;
         case 7: return MOVE_DOWN;
@@ -1120,6 +1129,19 @@ public final class GameService {
      * <code>.gameservice.GameObjectList objectList = 2;</code>
      */
     gameservice.GameService.GameObjectListOrBuilder getObjectListOrBuilder();
+
+    /**
+     * <code>.gameservice.PlayerData playerData = 3;</code>
+     */
+    boolean hasPlayerData();
+    /**
+     * <code>.gameservice.PlayerData playerData = 3;</code>
+     */
+    gameservice.GameService.PlayerData getPlayerData();
+    /**
+     * <code>.gameservice.PlayerData playerData = 3;</code>
+     */
+    gameservice.GameService.PlayerDataOrBuilder getPlayerDataOrBuilder();
   }
   /**
    * Protobuf type {@code gameservice.Data}
@@ -1193,6 +1215,19 @@ public final class GameService {
 
               break;
             }
+            case 26: {
+              gameservice.GameService.PlayerData.Builder subBuilder = null;
+              if (playerData_ != null) {
+                subBuilder = playerData_.toBuilder();
+              }
+              playerData_ = input.readMessage(gameservice.GameService.PlayerData.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(playerData_);
+                playerData_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -1259,6 +1294,27 @@ public final class GameService {
       return getObjectList();
     }
 
+    public static final int PLAYERDATA_FIELD_NUMBER = 3;
+    private gameservice.GameService.PlayerData playerData_;
+    /**
+     * <code>.gameservice.PlayerData playerData = 3;</code>
+     */
+    public boolean hasPlayerData() {
+      return playerData_ != null;
+    }
+    /**
+     * <code>.gameservice.PlayerData playerData = 3;</code>
+     */
+    public gameservice.GameService.PlayerData getPlayerData() {
+      return playerData_ == null ? gameservice.GameService.PlayerData.getDefaultInstance() : playerData_;
+    }
+    /**
+     * <code>.gameservice.PlayerData playerData = 3;</code>
+     */
+    public gameservice.GameService.PlayerDataOrBuilder getPlayerDataOrBuilder() {
+      return getPlayerData();
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -1277,6 +1333,9 @@ public final class GameService {
       if (objectList_ != null) {
         output.writeMessage(2, getObjectList());
       }
+      if (playerData_ != null) {
+        output.writeMessage(3, getPlayerData());
+      }
       unknownFields.writeTo(output);
     }
 
@@ -1292,6 +1351,10 @@ public final class GameService {
       if (objectList_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getObjectList());
+      }
+      if (playerData_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getPlayerData());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1319,6 +1382,11 @@ public final class GameService {
         result = result && getObjectList()
             .equals(other.getObjectList());
       }
+      result = result && (hasPlayerData() == other.hasPlayerData());
+      if (hasPlayerData()) {
+        result = result && getPlayerData()
+            .equals(other.getPlayerData());
+      }
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -1337,6 +1405,10 @@ public final class GameService {
       if (hasObjectList()) {
         hash = (37 * hash) + OBJECTLIST_FIELD_NUMBER;
         hash = (53 * hash) + getObjectList().hashCode();
+      }
+      if (hasPlayerData()) {
+        hash = (37 * hash) + PLAYERDATA_FIELD_NUMBER;
+        hash = (53 * hash) + getPlayerData().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -1479,6 +1551,12 @@ public final class GameService {
           objectList_ = null;
           objectListBuilder_ = null;
         }
+        if (playerDataBuilder_ == null) {
+          playerData_ = null;
+        } else {
+          playerData_ = null;
+          playerDataBuilder_ = null;
+        }
         return this;
       }
 
@@ -1510,6 +1588,11 @@ public final class GameService {
           result.objectList_ = objectList_;
         } else {
           result.objectList_ = objectListBuilder_.build();
+        }
+        if (playerDataBuilder_ == null) {
+          result.playerData_ = playerData_;
+        } else {
+          result.playerData_ = playerDataBuilder_.build();
         }
         onBuilt();
         return result;
@@ -1557,6 +1640,9 @@ public final class GameService {
         }
         if (other.hasObjectList()) {
           mergeObjectList(other.getObjectList());
+        }
+        if (other.hasPlayerData()) {
+          mergePlayerData(other.getPlayerData());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1818,6 +1904,123 @@ public final class GameService {
         }
         return objectListBuilder_;
       }
+
+      private gameservice.GameService.PlayerData playerData_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          gameservice.GameService.PlayerData, gameservice.GameService.PlayerData.Builder, gameservice.GameService.PlayerDataOrBuilder> playerDataBuilder_;
+      /**
+       * <code>.gameservice.PlayerData playerData = 3;</code>
+       */
+      public boolean hasPlayerData() {
+        return playerDataBuilder_ != null || playerData_ != null;
+      }
+      /**
+       * <code>.gameservice.PlayerData playerData = 3;</code>
+       */
+      public gameservice.GameService.PlayerData getPlayerData() {
+        if (playerDataBuilder_ == null) {
+          return playerData_ == null ? gameservice.GameService.PlayerData.getDefaultInstance() : playerData_;
+        } else {
+          return playerDataBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.gameservice.PlayerData playerData = 3;</code>
+       */
+      public Builder setPlayerData(gameservice.GameService.PlayerData value) {
+        if (playerDataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          playerData_ = value;
+          onChanged();
+        } else {
+          playerDataBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.gameservice.PlayerData playerData = 3;</code>
+       */
+      public Builder setPlayerData(
+          gameservice.GameService.PlayerData.Builder builderForValue) {
+        if (playerDataBuilder_ == null) {
+          playerData_ = builderForValue.build();
+          onChanged();
+        } else {
+          playerDataBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.gameservice.PlayerData playerData = 3;</code>
+       */
+      public Builder mergePlayerData(gameservice.GameService.PlayerData value) {
+        if (playerDataBuilder_ == null) {
+          if (playerData_ != null) {
+            playerData_ =
+              gameservice.GameService.PlayerData.newBuilder(playerData_).mergeFrom(value).buildPartial();
+          } else {
+            playerData_ = value;
+          }
+          onChanged();
+        } else {
+          playerDataBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.gameservice.PlayerData playerData = 3;</code>
+       */
+      public Builder clearPlayerData() {
+        if (playerDataBuilder_ == null) {
+          playerData_ = null;
+          onChanged();
+        } else {
+          playerData_ = null;
+          playerDataBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.gameservice.PlayerData playerData = 3;</code>
+       */
+      public gameservice.GameService.PlayerData.Builder getPlayerDataBuilder() {
+        
+        onChanged();
+        return getPlayerDataFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.gameservice.PlayerData playerData = 3;</code>
+       */
+      public gameservice.GameService.PlayerDataOrBuilder getPlayerDataOrBuilder() {
+        if (playerDataBuilder_ != null) {
+          return playerDataBuilder_.getMessageOrBuilder();
+        } else {
+          return playerData_ == null ?
+              gameservice.GameService.PlayerData.getDefaultInstance() : playerData_;
+        }
+      }
+      /**
+       * <code>.gameservice.PlayerData playerData = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          gameservice.GameService.PlayerData, gameservice.GameService.PlayerData.Builder, gameservice.GameService.PlayerDataOrBuilder> 
+          getPlayerDataFieldBuilder() {
+        if (playerDataBuilder_ == null) {
+          playerDataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              gameservice.GameService.PlayerData, gameservice.GameService.PlayerData.Builder, gameservice.GameService.PlayerDataOrBuilder>(
+                  getPlayerData(),
+                  getParentForChildren(),
+                  isClean());
+          playerData_ = null;
+        }
+        return playerDataBuilder_;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
@@ -1862,6 +2065,458 @@ public final class GameService {
     }
 
     public gameservice.GameService.Data getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PlayerDataOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:gameservice.PlayerData)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint64 playerId = 1;</code>
+     */
+    long getPlayerId();
+  }
+  /**
+   * Protobuf type {@code gameservice.PlayerData}
+   */
+  public  static final class PlayerData extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:gameservice.PlayerData)
+      PlayerDataOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use PlayerData.newBuilder() to construct.
+    private PlayerData(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PlayerData() {
+      playerId_ = 0L;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private PlayerData(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              playerId_ = input.readUInt64();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return gameservice.GameService.internal_static_gameservice_PlayerData_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return gameservice.GameService.internal_static_gameservice_PlayerData_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              gameservice.GameService.PlayerData.class, gameservice.GameService.PlayerData.Builder.class);
+    }
+
+    public static final int PLAYERID_FIELD_NUMBER = 1;
+    private long playerId_;
+    /**
+     * <code>uint64 playerId = 1;</code>
+     */
+    public long getPlayerId() {
+      return playerId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (playerId_ != 0L) {
+        output.writeUInt64(1, playerId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (playerId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(1, playerId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof gameservice.GameService.PlayerData)) {
+        return super.equals(obj);
+      }
+      gameservice.GameService.PlayerData other = (gameservice.GameService.PlayerData) obj;
+
+      boolean result = true;
+      result = result && (getPlayerId()
+          == other.getPlayerId());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + PLAYERID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getPlayerId());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static gameservice.GameService.PlayerData parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static gameservice.GameService.PlayerData parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static gameservice.GameService.PlayerData parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static gameservice.GameService.PlayerData parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static gameservice.GameService.PlayerData parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static gameservice.GameService.PlayerData parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static gameservice.GameService.PlayerData parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static gameservice.GameService.PlayerData parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static gameservice.GameService.PlayerData parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static gameservice.GameService.PlayerData parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static gameservice.GameService.PlayerData parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static gameservice.GameService.PlayerData parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(gameservice.GameService.PlayerData prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code gameservice.PlayerData}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:gameservice.PlayerData)
+        gameservice.GameService.PlayerDataOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return gameservice.GameService.internal_static_gameservice_PlayerData_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return gameservice.GameService.internal_static_gameservice_PlayerData_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                gameservice.GameService.PlayerData.class, gameservice.GameService.PlayerData.Builder.class);
+      }
+
+      // Construct using gameservice.GameService.PlayerData.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        playerId_ = 0L;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return gameservice.GameService.internal_static_gameservice_PlayerData_descriptor;
+      }
+
+      public gameservice.GameService.PlayerData getDefaultInstanceForType() {
+        return gameservice.GameService.PlayerData.getDefaultInstance();
+      }
+
+      public gameservice.GameService.PlayerData build() {
+        gameservice.GameService.PlayerData result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public gameservice.GameService.PlayerData buildPartial() {
+        gameservice.GameService.PlayerData result = new gameservice.GameService.PlayerData(this);
+        result.playerId_ = playerId_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof gameservice.GameService.PlayerData) {
+          return mergeFrom((gameservice.GameService.PlayerData)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(gameservice.GameService.PlayerData other) {
+        if (other == gameservice.GameService.PlayerData.getDefaultInstance()) return this;
+        if (other.getPlayerId() != 0L) {
+          setPlayerId(other.getPlayerId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        gameservice.GameService.PlayerData parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (gameservice.GameService.PlayerData) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private long playerId_ ;
+      /**
+       * <code>uint64 playerId = 1;</code>
+       */
+      public long getPlayerId() {
+        return playerId_;
+      }
+      /**
+       * <code>uint64 playerId = 1;</code>
+       */
+      public Builder setPlayerId(long value) {
+        
+        playerId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint64 playerId = 1;</code>
+       */
+      public Builder clearPlayerId() {
+        
+        playerId_ = 0L;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:gameservice.PlayerData)
+    }
+
+    // @@protoc_insertion_point(class_scope:gameservice.PlayerData)
+    private static final gameservice.GameService.PlayerData DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new gameservice.GameService.PlayerData();
+    }
+
+    public static gameservice.GameService.PlayerData getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PlayerData>
+        PARSER = new com.google.protobuf.AbstractParser<PlayerData>() {
+      public PlayerData parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new PlayerData(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PlayerData> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PlayerData> getParserForType() {
+      return PARSER;
+    }
+
+    public gameservice.GameService.PlayerData getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -2969,29 +3624,42 @@ public final class GameService {
     gameservice.GameService.Vector2OrBuilder getVelocityOrBuilder();
 
     /**
-     * <code>float speed = 5;</code>
+     * <code>.gameservice.Vector2 size = 5;</code>
+     */
+    boolean hasSize();
+    /**
+     * <code>.gameservice.Vector2 size = 5;</code>
+     */
+    gameservice.GameService.Vector2 getSize();
+    /**
+     * <code>.gameservice.Vector2 size = 5;</code>
+     */
+    gameservice.GameService.Vector2OrBuilder getSizeOrBuilder();
+
+    /**
+     * <code>float speed = 6;</code>
      */
     float getSpeed();
 
     /**
-     * <code>.gameservice.Texture texture = 6;</code>
+     * <code>.gameservice.Texture texture = 7;</code>
      */
     int getTextureValue();
     /**
-     * <code>.gameservice.Texture texture = 6;</code>
+     * <code>.gameservice.Texture texture = 7;</code>
      */
     gameservice.GameService.Texture getTexture();
 
     /**
-     * <code>.gameservice.TankData tankData = 7;</code>
+     * <code>.gameservice.TankData tankData = 8;</code>
      */
     boolean hasTankData();
     /**
-     * <code>.gameservice.TankData tankData = 7;</code>
+     * <code>.gameservice.TankData tankData = 8;</code>
      */
     gameservice.GameService.TankData getTankData();
     /**
-     * <code>.gameservice.TankData tankData = 7;</code>
+     * <code>.gameservice.TankData tankData = 8;</code>
      */
     gameservice.GameService.TankDataOrBuilder getTankDataOrBuilder();
   }
@@ -3095,18 +3763,31 @@ public final class GameService {
 
               break;
             }
-            case 45: {
+            case 42: {
+              gameservice.GameService.Vector2.Builder subBuilder = null;
+              if (size_ != null) {
+                subBuilder = size_.toBuilder();
+              }
+              size_ = input.readMessage(gameservice.GameService.Vector2.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(size_);
+                size_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 53: {
 
               speed_ = input.readFloat();
               break;
             }
-            case 48: {
+            case 56: {
               int rawValue = input.readEnum();
 
               texture_ = rawValue;
               break;
             }
-            case 58: {
+            case 66: {
               gameservice.GameService.TankData.Builder subBuilder = null;
               if (tankData_ != null) {
                 subBuilder = tankData_.toBuilder();
@@ -3227,47 +3908,68 @@ public final class GameService {
       return getVelocity();
     }
 
-    public static final int SPEED_FIELD_NUMBER = 5;
+    public static final int SIZE_FIELD_NUMBER = 5;
+    private gameservice.GameService.Vector2 size_;
+    /**
+     * <code>.gameservice.Vector2 size = 5;</code>
+     */
+    public boolean hasSize() {
+      return size_ != null;
+    }
+    /**
+     * <code>.gameservice.Vector2 size = 5;</code>
+     */
+    public gameservice.GameService.Vector2 getSize() {
+      return size_ == null ? gameservice.GameService.Vector2.getDefaultInstance() : size_;
+    }
+    /**
+     * <code>.gameservice.Vector2 size = 5;</code>
+     */
+    public gameservice.GameService.Vector2OrBuilder getSizeOrBuilder() {
+      return getSize();
+    }
+
+    public static final int SPEED_FIELD_NUMBER = 6;
     private float speed_;
     /**
-     * <code>float speed = 5;</code>
+     * <code>float speed = 6;</code>
      */
     public float getSpeed() {
       return speed_;
     }
 
-    public static final int TEXTURE_FIELD_NUMBER = 6;
+    public static final int TEXTURE_FIELD_NUMBER = 7;
     private int texture_;
     /**
-     * <code>.gameservice.Texture texture = 6;</code>
+     * <code>.gameservice.Texture texture = 7;</code>
      */
     public int getTextureValue() {
       return texture_;
     }
     /**
-     * <code>.gameservice.Texture texture = 6;</code>
+     * <code>.gameservice.Texture texture = 7;</code>
      */
     public gameservice.GameService.Texture getTexture() {
       gameservice.GameService.Texture result = gameservice.GameService.Texture.valueOf(texture_);
       return result == null ? gameservice.GameService.Texture.UNRECOGNIZED : result;
     }
 
-    public static final int TANKDATA_FIELD_NUMBER = 7;
+    public static final int TANKDATA_FIELD_NUMBER = 8;
     private gameservice.GameService.TankData tankData_;
     /**
-     * <code>.gameservice.TankData tankData = 7;</code>
+     * <code>.gameservice.TankData tankData = 8;</code>
      */
     public boolean hasTankData() {
       return tankData_ != null;
     }
     /**
-     * <code>.gameservice.TankData tankData = 7;</code>
+     * <code>.gameservice.TankData tankData = 8;</code>
      */
     public gameservice.GameService.TankData getTankData() {
       return tankData_ == null ? gameservice.GameService.TankData.getDefaultInstance() : tankData_;
     }
     /**
-     * <code>.gameservice.TankData tankData = 7;</code>
+     * <code>.gameservice.TankData tankData = 8;</code>
      */
     public gameservice.GameService.TankDataOrBuilder getTankDataOrBuilder() {
       return getTankData();
@@ -3297,14 +3999,17 @@ public final class GameService {
       if (velocity_ != null) {
         output.writeMessage(4, getVelocity());
       }
+      if (size_ != null) {
+        output.writeMessage(5, getSize());
+      }
       if (speed_ != 0F) {
-        output.writeFloat(5, speed_);
+        output.writeFloat(6, speed_);
       }
       if (texture_ != gameservice.GameService.Texture.TEXTURE_ATLAS.getNumber()) {
-        output.writeEnum(6, texture_);
+        output.writeEnum(7, texture_);
       }
       if (tankData_ != null) {
-        output.writeMessage(7, getTankData());
+        output.writeMessage(8, getTankData());
       }
       unknownFields.writeTo(output);
     }
@@ -3330,17 +4035,21 @@ public final class GameService {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, getVelocity());
       }
+      if (size_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, getSize());
+      }
       if (speed_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(5, speed_);
+          .computeFloatSize(6, speed_);
       }
       if (texture_ != gameservice.GameService.Texture.TEXTURE_ATLAS.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(6, texture_);
+          .computeEnumSize(7, texture_);
       }
       if (tankData_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(7, getTankData());
+          .computeMessageSize(8, getTankData());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -3378,6 +4087,11 @@ public final class GameService {
         result = result && getVelocity()
             .equals(other.getVelocity());
       }
+      result = result && (hasSize() == other.hasSize());
+      if (hasSize()) {
+        result = result && getSize()
+            .equals(other.getSize());
+      }
       result = result && (
           java.lang.Float.floatToIntBits(getSpeed())
           == java.lang.Float.floatToIntBits(
@@ -3414,6 +4128,10 @@ public final class GameService {
       if (hasVelocity()) {
         hash = (37 * hash) + VELOCITY_FIELD_NUMBER;
         hash = (53 * hash) + getVelocity().hashCode();
+      }
+      if (hasSize()) {
+        hash = (37 * hash) + SIZE_FIELD_NUMBER;
+        hash = (53 * hash) + getSize().hashCode();
       }
       hash = (37 * hash) + SPEED_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
@@ -3577,6 +4295,12 @@ public final class GameService {
           velocity_ = null;
           velocityBuilder_ = null;
         }
+        if (sizeBuilder_ == null) {
+          size_ = null;
+        } else {
+          size_ = null;
+          sizeBuilder_ = null;
+        }
         speed_ = 0F;
 
         texture_ = 0;
@@ -3628,6 +4352,11 @@ public final class GameService {
           result.velocity_ = velocity_;
         } else {
           result.velocity_ = velocityBuilder_.build();
+        }
+        if (sizeBuilder_ == null) {
+          result.size_ = size_;
+        } else {
+          result.size_ = sizeBuilder_.build();
         }
         result.speed_ = speed_;
         result.texture_ = texture_;
@@ -3688,6 +4417,9 @@ public final class GameService {
         }
         if (other.hasVelocity()) {
           mergeVelocity(other.getVelocity());
+        }
+        if (other.hasSize()) {
+          mergeSize(other.getSize());
         }
         if (other.getSpeed() != 0F) {
           setSpeed(other.getSpeed());
@@ -4193,15 +4925,132 @@ public final class GameService {
         return velocityBuilder_;
       }
 
+      private gameservice.GameService.Vector2 size_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          gameservice.GameService.Vector2, gameservice.GameService.Vector2.Builder, gameservice.GameService.Vector2OrBuilder> sizeBuilder_;
+      /**
+       * <code>.gameservice.Vector2 size = 5;</code>
+       */
+      public boolean hasSize() {
+        return sizeBuilder_ != null || size_ != null;
+      }
+      /**
+       * <code>.gameservice.Vector2 size = 5;</code>
+       */
+      public gameservice.GameService.Vector2 getSize() {
+        if (sizeBuilder_ == null) {
+          return size_ == null ? gameservice.GameService.Vector2.getDefaultInstance() : size_;
+        } else {
+          return sizeBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.gameservice.Vector2 size = 5;</code>
+       */
+      public Builder setSize(gameservice.GameService.Vector2 value) {
+        if (sizeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          size_ = value;
+          onChanged();
+        } else {
+          sizeBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.gameservice.Vector2 size = 5;</code>
+       */
+      public Builder setSize(
+          gameservice.GameService.Vector2.Builder builderForValue) {
+        if (sizeBuilder_ == null) {
+          size_ = builderForValue.build();
+          onChanged();
+        } else {
+          sizeBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.gameservice.Vector2 size = 5;</code>
+       */
+      public Builder mergeSize(gameservice.GameService.Vector2 value) {
+        if (sizeBuilder_ == null) {
+          if (size_ != null) {
+            size_ =
+              gameservice.GameService.Vector2.newBuilder(size_).mergeFrom(value).buildPartial();
+          } else {
+            size_ = value;
+          }
+          onChanged();
+        } else {
+          sizeBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.gameservice.Vector2 size = 5;</code>
+       */
+      public Builder clearSize() {
+        if (sizeBuilder_ == null) {
+          size_ = null;
+          onChanged();
+        } else {
+          size_ = null;
+          sizeBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.gameservice.Vector2 size = 5;</code>
+       */
+      public gameservice.GameService.Vector2.Builder getSizeBuilder() {
+        
+        onChanged();
+        return getSizeFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.gameservice.Vector2 size = 5;</code>
+       */
+      public gameservice.GameService.Vector2OrBuilder getSizeOrBuilder() {
+        if (sizeBuilder_ != null) {
+          return sizeBuilder_.getMessageOrBuilder();
+        } else {
+          return size_ == null ?
+              gameservice.GameService.Vector2.getDefaultInstance() : size_;
+        }
+      }
+      /**
+       * <code>.gameservice.Vector2 size = 5;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          gameservice.GameService.Vector2, gameservice.GameService.Vector2.Builder, gameservice.GameService.Vector2OrBuilder> 
+          getSizeFieldBuilder() {
+        if (sizeBuilder_ == null) {
+          sizeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              gameservice.GameService.Vector2, gameservice.GameService.Vector2.Builder, gameservice.GameService.Vector2OrBuilder>(
+                  getSize(),
+                  getParentForChildren(),
+                  isClean());
+          size_ = null;
+        }
+        return sizeBuilder_;
+      }
+
       private float speed_ ;
       /**
-       * <code>float speed = 5;</code>
+       * <code>float speed = 6;</code>
        */
       public float getSpeed() {
         return speed_;
       }
       /**
-       * <code>float speed = 5;</code>
+       * <code>float speed = 6;</code>
        */
       public Builder setSpeed(float value) {
         
@@ -4210,7 +5059,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>float speed = 5;</code>
+       * <code>float speed = 6;</code>
        */
       public Builder clearSpeed() {
         
@@ -4221,13 +5070,13 @@ public final class GameService {
 
       private int texture_ = 0;
       /**
-       * <code>.gameservice.Texture texture = 6;</code>
+       * <code>.gameservice.Texture texture = 7;</code>
        */
       public int getTextureValue() {
         return texture_;
       }
       /**
-       * <code>.gameservice.Texture texture = 6;</code>
+       * <code>.gameservice.Texture texture = 7;</code>
        */
       public Builder setTextureValue(int value) {
         texture_ = value;
@@ -4235,14 +5084,14 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>.gameservice.Texture texture = 6;</code>
+       * <code>.gameservice.Texture texture = 7;</code>
        */
       public gameservice.GameService.Texture getTexture() {
         gameservice.GameService.Texture result = gameservice.GameService.Texture.valueOf(texture_);
         return result == null ? gameservice.GameService.Texture.UNRECOGNIZED : result;
       }
       /**
-       * <code>.gameservice.Texture texture = 6;</code>
+       * <code>.gameservice.Texture texture = 7;</code>
        */
       public Builder setTexture(gameservice.GameService.Texture value) {
         if (value == null) {
@@ -4254,7 +5103,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>.gameservice.Texture texture = 6;</code>
+       * <code>.gameservice.Texture texture = 7;</code>
        */
       public Builder clearTexture() {
         
@@ -4267,13 +5116,13 @@ public final class GameService {
       private com.google.protobuf.SingleFieldBuilderV3<
           gameservice.GameService.TankData, gameservice.GameService.TankData.Builder, gameservice.GameService.TankDataOrBuilder> tankDataBuilder_;
       /**
-       * <code>.gameservice.TankData tankData = 7;</code>
+       * <code>.gameservice.TankData tankData = 8;</code>
        */
       public boolean hasTankData() {
         return tankDataBuilder_ != null || tankData_ != null;
       }
       /**
-       * <code>.gameservice.TankData tankData = 7;</code>
+       * <code>.gameservice.TankData tankData = 8;</code>
        */
       public gameservice.GameService.TankData getTankData() {
         if (tankDataBuilder_ == null) {
@@ -4283,7 +5132,7 @@ public final class GameService {
         }
       }
       /**
-       * <code>.gameservice.TankData tankData = 7;</code>
+       * <code>.gameservice.TankData tankData = 8;</code>
        */
       public Builder setTankData(gameservice.GameService.TankData value) {
         if (tankDataBuilder_ == null) {
@@ -4299,7 +5148,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>.gameservice.TankData tankData = 7;</code>
+       * <code>.gameservice.TankData tankData = 8;</code>
        */
       public Builder setTankData(
           gameservice.GameService.TankData.Builder builderForValue) {
@@ -4313,7 +5162,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>.gameservice.TankData tankData = 7;</code>
+       * <code>.gameservice.TankData tankData = 8;</code>
        */
       public Builder mergeTankData(gameservice.GameService.TankData value) {
         if (tankDataBuilder_ == null) {
@@ -4331,7 +5180,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>.gameservice.TankData tankData = 7;</code>
+       * <code>.gameservice.TankData tankData = 8;</code>
        */
       public Builder clearTankData() {
         if (tankDataBuilder_ == null) {
@@ -4345,7 +5194,7 @@ public final class GameService {
         return this;
       }
       /**
-       * <code>.gameservice.TankData tankData = 7;</code>
+       * <code>.gameservice.TankData tankData = 8;</code>
        */
       public gameservice.GameService.TankData.Builder getTankDataBuilder() {
         
@@ -4353,7 +5202,7 @@ public final class GameService {
         return getTankDataFieldBuilder().getBuilder();
       }
       /**
-       * <code>.gameservice.TankData tankData = 7;</code>
+       * <code>.gameservice.TankData tankData = 8;</code>
        */
       public gameservice.GameService.TankDataOrBuilder getTankDataOrBuilder() {
         if (tankDataBuilder_ != null) {
@@ -4364,7 +5213,7 @@ public final class GameService {
         }
       }
       /**
-       * <code>.gameservice.TankData tankData = 7;</code>
+       * <code>.gameservice.TankData tankData = 8;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           gameservice.GameService.TankData, gameservice.GameService.TankData.Builder, gameservice.GameService.TankDataOrBuilder> 
@@ -6181,6 +7030,11 @@ public final class GameService {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_gameservice_Data_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_gameservice_PlayerData_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_gameservice_PlayerData_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_gameservice_ServerInfo_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -6217,41 +7071,44 @@ public final class GameService {
       "\n\022game_service.proto\022\013gameservice\"U\n\013Mai" +
       "nMessage\022%\n\007command\030\001 \001(\0162\024.gameservice." +
       "Command\022\037\n\004data\030\002 \001(\0132\021.gameservice.Data" +
-      "\"d\n\004Data\022+\n\nserverInfo\030\001 \001(\0132\027.gameservi" +
-      "ce.ServerInfo\022/\n\nobjectList\030\002 \001(\0132\033.game" +
-      "service.GameObjectList\" \n\nServerInfo\022\022\n\n" +
-      "serverName\030\001 \001(\t\"\037\n\007Vector2\022\t\n\001x\030\001 \001(\002\022\t" +
-      "\n\001y\030\002 \001(\002\"\206\002\n\nGameObject\022&\n\010position\030\001 \001" +
-      "(\0132\024.gameservice.Vector2\022#\n\005scale\030\002 \001(\0132" +
-      "\024.gameservice.Vector2\022$\n\006origin\030\003 \001(\0132\024." +
-      "gameservice.Vector2\022&\n\010velocity\030\004 \001(\0132\024." +
-      "gameservice.Vector2\022\r\n\005speed\030\005 \001(\002\022%\n\007te" +
-      "xture\030\006 \001(\0162\024.gameservice.Texture\022\'\n\010tan" +
-      "kData\030\007 \001(\0132\025.gameservice.TankData\"w\n\010Ta" +
-      "nkData\022\014\n\004life\030\001 \001(\002\022\016\n\006shield\030\002 \001(\002\022\014\n\004" +
-      "name\030\003 \001(\t\022\016\n\006tankID\030\004 \001(\004\022\021\n\tdirection\030" +
-      "\005 \001(\005\022\020\n\010isPlayer\030\006 \001(\010\022\n\n\002id\030\007 \001(\t\"A\n\016G" +
-      "ameObjectList\022/\n\016gameObjectList\030\001 \003(\0132\027." +
-      "gameservice.GameObject*\321\004\n\007Texture\022\021\n\rTE" +
-      "XTURE_ATLAS\020\000\022\035\n\031DEFAULT_TEXTURE_REGIONS" +
-      "_L\020\001\022\035\n\031DEFAULT_TEXTURE_REGIONS_R\020\002\022\035\n\031D" +
-      "EFAULT_TEXTURE_REGIONS_U\020\003\022\035\n\031DEFAULT_TE" +
-      "XTURE_REGIONS_D\020\004\022\027\n\023STAR_TEXTURE_REGION" +
-      "\020\005\022\"\n\036PLAYER1_TANK_TEXTURE_REGIONS_L\020\006\022\"" +
-      "\n\036PLAYER1_TANK_TEXTURE_REGIONS_R\020\007\022\"\n\036PL" +
-      "AYER1_TANK_TEXTURE_REGIONS_U\020\010\022\"\n\036PLAYER" +
-      "1_TANK_TEXTURE_REGIONS_D\020\t\022\036\n\032BIG_TANK_T" +
-      "EXTURE_REGIONS_L\020\n\022\036\n\032BIG_TANK_TEXTURE_R" +
-      "EGIONS_R\020\013\022\036\n\032BIG_TANK_TEXTURE_REGIONS_U" +
-      "\020\014\022\036\n\032BIG_TANK_TEXTURE_REGIONS_D\020\r\022\"\n\036DE" +
-      "FAULT_TANK_TEXTURE_REGIONS_L\020\016\022\"\n\036DEFAUL" +
-      "T_TANK_TEXTURE_REGIONS_R\020\017\022\"\n\036DEFAULT_TA" +
-      "NK_TEXTURE_REGIONS_U\020\020\022\"\n\036DEFAULT_TANK_T" +
-      "EXTURE_REGIONS_D\020\021*\216\001\n\007Command\022\013\n\007UNKNOW" +
-      "N\020\000\022\017\n\013FIND_SERVER\020\001\022\n\n\006UPDATE\020\002\022\r\n\tMOVE" +
-      "_NONE\020\005\022\013\n\007MOVE_UP\020\006\022\r\n\tMOVE_DOWN\020\007\022\r\n\tM" +
-      "OVE_LEFT\020\010\022\016\n\nMOVE_RIGHT\020\t\022\017\n\013FIRE_BULLE" +
-      "T\020\nB\rB\013GameServiceb\006proto3"
+      "\"\221\001\n\004Data\022+\n\nserverInfo\030\001 \001(\0132\027.gameserv" +
+      "ice.ServerInfo\022/\n\nobjectList\030\002 \001(\0132\033.gam" +
+      "eservice.GameObjectList\022+\n\nplayerData\030\003 " +
+      "\001(\0132\027.gameservice.PlayerData\"\036\n\nPlayerDa" +
+      "ta\022\020\n\010playerId\030\001 \001(\004\" \n\nServerInfo\022\022\n\nse" +
+      "rverName\030\001 \001(\t\"\037\n\007Vector2\022\t\n\001x\030\001 \001(\002\022\t\n\001" +
+      "y\030\002 \001(\002\"\252\002\n\nGameObject\022&\n\010position\030\001 \001(\013" +
+      "2\024.gameservice.Vector2\022#\n\005scale\030\002 \001(\0132\024." +
+      "gameservice.Vector2\022$\n\006origin\030\003 \001(\0132\024.ga" +
+      "meservice.Vector2\022&\n\010velocity\030\004 \001(\0132\024.ga" +
+      "meservice.Vector2\022\"\n\004size\030\005 \001(\0132\024.gamese" +
+      "rvice.Vector2\022\r\n\005speed\030\006 \001(\002\022%\n\007texture\030" +
+      "\007 \001(\0162\024.gameservice.Texture\022\'\n\010tankData\030" +
+      "\010 \001(\0132\025.gameservice.TankData\"w\n\010TankData" +
+      "\022\014\n\004life\030\001 \001(\002\022\016\n\006shield\030\002 \001(\002\022\014\n\004name\030\003" +
+      " \001(\t\022\016\n\006tankID\030\004 \001(\004\022\021\n\tdirection\030\005 \001(\005\022" +
+      "\020\n\010isPlayer\030\006 \001(\010\022\n\n\002id\030\007 \001(\t\"A\n\016GameObj" +
+      "ectList\022/\n\016gameObjectList\030\001 \003(\0132\027.gamese" +
+      "rvice.GameObject*\321\004\n\007Texture\022\021\n\rTEXTURE_" +
+      "ATLAS\020\000\022\035\n\031DEFAULT_TEXTURE_REGIONS_L\020\001\022\035" +
+      "\n\031DEFAULT_TEXTURE_REGIONS_R\020\002\022\035\n\031DEFAULT" +
+      "_TEXTURE_REGIONS_U\020\003\022\035\n\031DEFAULT_TEXTURE_" +
+      "REGIONS_D\020\004\022\027\n\023STAR_TEXTURE_REGION\020\005\022\"\n\036" +
+      "PLAYER1_TANK_TEXTURE_REGIONS_L\020\006\022\"\n\036PLAY" +
+      "ER1_TANK_TEXTURE_REGIONS_R\020\007\022\"\n\036PLAYER1_" +
+      "TANK_TEXTURE_REGIONS_U\020\010\022\"\n\036PLAYER1_TANK" +
+      "_TEXTURE_REGIONS_D\020\t\022\036\n\032BIG_TANK_TEXTURE" +
+      "_REGIONS_L\020\n\022\036\n\032BIG_TANK_TEXTURE_REGIONS" +
+      "_R\020\013\022\036\n\032BIG_TANK_TEXTURE_REGIONS_U\020\014\022\036\n\032" +
+      "BIG_TANK_TEXTURE_REGIONS_D\020\r\022\"\n\036DEFAULT_" +
+      "TANK_TEXTURE_REGIONS_L\020\016\022\"\n\036DEFAULT_TANK" +
+      "_TEXTURE_REGIONS_R\020\017\022\"\n\036DEFAULT_TANK_TEX" +
+      "TURE_REGIONS_U\020\020\022\"\n\036DEFAULT_TANK_TEXTURE" +
+      "_REGIONS_D\020\021*\237\001\n\007Command\022\013\n\007UNKNOWN\020\000\022\017\n" +
+      "\013FIND_SERVER\020\001\022\n\n\006UPDATE\020\002\022\017\n\013PLAYER_DAT" +
+      "A\020\003\022\r\n\tMOVE_NONE\020\005\022\013\n\007MOVE_UP\020\006\022\r\n\tMOVE_" +
+      "DOWN\020\007\022\r\n\tMOVE_LEFT\020\010\022\016\n\nMOVE_RIGHT\020\t\022\017\n" +
+      "\013FIRE_BULLET\020\nB\rB\013GameServiceb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -6276,33 +7133,39 @@ public final class GameService {
     internal_static_gameservice_Data_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_gameservice_Data_descriptor,
-        new java.lang.String[] { "ServerInfo", "ObjectList", });
-    internal_static_gameservice_ServerInfo_descriptor =
+        new java.lang.String[] { "ServerInfo", "ObjectList", "PlayerData", });
+    internal_static_gameservice_PlayerData_descriptor =
       getDescriptor().getMessageTypes().get(2);
+    internal_static_gameservice_PlayerData_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_gameservice_PlayerData_descriptor,
+        new java.lang.String[] { "PlayerId", });
+    internal_static_gameservice_ServerInfo_descriptor =
+      getDescriptor().getMessageTypes().get(3);
     internal_static_gameservice_ServerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_gameservice_ServerInfo_descriptor,
         new java.lang.String[] { "ServerName", });
     internal_static_gameservice_Vector2_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_gameservice_Vector2_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_gameservice_Vector2_descriptor,
         new java.lang.String[] { "X", "Y", });
     internal_static_gameservice_GameObject_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_gameservice_GameObject_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_gameservice_GameObject_descriptor,
-        new java.lang.String[] { "Position", "Scale", "Origin", "Velocity", "Speed", "Texture", "TankData", });
+        new java.lang.String[] { "Position", "Scale", "Origin", "Velocity", "Size", "Speed", "Texture", "TankData", });
     internal_static_gameservice_TankData_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_gameservice_TankData_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_gameservice_TankData_descriptor,
         new java.lang.String[] { "Life", "Shield", "Name", "TankID", "Direction", "IsPlayer", "Id", });
     internal_static_gameservice_GameObjectList_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_gameservice_GameObjectList_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_gameservice_GameObjectList_descriptor,

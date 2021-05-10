@@ -288,6 +288,7 @@ public class GameServer {
         }
     }
 
+
     public void update(PvPScreen pvPScreen) {
         if(getTankAIList(pvPScreen).size() < ENEMY_QUANTITY){
             int direction = GENERATOR.nextInt(4);
@@ -309,7 +310,6 @@ public class GameServer {
 
     private void broadcastToClients(PvPScreen pvPScreen){
         GameService.MainMessage mainMessage = getBroadcastMessage(pvPScreen);
-        System.out.println("update");
 
         for (ServerWorker worker : workerList){
             worker.Send(mainMessage.toByteArray());
@@ -343,5 +343,18 @@ public class GameServer {
 
     public MapObjects getMapObjects() {
         return mapObjects;
+    }
+
+    public void shutdownServer() {
+        isCanceled = true;
+        try {
+            if(svSocket != null) svSocket.close();
+            if(UDPSocket != null) UDPSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(ServerWorker worker: workerList) {
+            worker.shutdown();
+        }
     }
 }

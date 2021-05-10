@@ -86,7 +86,6 @@ import com.mygdx.game.ConnectServerScreen;
 import com.mygdx.game.Direction;
 import com.mygdx.game.TankShootingGame;
 import gameservice.GameService;
-import sun.applet.Main;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -96,6 +95,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameClient {
 
@@ -174,22 +174,34 @@ public class GameClient {
         tcpThread = new Thread(() -> {
             byte[] data = new byte[25600];
 
-            while(clientSocket != null && clientSocket.isConnected()) {
-                try {
-                    int length = clientTCPIn.read(data);
-//                    GameService.MainMessage receivedMessage = getMessageFromData(data, length);
-//
-//                    if(receivedMessage.getCommand() == GameService.Command.UPDATE) {
-//
-//                    }
+            while(true) {
+                if(clientSocket != null && clientSocket.isConnected()) {
+                    try {
+                        int length = clientTCPIn.read(data);
+                        GameService.MainMessage receivedMessage = getMessageFromData(data, length);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
+                        if(PvPScreen.getInstance() != null) {
+                            if(receivedMessage.getCommand() == GameService.Command.PLAYER_DATA) {
+                                PvPScreen.getInstance().getPlayerNet().setPlayerID(
+                                        receivedMessage.getData().getPlayerData().getPlayerId()
+                                );
+
+                            }else if(receivedMessage.getCommand() == GameService.Command.UPDATE) {
+
+                                PvPScreen.getInstance().getNetObjectList().clear();
+                                PvPScreen.getInstance().setNetObjectList(receivedMessage.getData().getObjectList().getGameObjectListList());
+
+                            }
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
-            serverAddress = "";
-            serverPort = 0;
+//            serverAddress = "";
+//            serverPort = 0;
         });
         tcpThread.start();
     }
@@ -228,16 +240,32 @@ public class GameClient {
 
     public void connectToServer(String serverIp, int serverPort, TankShootingGame tankShootingGame) throws IOException {
         if(clientSocket == null || !clientSocket.isConnected()) {
+            tankShootingGame.changeScreen(TankShootingGame.PVP_SCREEN);
+
             this.serverAddress = serverIp;
             this.serverPort = serverPort;
             clientSocket = new Socket(serverIp, serverPort);
             clientTCPIn = clientSocket.getInputStream();
             clientTCPOut = clientSocket.getOutputStream();
+
+            byte[] data = new byte[1024];
+            int length = clientTCPIn.read(data);
+            GameService.MainMessage receivedMessage = getMessageFromData(data, length);
+
+            if(PvPScreen.getInstance() != null) {
+                if(receivedMessage.getCommand() == GameService.Command.PLAYER_DATA) {
+                    PvPScreen.getInstance().getPlayerNet().setPlayerID(
+                            receivedMessage.getData().getPlayerData().getPlayerId()
+                    );
+                }
+            }
+
             createTCPClientThread();
-            tankShootingGame.changeScreen(TankShootingGame.PVP_SCREEN);
             System.out.println("Connected to server at: " + serverIp);
+
         }
     }
+
 
     public void sendFireCommand() {
         if(clientSocket != null && clientSocket.isConnected()) {
@@ -299,6 +327,16 @@ public class GameClient {
             }
         }
         return null;
+    }
+
+    public void shutdownClient() {
+        isCanceled = true;
+        try {
+            if(clientSocket != null) clientSocket.close();
+            if(UDPSocket != null) UDPSocket.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

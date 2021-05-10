@@ -81,6 +81,8 @@ public class GameObject {
     public void setSize(float width, float height){
         if (sprite != null) {
             sprite.setSize(width, height);
+            scale.x = sprite.getScaleX();
+            scale.y = sprite.getScaleY();
         }
     }
 
@@ -232,6 +234,9 @@ public class GameObject {
                 .setVelocity(GameService.Vector2.newBuilder()
                     .setX(velocity.x)
                     .setY(velocity.y))
+                .setSize(GameService.Vector2.newBuilder()
+                        .setX(sprite.getWidth())
+                        .setY(sprite.getHeight()))
                 .setSpeed(speed);
 
         if(textureID != null) {
