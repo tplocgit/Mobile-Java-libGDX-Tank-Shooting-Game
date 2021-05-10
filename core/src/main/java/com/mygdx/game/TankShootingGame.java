@@ -2,7 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.mygdx.game.network.AssetManager;
 import com.mygdx.game.network.GameClient;
+import com.mygdx.game.network.GameServer;
 import com.mygdx.game.network.PvPScreen;
 
 public class TankShootingGame extends Game {
@@ -23,6 +25,7 @@ public class TankShootingGame extends Game {
 	@Override
 	public void create() {
 //		setScreen(new MainMenuScreen(this));
+		AssetManager.getInstance();
 		this.changeScreen(MENU_SCREEN);
 	}
 

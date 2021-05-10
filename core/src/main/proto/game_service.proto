@@ -28,6 +28,7 @@ enum Command{
   UNKNOWN = 0;
   FIND_SERVER = 1;
   UPDATE = 2;
+  PLAYER_DATA = 3;
 
   MOVE_NONE = 5;
   MOVE_UP = 6;
@@ -45,6 +46,11 @@ message MainMessage {
 message Data {
   ServerInfo serverInfo = 1;
   GameObjectList objectList = 2;
+  PlayerData playerData = 3;
+}
+
+message PlayerData {
+  uint64 playerId = 1;
 }
 
 message ServerInfo{
@@ -61,9 +67,10 @@ message GameObject{
   Vector2 scale = 2;
   Vector2 origin = 3;
   Vector2 velocity = 4;
-  float speed = 5;
-  Texture texture = 6;
-  TankData tankData = 7;
+  Vector2 size = 5;
+  float speed = 6;
+  Texture texture = 7;
+  TankData tankData = 8;
 }
 
 message TankData{

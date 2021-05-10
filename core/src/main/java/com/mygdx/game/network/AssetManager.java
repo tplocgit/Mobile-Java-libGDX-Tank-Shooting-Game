@@ -77,10 +77,10 @@ public class AssetManager {
             case BIG_TANK_TEXTURE_REGIONS_R: return BIG_TANK_TEXTURE_REGIONS[1];
             case BIG_TANK_TEXTURE_REGIONS_U: return BIG_TANK_TEXTURE_REGIONS[2];
             case BIG_TANK_TEXTURE_REGIONS_D: return BIG_TANK_TEXTURE_REGIONS[3];
-            case DEFAULT_TANK_TEXTURE_REGIONS_L: return DEFAULT_TEXTURE_REGIONS[0];
-            case DEFAULT_TANK_TEXTURE_REGIONS_R: return DEFAULT_TEXTURE_REGIONS[1];
-            case DEFAULT_TANK_TEXTURE_REGIONS_U: return DEFAULT_TEXTURE_REGIONS[2];
-            case DEFAULT_TANK_TEXTURE_REGIONS_D: return DEFAULT_TEXTURE_REGIONS[3];
+            case DEFAULT_TANK_TEXTURE_REGIONS_L: return DEFAULT_TANK_TEXTURE_REGIONS[0];
+            case DEFAULT_TANK_TEXTURE_REGIONS_R: return DEFAULT_TANK_TEXTURE_REGIONS[1];
+            case DEFAULT_TANK_TEXTURE_REGIONS_U: return DEFAULT_TANK_TEXTURE_REGIONS[2];
+            case DEFAULT_TANK_TEXTURE_REGIONS_D: return DEFAULT_TANK_TEXTURE_REGIONS[3];
             default: return null;
         }
     }
@@ -103,10 +103,10 @@ public class AssetManager {
         if(textureRegion.equals(BIG_TANK_TEXTURE_REGIONS[2])) return GameService.Texture.BIG_TANK_TEXTURE_REGIONS_U;
         if(textureRegion.equals(BIG_TANK_TEXTURE_REGIONS[3])) return GameService.Texture.BIG_TANK_TEXTURE_REGIONS_D;
 
-        if(textureRegion.equals(DEFAULT_TEXTURE_REGIONS[0])) return GameService.Texture.DEFAULT_TANK_TEXTURE_REGIONS_L;
-        if(textureRegion.equals(DEFAULT_TEXTURE_REGIONS[1])) return GameService.Texture.DEFAULT_TANK_TEXTURE_REGIONS_R;
-        if(textureRegion.equals(DEFAULT_TEXTURE_REGIONS[2])) return GameService.Texture.DEFAULT_TANK_TEXTURE_REGIONS_U;
-        if(textureRegion.equals(DEFAULT_TEXTURE_REGIONS[3])) return GameService.Texture.DEFAULT_TANK_TEXTURE_REGIONS_D;
+        if(textureRegion.equals(DEFAULT_TANK_TEXTURE_REGIONS[0])) return GameService.Texture.DEFAULT_TANK_TEXTURE_REGIONS_L;
+        if(textureRegion.equals(DEFAULT_TANK_TEXTURE_REGIONS[1])) return GameService.Texture.DEFAULT_TANK_TEXTURE_REGIONS_R;
+        if(textureRegion.equals(DEFAULT_TANK_TEXTURE_REGIONS[2])) return GameService.Texture.DEFAULT_TANK_TEXTURE_REGIONS_U;
+        if(textureRegion.equals(DEFAULT_TANK_TEXTURE_REGIONS[3])) return GameService.Texture.DEFAULT_TANK_TEXTURE_REGIONS_D;
 
         return null;
     }

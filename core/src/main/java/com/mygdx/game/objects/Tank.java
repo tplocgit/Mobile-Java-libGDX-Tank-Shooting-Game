@@ -13,6 +13,7 @@ import gameservice.GameService;
 
 public class Tank extends GameObject {
     private int bulletMag;
+    private long tankId = 0;
     private float timeBetweenShots;
     private float timeSinceLastShot = 0;
     private float life;
@@ -36,6 +37,14 @@ public class Tank extends GameObject {
         setCollidable(true);
         setBlockable(true);
 
+    }
+
+    public long getTankId() {
+        return tankId;
+    }
+
+    public void setTankId(long tankId) {
+        this.tankId = tankId;
     }
 
     public int getBulletMag() {
@@ -204,6 +213,7 @@ public class Tank extends GameObject {
                         .setY(getVelocity().y))
                 .setSpeed(getSpeed())
                 .setTankData(GameService.TankData.newBuilder()
+                        .setTankID(tankId)
                         .setLife(getLife())
                         .setShield(getShield())
                         .setDirection(getDirection())
