@@ -27,6 +27,16 @@ public class HUD {
     SpriteBatch batch;
     private GameScreen gameScreen;
 
+    private static HUD instance;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public HUD(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
         batch = gameScreen.getBatch();
@@ -43,6 +53,36 @@ public class HUD {
         font.setColor(Color.WHITE);
         font.getData().setScale(2.5f);
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+        instance = this;
+    }
+
+    public float getLife() {
+        return life;
+    }
+
+    public void setLife(float life) {
+        this.life = life;
+    }
+
+    public int getEnemyCount() {
+        return enemyCount;
+    }
+
+    public void setEnemyCount(int enemyCount) {
+        this.enemyCount = enemyCount;
+    }
+
+    public int getShield() {
+        return shield;
+    }
+
+    public void setShield(int shield) {
+        this.shield = shield;
+    }
+
+    public static HUD getInstance() {
+        return instance;
     }
 
     public void draw(){
@@ -103,4 +143,6 @@ public class HUD {
         this.firepower = gameScreen.getPlayerTank().getFirepower();
         this.shield = gameScreen.getPlayerTank().getShield();
     }
+
+
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.PvEScreen;
+import com.mygdx.game.network.AssetManager;
 
 
 public class TankAI extends  Tank {
@@ -25,7 +26,7 @@ public class TankAI extends  Tank {
         }
 
         if(GameScreen.time_line - getTimeSinceLastShot() >= getTimeBetweenShots()){
-            fireBullet();
+            fireBullet(AssetManager.getInstance().ENEMY_BULLET_TEXTURE_REGIONS, true);
             setTimeSinceLastShot(GameScreen.time_line);
         }
 

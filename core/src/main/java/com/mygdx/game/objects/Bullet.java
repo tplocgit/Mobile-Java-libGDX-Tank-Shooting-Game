@@ -14,12 +14,10 @@ public class Bullet extends GameObject {
     private float lifeTime = 3;
     private float timeSinceSpawn;
 
-    
-
     private Tank ownerTank;
+    boolean isAI = false;
 
-
-    public Bullet(TextureRegion textureRegion, Tank ownerTank, Vector2 position, Vector2 movement, float speed){
+    public Bullet(TextureRegion textureRegion, Tank ownerTank, Vector2 position, Vector2 movement, float speed, boolean isAI) {
         super();
         setImage(textureRegion);
         setPosition(position);
@@ -29,6 +27,7 @@ public class Bullet extends GameObject {
         setBlockable(false);
         this.ownerTank = ownerTank;
         timeSinceSpawn = GameScreen.time_line;
+        this.isAI = isAI;
     }
 
     //bullet meet map (wall)
@@ -39,19 +38,21 @@ public class Bullet extends GameObject {
 
     //bullet meet tank
     @Override
-    protected void onCollided(GameObject gameObject){
-        if(gameObject instanceof Tank){
-            Tank targetTank = (Tank)gameObject;
-            if (!targetTank.equals(ownerTank)){
+    protected void onCollided(GameObject gameObject) {
+        if (gameObject instanceof Tank) {
+            Tank targetTank = (Tank) gameObject;
+            if (isAI == true && targetTank instanceof TankAI){
+                return;
+            }
+            if (!targetTank.equals(ownerTank)) {
                 GameObject.Destroy(this);
-                if (targetTank.getShield() >= ownerTank.getFirepower()){
+                if (targetTank.getShield() >= ownerTank.getFirepower()) {
                     targetTank.setShield(targetTank.getShield() - ownerTank.getFirepower());
-                }
-                else {
+                } else {
                     targetTank.setLife(targetTank.getLife() + targetTank.getShield() - ownerTank.getFirepower());
                 }
 
-                if(targetTank.getLife() <= 0){
+                if (targetTank.getLife() <= 0) {
                     GameObject.Destroy(targetTank);
                 }
             }
@@ -67,12 +68,10 @@ public class Bullet extends GameObject {
     }
 
     @Override
-    public void update(){
+    public void update() {
         super.update();
-        if(GameScreen.time_line - timeSinceSpawn >= lifeTime){
+        if (GameScreen.time_line - timeSinceSpawn >= lifeTime) {
             GameObject.Destroy(this);
         }
     }
-
-
 }

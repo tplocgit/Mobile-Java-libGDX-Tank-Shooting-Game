@@ -159,7 +159,9 @@ public class PvPScreen extends GameScreen {
 
         if(gameObject.getTexture() != GameService.Texture.TEXTURE_ATLAS) {
             sprite = new Sprite(AssetManager.getInstance().getTextureFromID(gameObject.getTexture()));
-            sprite.setSize(gameObject.getSize().getX(), gameObject.getSize().getY());
+            if(gameObject.getSize().getX() != 0 && gameObject.getSize().getY() != 0){
+                sprite.setSize(gameObject.getSize().getX(), gameObject.getSize().getY());
+            }
         }
 
         if(sprite != null){

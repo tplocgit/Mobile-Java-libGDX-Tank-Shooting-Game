@@ -52,13 +52,12 @@ public class ServerWorker extends Thread{
     }
 
     private void HandleClientSocket() throws IOException {
-        byte[] data = new byte[1024];
-        int dataLength = svIn.read(data);
-        GameService.MainMessage receiveData = server.getMessageFromData(data, dataLength);
+
+        GameService.MainMessage receiveData = Network.getIntance().readMessage(svIn);
 
         switch (receiveData.getCommand()) {
             case FIRE_BULLET:
-                tank.fireBullet();
+                tank.fireBullet(AssetManager.getInstance().PLAYER1_BULLET_TEXTURE_REGIONS, false);
                 break;
 
             case MOVE_LEFT:
@@ -83,14 +82,6 @@ public class ServerWorker extends Thread{
         }
     }
 
-    public void Send(byte[] data) {
-        try {
-            svOut.write(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("ServerWorker.java (Send function) false");
-        }
-    }
     private void createClientTank() throws IOException {
         tank = new Tank(AssetManager.getInstance().PLAYER1_TANK_TEXTURE_REGIONS,
                 new Vector2(PvPScreen.PLAYER_INITIAL_POSITION_X, PvPScreen.PLAYER_INITIAL_POSITION_Y));
@@ -117,9 +108,12 @@ public class ServerWorker extends Thread{
                 )
                 .build();
 
-        svOut.write(mainMessage.toByteArray());
-        System.out.println("send data");
+        Network.getIntance().sendMessage(svOut, mainMessage);
 
+    }
+
+    public OutputStream getSvOut() {
+        return svOut;
     }
 
     public void shutdown() {

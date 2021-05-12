@@ -45,7 +45,7 @@ public class MainMenuScreen implements Screen {
         //create buttons
         TextButton pveButton = new TextButton("PVE", skin);
         TextButton pvpButton = new TextButton("PVP", skin);
-        TextButton findServerButton = new TextButton("Client", skin);
+        TextButton clientButton = new TextButton("Client", skin);
         pveButton.getLabel().setFontScale(Graphic.BUTTON_LABEL_FONT_SCALE);
         pveButton.pad(
                 Graphic.BUTTON_DEFAULT_PAD_VERTICAL, Graphic.BUTTON_DEFAULT_PAD_HORIZONTAL,
@@ -56,8 +56,8 @@ public class MainMenuScreen implements Screen {
                 Graphic.BUTTON_DEFAULT_PAD_VERTICAL, Graphic.BUTTON_DEFAULT_PAD_HORIZONTAL,
                 Graphic.BUTTON_DEFAULT_PAD_VERTICAL, Graphic.BUTTON_DEFAULT_PAD_HORIZONTAL
         );
-        findServerButton.getLabel().setFontScale(Graphic.BUTTON_LABEL_FONT_SCALE);
-        findServerButton.pad(
+        clientButton.getLabel().setFontScale(Graphic.BUTTON_LABEL_FONT_SCALE);
+        clientButton.pad(
                 Graphic.BUTTON_DEFAULT_PAD_VERTICAL, Graphic.BUTTON_DEFAULT_PAD_HORIZONTAL,
                 Graphic.BUTTON_DEFAULT_PAD_VERTICAL, Graphic.BUTTON_DEFAULT_PAD_HORIZONTAL
         );
@@ -68,14 +68,14 @@ public class MainMenuScreen implements Screen {
         buttonsTable.row().padTop(Graphic.TABLE_ROW_DEFAULT_PAD_VERTICAL);
         buttonsTable.add(pvpButton).uniform().fillX();
         buttonsTable.row().padTop(Graphic.TABLE_ROW_DEFAULT_PAD_VERTICAL);
-        buttonsTable.add(findServerButton).uniform().fillX();
+        buttonsTable.add(clientButton).uniform().fillX();
 
         container.add(title).padBottom(Graphic.LABEL_TITLE_PAD_BOTTOM);
         container.row();
         container.add(buttonsTable);
 
         // create button listeners
-        findServerButton.addListener(new ChangeListener() {
+        clientButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 parent.changeScreen(TankShootingGame.CONNECT_SERVER_SCREEN);

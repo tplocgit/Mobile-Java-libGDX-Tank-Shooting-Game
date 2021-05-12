@@ -126,8 +126,9 @@ public class PvEScreen extends GameScreen {
                 enemyBigTank.setDirection(Direction.UP);
                 enemyBigTank.setLife(80);
                 enemyBigTank.setTankTextureRegions(AssetManager.getInstance().BIG_TANK_TEXTURE_REGIONS);
-
                 normalEnemyCounter = 0;
+
+                HUD.getInstance().setEnemyCount(HUD.getInstance().getEnemyCount() + 1);
             }
 
             TankAI enemyTank = new TankAI(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS,
@@ -146,6 +147,7 @@ public class PvEScreen extends GameScreen {
 
             spawnTimers = GameScreen.time_line;
             normalEnemyCounter += 1;
+            HUD.getInstance().setEnemyCount(HUD.getInstance().getEnemyCount() + 1);
         }
     }
 

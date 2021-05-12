@@ -4,21 +4,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.mygdx.game.Graphic;
 import gameservice.GameService;
 
 public class AssetManager {
 
-    public static AssetManager instance;
+    private static AssetManager instance;
     private final TextureAtlas TEXTURE_ATLAS = new TextureAtlas("images.atlas");
     public final String SKIN_PATH = "skin\\commodore64\\skin\\uiskin.json";
-//    public final TextureRegion[] PLAYER1_BULLET_TEXTURE_REGIONS = {
-//            TEXTURE_ATLAS.findRegion("bulletBlue2_left"),
-//            TEXTURE_ATLAS.findRegion("bulletBlue2_right"),
-//            TEXTURE_ATLAS.findRegion("bulletBlue2_up"),
-//            TEXTURE_ATLAS.findRegion("bulletBlue2_down"),
-//    };
-    public final TextureRegion[] DEFAULT_TEXTURE_REGIONS = {
+    public final TextureRegion[] PLAYER1_BULLET_TEXTURE_REGIONS = {
+            TEXTURE_ATLAS.findRegion("bulletBlue2_left"),
+            TEXTURE_ATLAS.findRegion("bulletBlue2_right"),
+            TEXTURE_ATLAS.findRegion("bulletBlue2_up"),
+            TEXTURE_ATLAS.findRegion("bulletBlue2_down"),
+    };
+    public final TextureRegion[] ENEMY_BULLET_TEXTURE_REGIONS = {
             TEXTURE_ATLAS.findRegion("bulletRed2_left"),
             TEXTURE_ATLAS.findRegion("bulletRed2_right"),
             TEXTURE_ATLAS.findRegion("bulletRed2_up"),
@@ -64,10 +63,10 @@ public class AssetManager {
 
     public TextureRegion getTextureFromID(GameService.Texture textureID){
         switch (textureID){
-            case DEFAULT_TEXTURE_REGIONS_L: return DEFAULT_TEXTURE_REGIONS[0];
-            case DEFAULT_TEXTURE_REGIONS_R: return DEFAULT_TEXTURE_REGIONS[1];
-            case DEFAULT_TEXTURE_REGIONS_U: return DEFAULT_TEXTURE_REGIONS[2];
-            case DEFAULT_TEXTURE_REGIONS_D: return DEFAULT_TEXTURE_REGIONS[3];
+            case DEFAULT_TEXTURE_REGIONS_L: return ENEMY_BULLET_TEXTURE_REGIONS[0];
+            case DEFAULT_TEXTURE_REGIONS_R: return ENEMY_BULLET_TEXTURE_REGIONS[1];
+            case DEFAULT_TEXTURE_REGIONS_U: return ENEMY_BULLET_TEXTURE_REGIONS[2];
+            case DEFAULT_TEXTURE_REGIONS_D: return ENEMY_BULLET_TEXTURE_REGIONS[3];
             case STAR_TEXTURE_REGION: return STAR_TEXTURE_REGION;
             case PLAYER1_TANK_TEXTURE_REGIONS_L: return PLAYER1_TANK_TEXTURE_REGIONS[0];
             case PLAYER1_TANK_TEXTURE_REGIONS_R: return PLAYER1_TANK_TEXTURE_REGIONS[1];
@@ -81,15 +80,19 @@ public class AssetManager {
             case DEFAULT_TANK_TEXTURE_REGIONS_R: return DEFAULT_TANK_TEXTURE_REGIONS[1];
             case DEFAULT_TANK_TEXTURE_REGIONS_U: return DEFAULT_TANK_TEXTURE_REGIONS[2];
             case DEFAULT_TANK_TEXTURE_REGIONS_D: return DEFAULT_TANK_TEXTURE_REGIONS[3];
+            case PLAYER1_BULLET_TEXTURE_REGIONS_L: return PLAYER1_BULLET_TEXTURE_REGIONS[0];
+            case PLAYER1_BULLET_TEXTURE_REGIONS_R: return PLAYER1_BULLET_TEXTURE_REGIONS[1];
+            case PLAYER1_BULLET_TEXTURE_REGIONS_U: return PLAYER1_BULLET_TEXTURE_REGIONS[2];
+            case PLAYER1_BULLET_TEXTURE_REGIONS_D: return PLAYER1_BULLET_TEXTURE_REGIONS[3];
             default: return null;
         }
     }
 
     public GameService.Texture getIDFromTexture(TextureRegion textureRegion){
-        if(textureRegion.equals(DEFAULT_TEXTURE_REGIONS[0])) return GameService.Texture.DEFAULT_TEXTURE_REGIONS_L;
-        if(textureRegion.equals(DEFAULT_TEXTURE_REGIONS[1])) return GameService.Texture.DEFAULT_TEXTURE_REGIONS_R;
-        if(textureRegion.equals(DEFAULT_TEXTURE_REGIONS[2])) return GameService.Texture.DEFAULT_TEXTURE_REGIONS_U;
-        if(textureRegion.equals(DEFAULT_TEXTURE_REGIONS[3])) return GameService.Texture.DEFAULT_TEXTURE_REGIONS_D;
+        if(textureRegion.equals(ENEMY_BULLET_TEXTURE_REGIONS[0])) return GameService.Texture.DEFAULT_TEXTURE_REGIONS_L;
+        if(textureRegion.equals(ENEMY_BULLET_TEXTURE_REGIONS[1])) return GameService.Texture.DEFAULT_TEXTURE_REGIONS_R;
+        if(textureRegion.equals(ENEMY_BULLET_TEXTURE_REGIONS[2])) return GameService.Texture.DEFAULT_TEXTURE_REGIONS_U;
+        if(textureRegion.equals(ENEMY_BULLET_TEXTURE_REGIONS[3])) return GameService.Texture.DEFAULT_TEXTURE_REGIONS_D;
 
         if(textureRegion.equals(STAR_TEXTURE_REGION)) return GameService.Texture.STAR_TEXTURE_REGION;
 
@@ -107,6 +110,13 @@ public class AssetManager {
         if(textureRegion.equals(DEFAULT_TANK_TEXTURE_REGIONS[1])) return GameService.Texture.DEFAULT_TANK_TEXTURE_REGIONS_R;
         if(textureRegion.equals(DEFAULT_TANK_TEXTURE_REGIONS[2])) return GameService.Texture.DEFAULT_TANK_TEXTURE_REGIONS_U;
         if(textureRegion.equals(DEFAULT_TANK_TEXTURE_REGIONS[3])) return GameService.Texture.DEFAULT_TANK_TEXTURE_REGIONS_D;
+
+        if(textureRegion.equals(PLAYER1_BULLET_TEXTURE_REGIONS[0])) return GameService.Texture.PLAYER1_BULLET_TEXTURE_REGIONS_L;
+        if(textureRegion.equals(PLAYER1_BULLET_TEXTURE_REGIONS[1])) return GameService.Texture.PLAYER1_BULLET_TEXTURE_REGIONS_R;
+        if(textureRegion.equals(PLAYER1_BULLET_TEXTURE_REGIONS[2])) return GameService.Texture.PLAYER1_BULLET_TEXTURE_REGIONS_U;
+        if(textureRegion.equals(PLAYER1_BULLET_TEXTURE_REGIONS[3])) return GameService.Texture.PLAYER1_BULLET_TEXTURE_REGIONS_D;
+
+
 
         return null;
     }
