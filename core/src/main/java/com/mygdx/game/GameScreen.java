@@ -20,9 +20,6 @@ public class GameScreen implements Screen {
 
     public MapObjects mapObjects;
 
-    //texture map
-
-
 
     protected OrthographicCamera camera;
     protected Viewport viewport;
@@ -52,15 +49,8 @@ public class GameScreen implements Screen {
     public static final float PLAYER_HIT_BOX_WIDTH = 60;
     public static final float PLAYER_HIT_BOX_HEIGHT = 60;
     public static final int PLAYER_INITIAL_DIRECTION = Direction.RIGHT;
-//    public static final Bullet PLAYER_BULLET_SAMPLE = new Bullet(
-//            0, 0, PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT,
-//            PLAYER_BULLET_SPEED, Direction.UP , PLAYER1_BULLET_TEXTURE_REGIONS);
 
-
-    //power up item
-    public static boolean powerUP = false;
-    protected ArrayList<Item> itemList = new ArrayList<>();
-
+    //
 
     //player object
     protected PlayerTank playerTank;

@@ -85,6 +85,7 @@ message TankData{
   int32 direction = 5;
   bool isPlayer = 6;
   string id = 7;
+  int32 score = 8;
 }
 
 message GameObjectList{

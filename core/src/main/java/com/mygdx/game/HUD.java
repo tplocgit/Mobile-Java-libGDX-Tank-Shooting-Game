@@ -19,10 +19,10 @@ public class HUD {
     Stage stage;
     OrthographicCamera cam;
     BitmapFont font;
-    float life, movementSpeed;
-    int score, enemyCount, firepower, shield;
+    float life, movementSpeed, shield;
+    int score, enemyCount, firepower;
     Vector2 position;
-    boolean debugMode = true;
+    boolean debugMode = false;
     boolean isPvp = false;
     SpriteBatch batch;
     private GameScreen gameScreen;
@@ -44,7 +44,6 @@ public class HUD {
         viewport = new FitViewport(800, 480, cam);
         //stage = new Stage(viewport, GameScreen.batch);
         stage = new Stage(viewport, batch);
-        this.debugMode = true;
         this.score = 0;
         this.update();
         this.enemyCount = 0;
@@ -73,7 +72,7 @@ public class HUD {
         this.enemyCount = enemyCount;
     }
 
-    public int getShield() {
+    public float getShield() {
         return shield;
     }
 
@@ -118,7 +117,7 @@ public class HUD {
         font.draw(batch, "%", 485, 80,
                 20, Align.right, false);
         font.draw(batch, "Shield", 300, 40, 20, Align.left, false);
-        font.draw(batch, String.format(Locale.getDefault(), "%02d", shield), 450, 40,
+        font.draw(batch, String.format(Locale.getDefault(), "%.0f", shield), 450, 40,
                 20, Align.right, false);
         font.draw(batch, "%", 485, 40,
                 20, Align.right, false);

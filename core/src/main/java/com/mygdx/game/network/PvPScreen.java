@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.*;
+import com.mygdx.game.objects.PlayerTank;
 import gameservice.GameService;
 
 import java.util.ArrayList;
@@ -47,6 +48,11 @@ public class PvPScreen extends GameScreen {
 
         playerNet = new PlayerNet();
 
+        playerTank = new PlayerTank(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS, new Vector2(0,0));
+        GameObject.gameObjectList.remove(playerTank);
+        playerTank.setBaseSpeed(GameScreen.PLAYER_INITIAL_MOVEMENT_SPEED);
+        playerTank.setFirepower(10);
+
         camera = new OrthographicCamera();
         viewport = new FitViewport(20 * TILE_SIZE, 10 * TILE_SIZE, camera);
         map = new TmxMapLoader().load("beta_01.tmx");
@@ -61,7 +67,7 @@ public class PvPScreen extends GameScreen {
         //set up game objects
 
         batch = new SpriteBatch();
-//        my_hud = new HUD(this);
+        my_hud = new HUD(this);
 
 
     }
@@ -168,6 +174,9 @@ public class PvPScreen extends GameScreen {
             if(ob.getTankData().getTankID() == playerNet.getPlayerID() && playerNet.getPlayerID() != 0) {
                 playerNet.setPlayerObject(ob);
                 camera.position.set(ob.getPosition().getX() , ob.getPosition().getY() , 0);
+                playerTank.setPosition(new Vector2(ob.getPosition().getX(), ob.getPosition().getY()));
+                playerTank.setLife(ob.getTankData().getLife());
+                playerTank.setShield(ob.getTankData().getShield());
             }
             drawNetObject(ob);
         }
@@ -175,7 +184,7 @@ public class PvPScreen extends GameScreen {
         batch.end();
 
         VirtualController.getInstance().draw();
-//        my_hud.update();
-//        my_hud.draw();
+        my_hud.update();
+        my_hud.draw();
     }
 }
