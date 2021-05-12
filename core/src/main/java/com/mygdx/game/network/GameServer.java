@@ -12,6 +12,7 @@ import com.mygdx.game.GameObject;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.Graphic;
 import com.mygdx.game.items.Star;
+import com.mygdx.game.objects.Tank;
 import com.mygdx.game.objects.TankAI;
 import gameservice.GameService;
 
@@ -22,77 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-//public class GameServer {
-//    public ServerSocket svSocket;
-//    private int svPort;
-//    public GameServer instance = this;
-//    public ArrayList<ServerWorker> workerList = new ArrayList<>();
-//    public List<String> usernameList = new ArrayList<>();
-////    private static GameServer instance;
-////    private String serverName = "defaultname";
-////    private Server server;
-////      public GameServer(String serverName) throws IOException {
-////
-////        this.serverName = serverName;
-////
-////    }
-////
-////    public static GameServer getInstance() throws IOException {
-////        if(instance == null){
-////            instance = new GameServer("default_server_name");
-////        }
-////        return instance;
-////    }
-////
-////    public void Start(){
-////        new Thread(new Runnable() {
-////            @Override
-////            public void run() {
-////                try {
-////                    server = NettyServerBuilder.forPort(9995)
-////                            .addService(getInstance())
-////                            .build();
-////
-////                    server.start();
-////                    System.out.println("server started at port: " + server.getPort());
-////                    server.awaitTermination();
-////                } catch (IOException | InterruptedException e) {
-////                    e.printStackTrace();
-////                }
-////            }
-////        }).start();
-////    }
-////
-////    @Override
-////    public void findServer(GameService.CommandData request, StreamObserver<GameService.ServerInfo> responseObserver) {
-////
-////        GameService.ServerInfo serverInfo = GameService.ServerInfo.newBuilder()
-////                .setServerName(serverName)
-////                .build();
-////
-////
-////        responseObserver.onNext(serverInfo);
-////        responseObserver.onCompleted();
-////    }
-//    public GameServer() throws IOException {
-//        int svPort = 8888;
-//        Start();
-//    }
-//
-//    private void Start() throws IOException {
-//        this.svSocket = new ServerSocket(svPort);
-//        System.out.println(svSocket.toString());
-//        System.out.println("waiting for client to connect");
-//        Socket clientSocket = svSocket.accept();
-//        System.out.println("connect to: " + clientSocket);
-//        ServerWorker worker = new ServerWorker(this, clientSocket);
-//        workerList.add(worker);
-//    }
-//
-//    public void RemoveWorker(ServerWorker worker){
-//        workerList.remove(worker);
-//    }
-//}
 public class GameServer {
 
     public static final int UDP_PORT = 1234;
@@ -196,12 +126,7 @@ public class GameServer {
         map = new TmxMapLoader().load("beta_01.tmx");
         layer = map.getLayers().get(OBJECTS_LAYER_INDEX);
         mapObjects = layer.getObjects();
-        spawnPos = new ArrayList<>();
-        spawnPos.add(new Vector2(700, 450));
-        spawnPos.add(new Vector2(2240, 820));
-        spawnPos.add(new Vector2(1400, 2048));
-        spawnPos.add(new Vector2(624, 2122));
-        spawnPos.add(new Vector2(225, 1520));
+
         isStarted = true;
     }
 
@@ -225,25 +150,56 @@ public class GameServer {
                 enemyBigTank.setLife(80);
                 enemyBigTank.setTankTextureRegions(AssetManager.getInstance().BIG_TANK_TEXTURE_REGIONS);
 
+                enemyBigTank.setPosition(new Vector2(GENERATOR.nextInt(Graphic.NUMBER_OF_WIDTH_TILE*64),
+                        GENERATOR.nextInt(Graphic.NUMBER_OF_HEIGHT_TILE*64)));
+
+                while (isCollideMap(enemyBigTank.getHitBox())){
+                    for (GameObject ob : GameObject.gameObjectList){
+                        if (ob instanceof Tank){
+                            if (ob.getHitBox().overlaps(enemyBigTank.getHitBox())){
+                                continue;
+                            }
+                        }
+                    }
+                    enemyBigTank.setPosition(new Vector2(GENERATOR.nextInt(Graphic.NUMBER_OF_WIDTH_TILE*64),
+                            GENERATOR.nextInt(Graphic.NUMBER_OF_HEIGHT_TILE*64)));
+                }
+
                 normalEnemyCounter = 0;
+            }else {
+
+                TankAI enemyTank = new TankAI(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS,
+                        new Vector2(x, y));
+
+                enemyTank.setHitBox(new Rectangle(x, y, GameScreen.PLAYER_HIT_BOX_WIDTH, GameScreen.PLAYER_HIT_BOX_HEIGHT));
+                enemyTank.setBulletMag(2);
+                enemyTank.setScore(100);
+                enemyTank.setSpeed(3);
+                enemyTank.setFirepower(ENEMY_FIREPOWER);
+                enemyTank.setShield(0);
+                enemyTank.setTimeBetweenShots(ENEMY_TIME_BETWEEN_SHOT);
+                enemyTank.setDirection(direction);
+                enemyTank.setLife(30);
+                enemyTank.setTankTextureRegions(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS);
+
+                enemyTank.setPosition(new Vector2(GENERATOR.nextInt(Graphic.NUMBER_OF_WIDTH_TILE*64),
+                        GENERATOR.nextInt(Graphic.NUMBER_OF_HEIGHT_TILE*64)));
+
+                while (isCollideMap(enemyTank.getHitBox())){
+                    for (GameObject ob : GameObject.gameObjectList){
+                        if (ob instanceof Tank){
+                            if (ob.getHitBox().overlaps(enemyTank.getHitBox())){
+                                continue;
+                            }
+                        }
+                    }
+                    enemyTank.setPosition(new Vector2(GENERATOR.nextInt(Graphic.NUMBER_OF_WIDTH_TILE*64),
+                            GENERATOR.nextInt(Graphic.NUMBER_OF_HEIGHT_TILE*64)));
+                }
+
+                normalEnemyCounter += 1;
             }
-
-            TankAI enemyTank = new TankAI(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS,
-                    new Vector2(x, y));
-
-            enemyTank.setHitBox(new Rectangle(x, y, GameScreen.PLAYER_HIT_BOX_WIDTH, GameScreen.PLAYER_HIT_BOX_HEIGHT));
-            enemyTank.setBulletMag(2);
-            enemyTank.setScore(100);
-            enemyTank.setSpeed(3);
-            enemyTank.setFirepower(ENEMY_FIREPOWER);
-            enemyTank.setShield(0);
-            enemyTank.setTimeBetweenShots(ENEMY_TIME_BETWEEN_SHOT);
-            enemyTank.setDirection(direction);
-            enemyTank.setLife(30);
-            enemyTank.setTankTextureRegions(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS);
-
             spawnTimers = GameScreen.time_line;
-            normalEnemyCounter += 1;
         }
     }
 
@@ -278,24 +234,7 @@ public class GameServer {
         }
     }
 
-    public void update(PvPScreen pvPScreen) {
-        if(getTankAIList(pvPScreen).size() < ENEMY_QUANTITY){
-            int direction = GENERATOR.nextInt(4);
-            int pos = GENERATOR.nextInt(5);
-            spawnEnemies(spawnPos.get(pos).x, spawnPos.get(pos).y, direction);
-        }
 
-        if(GameScreen.time_line >= timeToNextItemSpawn){
-            timeToNextItemSpawn = 1 + GENERATOR.nextInt(3) + GameScreen.time_line;
-            SpawnItem();
-        }
-
-        for(GameObject ob : GameObject.gameObjectList){
-            ob.update();
-        }
-
-        broadcastToClients(pvPScreen);
-    }
 
     private void broadcastToClients(PvPScreen pvPScreen){
         GameService.MainMessage mainMessage = getBroadcastMessage(pvPScreen);
@@ -309,17 +248,17 @@ public class GameServer {
     }
 
     private GameService.MainMessage getBroadcastMessage(PvPScreen pvPScreen) {
-        List<GameService.GameObject> gameObjectList = new ArrayList<>();
+        List<GameService.GameObject> gameServiceObjectList = new ArrayList<>();
 
         for (GameObject go : GameObject.gameObjectList) {
-            gameObjectList.add(go.getServiceObject());
+            gameServiceObjectList.add(go.getServiceObject());
         }
 
         return GameService.MainMessage.newBuilder()
                 .setCommand(GameService.Command.UPDATE)
                 .setData(GameService.Data.newBuilder()
                         .setObjectList(GameService.GameObjectList.newBuilder()
-                                .addAllGameObjectList(gameObjectList)
+                                .addAllGameObjectList(gameServiceObjectList)
                         )
                 )
                 .build();
@@ -348,6 +287,24 @@ public class GameServer {
         for(ServerWorker worker: workerList) {
             worker.shutdown();
         }
+    }
+
+    public void update(PvPScreen pvPScreen) {
+        if(getTankAIList(pvPScreen).size() < ENEMY_QUANTITY){
+            int direction = GENERATOR.nextInt(4);
+            spawnEnemies(0, 0, direction);
+        }
+
+        if(GameScreen.time_line >= timeToNextItemSpawn){
+            timeToNextItemSpawn = 1 + GENERATOR.nextInt(3) + GameScreen.time_line;
+            SpawnItem();
+        }
+
+        for(GameObject ob : GameObject.gameObjectList){
+            ob.update();
+        }
+
+        broadcastToClients(pvPScreen);
     }
 
 }

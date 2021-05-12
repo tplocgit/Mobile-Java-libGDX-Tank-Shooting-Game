@@ -63,13 +63,7 @@ public class PvPScreen extends GameScreen {
         batch = new SpriteBatch();
 //        my_hud = new HUD(this);
 
-        //position to spawn enemies
-        spawnPos = new ArrayList<>();
-        spawnPos.add(new Vector2(700, 450));
-        spawnPos.add(new Vector2(2240, 820));
-        spawnPos.add(new Vector2(1400, 2048));
-        spawnPos.add(new Vector2(624, 2122));
-        spawnPos.add(new Vector2(225, 1520));
+
     }
 
     public static PvPScreen getInstance(){
@@ -118,6 +112,38 @@ public class PvPScreen extends GameScreen {
         }
     }
 
+    private void drawNetObject(GameService.GameObject gameObject) {
+
+        Sprite sprite = null;
+
+        if(gameObject.getTexture() != GameService.Texture.TEXTURE_ATLAS) {
+            sprite = new Sprite(AssetManager.getInstance().getTextureFromID(gameObject.getTexture()));
+            if(gameObject.getSize().getX() != 0 && gameObject.getSize().getY() != 0){
+                sprite.setSize(gameObject.getSize().getX(), gameObject.getSize().getY());
+            }
+        }
+
+        if(sprite != null){
+            sprite.setBounds(gameObject.getPosition().getX() - sprite.getWidth() / 2f, gameObject.getPosition().getY() - sprite.getHeight() / 2f,
+                    sprite.getWidth(), sprite.getHeight());
+            sprite.setScale(gameObject.getScale().getX(), gameObject.getScale().getY());
+            sprite.draw(batch);
+        }
+    }
+
+    public PlayerNet getPlayerNet() {
+        return playerNet;
+    }
+
+    public CopyOnWriteArrayList<GameService.GameObject> getNetObjectList() {
+        return netObjectList;
+    }
+
+    public void setNetObjectList(List<GameService.GameObject> netObjectList) {
+        this.netObjectList.clear();
+        this.netObjectList.addAll(netObjectList);
+    }
+
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -151,37 +177,5 @@ public class PvPScreen extends GameScreen {
         VirtualController.getInstance().draw();
 //        my_hud.update();
 //        my_hud.draw();
-    }
-
-    private void drawNetObject(GameService.GameObject gameObject) {
-
-        Sprite sprite = null;
-
-        if(gameObject.getTexture() != GameService.Texture.TEXTURE_ATLAS) {
-            sprite = new Sprite(AssetManager.getInstance().getTextureFromID(gameObject.getTexture()));
-            if(gameObject.getSize().getX() != 0 && gameObject.getSize().getY() != 0){
-                sprite.setSize(gameObject.getSize().getX(), gameObject.getSize().getY());
-            }
-        }
-
-        if(sprite != null){
-            sprite.setBounds(gameObject.getPosition().getX() - sprite.getWidth() / 2f, gameObject.getPosition().getY() - sprite.getHeight() / 2f,
-                    sprite.getWidth(), sprite.getHeight());
-            sprite.setScale(gameObject.getScale().getX(), gameObject.getScale().getY());
-            sprite.draw(batch);
-        }
-    }
-
-    public PlayerNet getPlayerNet() {
-        return playerNet;
-    }
-
-    public CopyOnWriteArrayList<GameService.GameObject> getNetObjectList() {
-        return netObjectList;
-    }
-
-    public void setNetObjectList(List<GameService.GameObject> netObjectList) {
-        this.netObjectList.clear();
-        this.netObjectList.addAll(netObjectList);
     }
 }

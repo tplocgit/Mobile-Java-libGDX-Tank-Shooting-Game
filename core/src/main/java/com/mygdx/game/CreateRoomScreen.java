@@ -100,6 +100,7 @@ public class CreateRoomScreen implements Screen {
         createButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+            GameServer gameServer = new GameServer(nameTextField.getText());
             System.out.println("Server online at port TCP: " + GameServer.TCP_PORT);
             try {
                 GameClient.getInstance().connectToServer("127.0.0.1", GameServer.TCP_PORT, parent);
