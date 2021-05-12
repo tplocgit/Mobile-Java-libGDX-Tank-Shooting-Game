@@ -5361,6 +5361,16 @@ public final class GameService {
      */
     com.google.protobuf.ByteString
         getIdBytes();
+
+    /**
+     * <code>int32 score = 8;</code>
+     */
+    int getScore();
+
+    /**
+     * <code>int32 enemyCount = 9;</code>
+     */
+    int getEnemyCount();
   }
   /**
    * Protobuf type {@code gameservice.TankData}
@@ -5382,6 +5392,8 @@ public final class GameService {
       direction_ = 0;
       isPlayer_ = false;
       id_ = "";
+      score_ = 0;
+      enemyCount_ = 0;
     }
 
     @java.lang.Override
@@ -5450,6 +5462,16 @@ public final class GameService {
               java.lang.String s = input.readStringRequireUtf8();
 
               id_ = s;
+              break;
+            }
+            case 64: {
+
+              score_ = input.readInt32();
+              break;
+            }
+            case 72: {
+
+              enemyCount_ = input.readInt32();
               break;
             }
           }
@@ -5589,6 +5611,24 @@ public final class GameService {
       }
     }
 
+    public static final int SCORE_FIELD_NUMBER = 8;
+    private int score_;
+    /**
+     * <code>int32 score = 8;</code>
+     */
+    public int getScore() {
+      return score_;
+    }
+
+    public static final int ENEMYCOUNT_FIELD_NUMBER = 9;
+    private int enemyCount_;
+    /**
+     * <code>int32 enemyCount = 9;</code>
+     */
+    public int getEnemyCount() {
+      return enemyCount_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -5621,6 +5661,12 @@ public final class GameService {
       }
       if (!getIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 7, id_);
+      }
+      if (score_ != 0) {
+        output.writeInt32(8, score_);
+      }
+      if (enemyCount_ != 0) {
+        output.writeInt32(9, enemyCount_);
       }
       unknownFields.writeTo(output);
     }
@@ -5656,6 +5702,14 @@ public final class GameService {
       if (!getIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, id_);
       }
+      if (score_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(8, score_);
+      }
+      if (enemyCount_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(9, enemyCount_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -5690,6 +5744,10 @@ public final class GameService {
           == other.getIsPlayer());
       result = result && getId()
           .equals(other.getId());
+      result = result && (getScore()
+          == other.getScore());
+      result = result && (getEnemyCount()
+          == other.getEnemyCount());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -5719,6 +5777,10 @@ public final class GameService {
           getIsPlayer());
       hash = (37 * hash) + ID_FIELD_NUMBER;
       hash = (53 * hash) + getId().hashCode();
+      hash = (37 * hash) + SCORE_FIELD_NUMBER;
+      hash = (53 * hash) + getScore();
+      hash = (37 * hash) + ENEMYCOUNT_FIELD_NUMBER;
+      hash = (53 * hash) + getEnemyCount();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -5862,6 +5924,10 @@ public final class GameService {
 
         id_ = "";
 
+        score_ = 0;
+
+        enemyCount_ = 0;
+
         return this;
       }
 
@@ -5891,6 +5957,8 @@ public final class GameService {
         result.direction_ = direction_;
         result.isPlayer_ = isPlayer_;
         result.id_ = id_;
+        result.score_ = score_;
+        result.enemyCount_ = enemyCount_;
         onBuilt();
         return result;
       }
@@ -5954,6 +6022,12 @@ public final class GameService {
         if (!other.getId().isEmpty()) {
           id_ = other.id_;
           onChanged();
+        }
+        if (other.getScore() != 0) {
+          setScore(other.getScore());
+        }
+        if (other.getEnemyCount() != 0) {
+          setEnemyCount(other.getEnemyCount());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -6246,6 +6320,58 @@ public final class GameService {
   checkByteStringIsUtf8(value);
         
         id_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int score_ ;
+      /**
+       * <code>int32 score = 8;</code>
+       */
+      public int getScore() {
+        return score_;
+      }
+      /**
+       * <code>int32 score = 8;</code>
+       */
+      public Builder setScore(int value) {
+        
+        score_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 score = 8;</code>
+       */
+      public Builder clearScore() {
+        
+        score_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int enemyCount_ ;
+      /**
+       * <code>int32 enemyCount = 9;</code>
+       */
+      public int getEnemyCount() {
+        return enemyCount_;
+      }
+      /**
+       * <code>int32 enemyCount = 9;</code>
+       */
+      public Builder setEnemyCount(int value) {
+        
+        enemyCount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 enemyCount = 9;</code>
+       */
+      public Builder clearEnemyCount() {
+        
+        enemyCount_ = 0;
         onChanged();
         return this;
       }
@@ -7120,35 +7246,36 @@ public final class GameService {
       "meservice.Vector2\022\"\n\004size\030\005 \001(\0132\024.gamese" +
       "rvice.Vector2\022\r\n\005speed\030\006 \001(\002\022%\n\007texture\030" +
       "\007 \001(\0162\024.gameservice.Texture\022\'\n\010tankData\030" +
-      "\010 \001(\0132\025.gameservice.TankData\"w\n\010TankData" +
-      "\022\014\n\004life\030\001 \001(\002\022\016\n\006shield\030\002 \001(\002\022\014\n\004name\030\003" +
-      " \001(\t\022\016\n\006tankID\030\004 \001(\004\022\021\n\tdirection\030\005 \001(\005\022" +
-      "\020\n\010isPlayer\030\006 \001(\010\022\n\n\002id\030\007 \001(\t\"A\n\016GameObj" +
-      "ectList\022/\n\016gameObjectList\030\001 \003(\0132\027.gamese" +
-      "rvice.GameObject*\351\005\n\007Texture\022\021\n\rTEXTURE_" +
-      "ATLAS\020\000\022\035\n\031DEFAULT_TEXTURE_REGIONS_L\020\001\022\035" +
-      "\n\031DEFAULT_TEXTURE_REGIONS_R\020\002\022\035\n\031DEFAULT" +
-      "_TEXTURE_REGIONS_U\020\003\022\035\n\031DEFAULT_TEXTURE_" +
-      "REGIONS_D\020\004\022\027\n\023STAR_TEXTURE_REGION\020\005\022\"\n\036" +
-      "PLAYER1_TANK_TEXTURE_REGIONS_L\020\006\022\"\n\036PLAY" +
-      "ER1_TANK_TEXTURE_REGIONS_R\020\007\022\"\n\036PLAYER1_" +
-      "TANK_TEXTURE_REGIONS_U\020\010\022\"\n\036PLAYER1_TANK" +
-      "_TEXTURE_REGIONS_D\020\t\022\036\n\032BIG_TANK_TEXTURE" +
-      "_REGIONS_L\020\n\022\036\n\032BIG_TANK_TEXTURE_REGIONS" +
-      "_R\020\013\022\036\n\032BIG_TANK_TEXTURE_REGIONS_U\020\014\022\036\n\032" +
-      "BIG_TANK_TEXTURE_REGIONS_D\020\r\022\"\n\036DEFAULT_" +
-      "TANK_TEXTURE_REGIONS_L\020\016\022\"\n\036DEFAULT_TANK" +
-      "_TEXTURE_REGIONS_R\020\017\022\"\n\036DEFAULT_TANK_TEX" +
-      "TURE_REGIONS_U\020\020\022\"\n\036DEFAULT_TANK_TEXTURE" +
-      "_REGIONS_D\020\021\022$\n PLAYER1_BULLET_TEXTURE_R" +
-      "EGIONS_L\020\022\022$\n PLAYER1_BULLET_TEXTURE_REG" +
-      "IONS_R\020\023\022$\n PLAYER1_BULLET_TEXTURE_REGIO" +
-      "NS_U\020\024\022$\n PLAYER1_BULLET_TEXTURE_REGIONS" +
-      "_D\020\025*\237\001\n\007Command\022\013\n\007UNKNOWN\020\000\022\017\n\013FIND_SE" +
-      "RVER\020\001\022\n\n\006UPDATE\020\002\022\017\n\013PLAYER_DATA\020\003\022\r\n\tM" +
-      "OVE_NONE\020\005\022\013\n\007MOVE_UP\020\006\022\r\n\tMOVE_DOWN\020\007\022\r" +
-      "\n\tMOVE_LEFT\020\010\022\016\n\nMOVE_RIGHT\020\t\022\017\n\013FIRE_BU" +
-      "LLET\020\nB\rB\013GameServiceb\006proto3"
+      "\010 \001(\0132\025.gameservice.TankData\"\232\001\n\010TankDat" +
+      "a\022\014\n\004life\030\001 \001(\002\022\016\n\006shield\030\002 \001(\002\022\014\n\004name\030" +
+      "\003 \001(\t\022\016\n\006tankID\030\004 \001(\004\022\021\n\tdirection\030\005 \001(\005" +
+      "\022\020\n\010isPlayer\030\006 \001(\010\022\n\n\002id\030\007 \001(\t\022\r\n\005score\030" +
+      "\010 \001(\005\022\022\n\nenemyCount\030\t \001(\005\"A\n\016GameObjectL" +
+      "ist\022/\n\016gameObjectList\030\001 \003(\0132\027.gameservic" +
+      "e.GameObject*\351\005\n\007Texture\022\021\n\rTEXTURE_ATLA" +
+      "S\020\000\022\035\n\031DEFAULT_TEXTURE_REGIONS_L\020\001\022\035\n\031DE" +
+      "FAULT_TEXTURE_REGIONS_R\020\002\022\035\n\031DEFAULT_TEX" +
+      "TURE_REGIONS_U\020\003\022\035\n\031DEFAULT_TEXTURE_REGI" +
+      "ONS_D\020\004\022\027\n\023STAR_TEXTURE_REGION\020\005\022\"\n\036PLAY" +
+      "ER1_TANK_TEXTURE_REGIONS_L\020\006\022\"\n\036PLAYER1_" +
+      "TANK_TEXTURE_REGIONS_R\020\007\022\"\n\036PLAYER1_TANK" +
+      "_TEXTURE_REGIONS_U\020\010\022\"\n\036PLAYER1_TANK_TEX" +
+      "TURE_REGIONS_D\020\t\022\036\n\032BIG_TANK_TEXTURE_REG" +
+      "IONS_L\020\n\022\036\n\032BIG_TANK_TEXTURE_REGIONS_R\020\013" +
+      "\022\036\n\032BIG_TANK_TEXTURE_REGIONS_U\020\014\022\036\n\032BIG_" +
+      "TANK_TEXTURE_REGIONS_D\020\r\022\"\n\036DEFAULT_TANK" +
+      "_TEXTURE_REGIONS_L\020\016\022\"\n\036DEFAULT_TANK_TEX" +
+      "TURE_REGIONS_R\020\017\022\"\n\036DEFAULT_TANK_TEXTURE" +
+      "_REGIONS_U\020\020\022\"\n\036DEFAULT_TANK_TEXTURE_REG" +
+      "IONS_D\020\021\022$\n PLAYER1_BULLET_TEXTURE_REGIO" +
+      "NS_L\020\022\022$\n PLAYER1_BULLET_TEXTURE_REGIONS" +
+      "_R\020\023\022$\n PLAYER1_BULLET_TEXTURE_REGIONS_U" +
+      "\020\024\022$\n PLAYER1_BULLET_TEXTURE_REGIONS_D\020\025" +
+      "*\237\001\n\007Command\022\013\n\007UNKNOWN\020\000\022\017\n\013FIND_SERVER" +
+      "\020\001\022\n\n\006UPDATE\020\002\022\017\n\013PLAYER_DATA\020\003\022\r\n\tMOVE_" +
+      "NONE\020\005\022\013\n\007MOVE_UP\020\006\022\r\n\tMOVE_DOWN\020\007\022\r\n\tMO" +
+      "VE_LEFT\020\010\022\016\n\nMOVE_RIGHT\020\t\022\017\n\013FIRE_BULLET" +
+      "\020\nB\rB\013GameServiceb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -7203,7 +7330,7 @@ public final class GameService {
     internal_static_gameservice_TankData_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_gameservice_TankData_descriptor,
-        new java.lang.String[] { "Life", "Shield", "Name", "TankID", "Direction", "IsPlayer", "Id", });
+        new java.lang.String[] { "Life", "Shield", "Name", "TankID", "Direction", "IsPlayer", "Id", "Score", "EnemyCount", });
     internal_static_gameservice_GameObjectList_descriptor =
       getDescriptor().getMessageTypes().get(7);
     internal_static_gameservice_GameObjectList_fieldAccessorTable = new

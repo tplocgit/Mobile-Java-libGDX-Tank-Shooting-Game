@@ -14,6 +14,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.*;
+import com.mygdx.game.objects.PlayerTank;
+import com.mygdx.game.objects.TankAI;
 import gameservice.GameService;
 
 import java.util.ArrayList;
@@ -61,7 +63,7 @@ public class PvPScreen extends GameScreen {
         //set up game objects
 
         batch = new SpriteBatch();
-//        my_hud = new HUD(this);
+        my_hud = new HUD(this);
 
 
     }
@@ -144,6 +146,16 @@ public class PvPScreen extends GameScreen {
         this.netObjectList.addAll(netObjectList);
     }
 
+    private int getEnemyCount(){
+        int count = 0;
+        for(GameService.GameObject go : netObjectList){
+            if(go.getTankData() != null){
+                count++;
+            }
+        }
+        return count - 1;
+    }
+
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -167,7 +179,12 @@ public class PvPScreen extends GameScreen {
         for(GameService.GameObject ob : netObjectList){
             if(ob.getTankData().getTankID() == playerNet.getPlayerID() && playerNet.getPlayerID() != 0) {
                 playerNet.setPlayerObject(ob);
-                camera.position.set(ob.getPosition().getX() , ob.getPosition().getY() , 0);
+                camera.position.set(ob.getPosition().getX(), ob.getPosition().getY(), 0);
+                my_hud.setLife(ob.getTankData().getLife());
+                my_hud.setShield(ob.getTankData().getShield());
+                my_hud.setScore(ob.getTankData().getScore());
+                my_hud.setPosition(new Vector2(ob.getPosition().getX(), ob.getPosition().getY()));
+                my_hud.setEnemyCount(ob.getTankData().getEnemyCount());
             }
             drawNetObject(ob);
         }
@@ -175,7 +192,7 @@ public class PvPScreen extends GameScreen {
         batch.end();
 
         VirtualController.getInstance().draw();
-//        my_hud.update();
-//        my_hud.draw();
+
+        my_hud.draw();
     }
 }

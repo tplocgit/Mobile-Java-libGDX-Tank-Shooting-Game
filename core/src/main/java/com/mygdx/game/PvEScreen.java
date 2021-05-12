@@ -77,7 +77,7 @@ public class PvEScreen extends GameScreen {
 
         playerTank.setHitBox(new Rectangle(0, 0, PLAYER_HIT_BOX_WIDTH, PLAYER_HIT_BOX_HEIGHT));
         playerTank.setBulletMag(PLAYER_INITIAL_BULLET_MAG);
-        playerTank.setScore(1000);
+        playerTank.setScore(0);
         playerTank.setSpeed(PLAYER_INITIAL_MOVEMENT_SPEED);
         playerTank.setBaseSpeed(PLAYER_INITIAL_MOVEMENT_SPEED);
         playerTank.setFirepower(PLAYER_FIREPOWER);
@@ -127,26 +127,23 @@ public class PvEScreen extends GameScreen {
                 enemyBigTank.setLife(80);
                 enemyBigTank.setTankTextureRegions(AssetManager.getInstance().BIG_TANK_TEXTURE_REGIONS);
                 normalEnemyCounter = 0;
+            }else {
+                TankAI enemyTank = new TankAI(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS,
+                        new Vector2(x, y));
 
-                HUD.getInstance().setEnemyCount(HUD.getInstance().getEnemyCount() + 1);
+                enemyTank.setHitBox(new Rectangle(x, y, GameScreen.PLAYER_HIT_BOX_WIDTH, GameScreen.PLAYER_HIT_BOX_HEIGHT));
+                enemyTank.setBulletMag(2);
+                enemyTank.setScore(100);
+                enemyTank.setSpeed(3);
+                enemyTank.setFirepower(ENEMY_FIREPOWER);
+                enemyTank.setShield(0);
+                enemyTank.setTimeBetweenShots(ENEMY_TIME_BETWEEN_SHOT);
+                enemyTank.setDirection(direction);
+                enemyTank.setLife(30);
+                enemyTank.setTankTextureRegions(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS);
+                normalEnemyCounter += 1;
             }
-
-            TankAI enemyTank = new TankAI(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS,
-                    new Vector2(x, y));
-
-            enemyTank.setHitBox(new Rectangle(x, y, GameScreen.PLAYER_HIT_BOX_WIDTH, GameScreen.PLAYER_HIT_BOX_HEIGHT));
-            enemyTank.setBulletMag(2);
-            enemyTank.setScore(100);
-            enemyTank.setSpeed(3);
-            enemyTank.setFirepower(ENEMY_FIREPOWER);
-            enemyTank.setShield(0);
-            enemyTank.setTimeBetweenShots(ENEMY_TIME_BETWEEN_SHOT);
-            enemyTank.setDirection(direction);
-            enemyTank.setLife(30);
-            enemyTank.setTankTextureRegions(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS);
-
             spawnTimers = GameScreen.time_line;
-            normalEnemyCounter += 1;
             HUD.getInstance().setEnemyCount(HUD.getInstance().getEnemyCount() + 1);
         }
     }
@@ -265,7 +262,11 @@ public class PvEScreen extends GameScreen {
         batch.end();
 
         VirtualController.getInstance().draw();
-        my_hud.update();
+//        my_hud.update();
+        my_hud.setLife(playerTank.getLife());
+        my_hud.setShield(playerTank.getShield());
+        my_hud.setPosition(playerTank.getPosition());
+        my_hud.setScore(playerTank.getGainedScore());
         my_hud.draw();
 
     }

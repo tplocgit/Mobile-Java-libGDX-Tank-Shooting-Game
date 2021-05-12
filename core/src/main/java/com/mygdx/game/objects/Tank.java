@@ -3,10 +3,7 @@ package com.mygdx.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Direction;
-import com.mygdx.game.GameObject;
-import com.mygdx.game.GameScreen;
-import com.mygdx.game.PvEScreen;
+import com.mygdx.game.*;
 import com.mygdx.game.network.AssetManager;
 import gameservice.GameService;
 
@@ -18,11 +15,12 @@ public class Tank extends GameObject {
     private float timeSinceLastShot = 0;
     private float life;
     private int firepower;
-    private int shield;
+    private float shield;
     private boolean isFire = false;
     private boolean canFire = true;
     private int direction;
     private int score = 100;
+    private int gainedScore = 0;
     private TextureRegion[] tankTextureRegions;
     private float baseSpeed = 0;
 
@@ -87,11 +85,11 @@ public class Tank extends GameObject {
         this.firepower = firepower;
     }
 
-    public int getShield() {
+    public float getShield() {
         return shield;
     }
 
-    public void setShield(int shield) {
+    public void setShield(float shield) {
         this.shield = shield;
     }
 
@@ -109,6 +107,14 @@ public class Tank extends GameObject {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getGainedScore() {
+        return gainedScore;
+    }
+
+    public void setGainedScore(int gainedScore) {
+        this.gainedScore = gainedScore;
     }
 
     public int getDirection() {
@@ -217,6 +223,8 @@ public class Tank extends GameObject {
                         .setLife(getLife())
                         .setShield(getShield())
                         .setDirection(getDirection())
+                        .setScore(gainedScore)
+                        .setEnemyCount(HUD.getInstance().getEnemyCount())
                 );
 
         if(getTextureID() != null) {

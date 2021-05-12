@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Direction;
 import com.mygdx.game.GameObject;
+import com.mygdx.game.GameScreen;
+import com.mygdx.game.Graphic;
 import com.mygdx.game.objects.Tank;
 import gameservice.GameService;
 
@@ -98,6 +100,20 @@ public class ServerWorker extends Thread{
         tank.setDirection(PvPScreen.PLAYER_INITIAL_DIRECTION);
         tank.setLife(100);
         tank.setTankTextureRegions(AssetManager.getInstance().PLAYER1_TANK_TEXTURE_REGIONS);
+
+        boolean isOverLapOtherTank = true;
+        while (GameServer.getInstance().isCollideMap(tank.getHitBox()) || isOverLapOtherTank){
+            isOverLapOtherTank = false;
+            tank.setPosition(new Vector2(GameServer.GENERATOR.nextInt(Graphic.NUMBER_OF_WIDTH_TILE*64),
+                    GameServer.GENERATOR.nextInt(Graphic.NUMBER_OF_HEIGHT_TILE*64)));
+            for (GameObject ob : GameObject.gameObjectList){
+                if (ob instanceof Tank){
+                    if (ob.getHitBox().overlaps(tank.getHitBox()) && ob != tank){
+                        isOverLapOtherTank = true;
+                    }
+                }
+            }
+        }
 
         GameService.MainMessage mainMessage = GameService.MainMessage.newBuilder()
                 .setCommand(GameService.Command.PLAYER_DATA)
