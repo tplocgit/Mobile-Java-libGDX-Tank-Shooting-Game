@@ -3,10 +3,9 @@ package com.mygdx.game.objects;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.GameObject;
-import com.mygdx.game.GameScreen;
-import com.mygdx.game.Graphic;
-import com.mygdx.game.PvEScreen;
+import com.mygdx.game.*;
+
+import java.security.acl.Owner;
 
 
 public class Bullet extends GameObject {
@@ -41,7 +40,7 @@ public class Bullet extends GameObject {
     protected void onCollided(GameObject gameObject) {
         if (gameObject instanceof Tank) {
             Tank targetTank = (Tank) gameObject;
-            if (isAI == true && targetTank instanceof TankAI){
+            if (isAI && targetTank instanceof TankAI){
                 return;
             }
             if (!targetTank.equals(ownerTank)) {
@@ -53,6 +52,8 @@ public class Bullet extends GameObject {
                 }
 
                 if (targetTank.getLife() <= 0) {
+                    HUD.getInstance().setEnemyCount(HUD.getInstance().getEnemyCount() - 1);
+                    ownerTank.setGainedScore(ownerTank.getGainedScore() + targetTank.getScore());
                     GameObject.Destroy(targetTank);
                 }
             }

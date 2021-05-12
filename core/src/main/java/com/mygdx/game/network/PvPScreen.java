@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.*;
 import com.mygdx.game.objects.PlayerTank;
+import com.mygdx.game.objects.TankAI;
 import gameservice.GameService;
 
 import java.util.ArrayList;
@@ -47,11 +48,6 @@ public class PvPScreen extends GameScreen {
         instance = this;
 
         playerNet = new PlayerNet();
-
-        playerTank = new PlayerTank(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS, new Vector2(0,0));
-        GameObject.gameObjectList.remove(playerTank);
-        playerTank.setBaseSpeed(GameScreen.PLAYER_INITIAL_MOVEMENT_SPEED);
-        playerTank.setFirepower(10);
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(20 * TILE_SIZE, 10 * TILE_SIZE, camera);
@@ -150,6 +146,16 @@ public class PvPScreen extends GameScreen {
         this.netObjectList.addAll(netObjectList);
     }
 
+    private int getEnemyCount(){
+        int count = 0;
+        for(GameService.GameObject go : netObjectList){
+            if(go.getTankData() != null){
+                count++;
+            }
+        }
+        return count - 1;
+    }
+
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -173,10 +179,12 @@ public class PvPScreen extends GameScreen {
         for(GameService.GameObject ob : netObjectList){
             if(ob.getTankData().getTankID() == playerNet.getPlayerID() && playerNet.getPlayerID() != 0) {
                 playerNet.setPlayerObject(ob);
-                camera.position.set(ob.getPosition().getX() , ob.getPosition().getY() , 0);
-                playerTank.setPosition(new Vector2(ob.getPosition().getX(), ob.getPosition().getY()));
-                playerTank.setLife(ob.getTankData().getLife());
-                playerTank.setShield(ob.getTankData().getShield());
+                camera.position.set(ob.getPosition().getX(), ob.getPosition().getY(), 0);
+                my_hud.setLife(ob.getTankData().getLife());
+                my_hud.setShield(ob.getTankData().getShield());
+                my_hud.setScore(ob.getTankData().getScore());
+                my_hud.setPosition(new Vector2(ob.getPosition().getX(), ob.getPosition().getY()));
+                my_hud.setEnemyCount(ob.getTankData().getEnemyCount());
             }
             drawNetObject(ob);
         }
@@ -184,7 +192,7 @@ public class PvPScreen extends GameScreen {
         batch.end();
 
         VirtualController.getInstance().draw();
-        my_hud.update();
+
         my_hud.draw();
     }
 }

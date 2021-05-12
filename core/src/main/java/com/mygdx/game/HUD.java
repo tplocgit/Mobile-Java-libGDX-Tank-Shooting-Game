@@ -29,13 +29,7 @@ public class HUD {
 
     private static HUD instance;
 
-    public int getScore() {
-        return score;
-    }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
 
     public HUD(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
@@ -45,7 +39,7 @@ public class HUD {
         //stage = new Stage(viewport, GameScreen.batch);
         stage = new Stage(viewport, batch);
         this.score = 0;
-        this.update();
+//        this.update();
         this.enemyCount = 0;
 
         font = new BitmapFont();
@@ -88,7 +82,7 @@ public class HUD {
 //        stage.draw();
         batch.begin();
 
-        PlayerTank pTank = gameScreen.getPlayerTank();
+//        PlayerTank pTank = gameScreen.getPlayerTank();
 
         font.draw(batch, "Enemy", 100, 475, 20, Align.left, false);
         font.draw(batch, String.format(Locale.getDefault(), "%02d", enemyCount), 100, 435,
@@ -135,13 +129,38 @@ public class HUD {
         viewport.update(width, height);
     }
 
-    public void update() {
-        this.movementSpeed = gameScreen.getPlayerTank().getSpeed();
-        this.life = gameScreen.getPlayerTank().getLife();
-        this.position = gameScreen.getPlayerTank().getPosition();
-        this.firepower = gameScreen.getPlayerTank().getFirepower();
-        this.shield = gameScreen.getPlayerTank().getShield();
+//    public void update() {
+//        this.movementSpeed = gameScreen.getPlayerTank().getSpeed();
+//        this.life = gameScreen.getPlayerTank().getLife();
+//        this.position = gameScreen.getPlayerTank().getPosition();
+//        this.firepower = gameScreen.getPlayerTank().getFirepower();
+//        this.shield = gameScreen.getPlayerTank().getShield();
+//        this.score = gameScreen.getPlayerTank().getGainedScore();
+//    }
+
+
+
+    public void setMovementSpeed(float movementSpeed) {
+        this.movementSpeed = movementSpeed;
     }
 
+    public void setShield(float shield) {
+        this.shield = shield;
+    }
 
+    public void setFirepower(int firepower) {
+        this.firepower = firepower;
+    }
+
+    public void setPosition(Vector2 position) {
+        this.position = position;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 }

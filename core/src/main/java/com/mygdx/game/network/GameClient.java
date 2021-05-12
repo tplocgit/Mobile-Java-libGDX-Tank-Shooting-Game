@@ -179,7 +179,7 @@ public class GameClient {
                         if(PvPScreen.getInstance() != null) {
                             if(receivedMessage.getCommand() == GameService.Command.UPDATE) {
 
-                                PvPScreen.getInstance().getNetObjectList().clear();
+//                                PvPScreen.getInstance().getNetObjectList().clear();
                                 PvPScreen.getInstance().setNetObjectList(receivedMessage.getData().getObjectList().getGameObjectListList());
 
                             }

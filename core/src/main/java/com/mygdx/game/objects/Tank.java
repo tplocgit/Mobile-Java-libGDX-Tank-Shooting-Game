@@ -3,10 +3,7 @@ package com.mygdx.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Direction;
-import com.mygdx.game.GameObject;
-import com.mygdx.game.GameScreen;
-import com.mygdx.game.PvEScreen;
+import com.mygdx.game.*;
 import com.mygdx.game.network.AssetManager;
 import gameservice.GameService;
 
@@ -227,8 +224,9 @@ public class Tank extends GameObject {
                         .setShield(getShield())
                         .setDirection(getDirection())
                         .setScore(gainedScore)
+                        .setEnemyCount(HUD.getInstance().getEnemyCount())
                 );
-        
+
         if(getTextureID() != null) {
             gameObjectBuilder.setTexture(getTextureID());
         }

@@ -7,10 +7,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Direction;
-import com.mygdx.game.GameObject;
-import com.mygdx.game.GameScreen;
-import com.mygdx.game.Graphic;
+import com.mygdx.game.*;
 import com.mygdx.game.items.Star;
 import com.mygdx.game.objects.Tank;
 import com.mygdx.game.objects.TankAI;
@@ -197,6 +194,7 @@ public class GameServer {
 
                 normalEnemyCounter += 1;
             }
+            HUD.getInstance().setEnemyCount(HUD.getInstance().getEnemyCount() + 1);
             spawnTimers = GameScreen.time_line;
         }
     }
