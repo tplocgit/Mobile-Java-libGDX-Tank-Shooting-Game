@@ -150,19 +150,18 @@ public class GameServer {
                 enemyBigTank.setLife(80);
                 enemyBigTank.setTankTextureRegions(AssetManager.getInstance().BIG_TANK_TEXTURE_REGIONS);
 
-                enemyBigTank.setPosition(new Vector2(GENERATOR.nextInt(Graphic.NUMBER_OF_WIDTH_TILE*64),
-                        GENERATOR.nextInt(Graphic.NUMBER_OF_HEIGHT_TILE*64)));
-
-                while (isCollideMap(enemyBigTank.getHitBox())){
+                boolean isOverLapOtherTank = true;
+                while (isCollideMap(enemyBigTank.getHitBox()) || isOverLapOtherTank){
+                    isOverLapOtherTank = false;
+                    enemyBigTank.setPosition(new Vector2(GENERATOR.nextInt(Graphic.NUMBER_OF_WIDTH_TILE*64),
+                            GENERATOR.nextInt(Graphic.NUMBER_OF_HEIGHT_TILE*64)));
                     for (GameObject ob : GameObject.gameObjectList){
                         if (ob instanceof Tank){
-                            if (ob.getHitBox().overlaps(enemyBigTank.getHitBox())){
-                                continue;
+                            if (ob.getHitBox().overlaps(enemyBigTank.getHitBox()) && ob != enemyBigTank){
+                                isOverLapOtherTank = true;
                             }
                         }
                     }
-                    enemyBigTank.setPosition(new Vector2(GENERATOR.nextInt(Graphic.NUMBER_OF_WIDTH_TILE*64),
-                            GENERATOR.nextInt(Graphic.NUMBER_OF_HEIGHT_TILE*64)));
                 }
 
                 normalEnemyCounter = 0;
@@ -182,19 +181,18 @@ public class GameServer {
                 enemyTank.setLife(30);
                 enemyTank.setTankTextureRegions(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS);
 
-                enemyTank.setPosition(new Vector2(GENERATOR.nextInt(Graphic.NUMBER_OF_WIDTH_TILE*64),
-                        GENERATOR.nextInt(Graphic.NUMBER_OF_HEIGHT_TILE*64)));
-
-                while (isCollideMap(enemyTank.getHitBox())){
+                boolean isOverLapOtherTank = true;
+                while (isCollideMap(enemyTank.getHitBox()) || isOverLapOtherTank){
+                    isOverLapOtherTank = false;
+                    enemyTank.setPosition(new Vector2(GENERATOR.nextInt(Graphic.NUMBER_OF_WIDTH_TILE*64),
+                            GENERATOR.nextInt(Graphic.NUMBER_OF_HEIGHT_TILE*64)));
                     for (GameObject ob : GameObject.gameObjectList){
                         if (ob instanceof Tank){
-                            if (ob.getHitBox().overlaps(enemyTank.getHitBox())){
-                                continue;
+                            if (ob.getHitBox().overlaps(enemyTank.getHitBox()) && ob != enemyTank){
+                                isOverLapOtherTank = true;
                             }
                         }
                     }
-                    enemyTank.setPosition(new Vector2(GENERATOR.nextInt(Graphic.NUMBER_OF_WIDTH_TILE*64),
-                            GENERATOR.nextInt(Graphic.NUMBER_OF_HEIGHT_TILE*64)));
                 }
 
                 normalEnemyCounter += 1;
@@ -213,7 +211,7 @@ public class GameServer {
         return gameObjects;
     }
 
-    private boolean isCollideMap(Rectangle rec){
+    public boolean isCollideMap(Rectangle rec){
         for(RectangleMapObject objectRectangle : mapObjects.getByType(RectangleMapObject.class)) {
             Rectangle objectBounds = objectRectangle.getRectangle();
             if(rec.overlaps(objectBounds)) {
