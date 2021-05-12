@@ -57,11 +57,11 @@ public class ConnectServerScreen implements Screen {
         outerTable.add(backButton).height(150).width(300).pad(50);
 
         //exp
-        serverButtonTable.add(createButton("huhuorigin", "haa", 90, buttonSkin)).height(200).width(400);
-        serverButtonTable.add(createButton("huhu", "haa", 90, buttonSkin)).height(200).width(400);
-        serverButtonTable.add(createButton("huhu", "haa", 90, buttonSkin)).height(200).width(400);
-        serverButtonTable.add(createButton("huhu", "haa", 90, buttonSkin)).height(200).width(400);
-        serverButtonTable.add(createButton("huhu", "haa", 90, buttonSkin)).height(200).width(400);
+//        serverButtonTable.add(createButton("huhuorigin", "haa", 90, buttonSkin)).height(200).width(400);
+//        serverButtonTable.add(createButton("huhu", "haa", 90, buttonSkin)).height(200).width(400);
+//        serverButtonTable.add(createButton("huhu", "haa", 90, buttonSkin)).height(200).width(400);
+//        serverButtonTable.add(createButton("huhu", "haa", 90, buttonSkin)).height(200).width(400);
+//        serverButtonTable.add(createButton("huhu", "haa", 90, buttonSkin)).height(200).width(400);
 
 
         //listener
@@ -124,8 +124,6 @@ public class ConnectServerScreen implements Screen {
         stage.dispose();
     }
 
-    public ConnectServerScreen() {
-    }
 
     public ConnectServerScreen(TankShootingGame parent) {
         this.stage = new Stage();

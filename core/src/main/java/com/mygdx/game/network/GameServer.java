@@ -7,7 +7,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.google.protobuf.InvalidProtocolBufferException;
 import com.mygdx.game.Direction;
 import com.mygdx.game.GameObject;
 import com.mygdx.game.GameScreen;
@@ -15,17 +14,13 @@ import com.mygdx.game.Graphic;
 import com.mygdx.game.items.Star;
 import com.mygdx.game.objects.TankAI;
 import gameservice.GameService;
-import io.grpc.Server;
 
 import java.io.IOException;
 
 import java.net.*;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 //public class GameServer {
 //    public ServerSocket svSocket;
@@ -158,7 +153,7 @@ public class GameServer {
                     DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                     UDPSocket.receive(packet);
 
-                    GameService.MainMessage mainMessage = getMessageFromData(packet.getData(), packet.getLength());
+                    GameService.MainMessage mainMessage = GameService.MainMessage.parser().parseFrom(packet.getData(), 0, packet.getLength());
 
                     if (mainMessage.getCommand() == GameService.Command.FIND_SERVER) {
                         GameService.MainMessage response = GameService.MainMessage.newBuilder()
@@ -195,11 +190,6 @@ public class GameServer {
             }
         });
         tcpThread.start();
-    }
-
-    public GameService.MainMessage getMessageFromData(byte[] data, int length) throws InvalidProtocolBufferException {
-        byte[] newData = Arrays.copyOf(data, length);
-        return GameService.MainMessage.parseFrom(newData);
     }
 
     public void startServer() {
@@ -288,7 +278,6 @@ public class GameServer {
         }
     }
 
-
     public void update(PvPScreen pvPScreen) {
         if(getTankAIList(pvPScreen).size() < ENEMY_QUANTITY){
             int direction = GENERATOR.nextInt(4);
@@ -310,16 +299,19 @@ public class GameServer {
 
     private void broadcastToClients(PvPScreen pvPScreen){
         GameService.MainMessage mainMessage = getBroadcastMessage(pvPScreen);
-
         for (ServerWorker worker : workerList){
-            worker.Send(mainMessage.toByteArray());
+            try {
+                Network.getIntance().sendMessage(worker.getSvOut(), mainMessage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private GameService.MainMessage getBroadcastMessage(PvPScreen pvPScreen){
+    private GameService.MainMessage getBroadcastMessage(PvPScreen pvPScreen) {
         List<GameService.GameObject> gameObjectList = new ArrayList<>();
 
-        for(GameObject go : GameObject.gameObjectList){
+        for (GameObject go : GameObject.gameObjectList) {
             gameObjectList.add(go.getServiceObject());
         }
 
@@ -357,4 +349,5 @@ public class GameServer {
             worker.shutdown();
         }
     }
+
 }

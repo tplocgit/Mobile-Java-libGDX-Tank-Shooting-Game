@@ -91,6 +91,22 @@ public final class GameService {
      * <code>DEFAULT_TANK_TEXTURE_REGIONS_D = 17;</code>
      */
     DEFAULT_TANK_TEXTURE_REGIONS_D(17),
+    /**
+     * <code>PLAYER1_BULLET_TEXTURE_REGIONS_L = 18;</code>
+     */
+    PLAYER1_BULLET_TEXTURE_REGIONS_L(18),
+    /**
+     * <code>PLAYER1_BULLET_TEXTURE_REGIONS_R = 19;</code>
+     */
+    PLAYER1_BULLET_TEXTURE_REGIONS_R(19),
+    /**
+     * <code>PLAYER1_BULLET_TEXTURE_REGIONS_U = 20;</code>
+     */
+    PLAYER1_BULLET_TEXTURE_REGIONS_U(20),
+    /**
+     * <code>PLAYER1_BULLET_TEXTURE_REGIONS_D = 21;</code>
+     */
+    PLAYER1_BULLET_TEXTURE_REGIONS_D(21),
     UNRECOGNIZED(-1),
     ;
 
@@ -166,6 +182,22 @@ public final class GameService {
      * <code>DEFAULT_TANK_TEXTURE_REGIONS_D = 17;</code>
      */
     public static final int DEFAULT_TANK_TEXTURE_REGIONS_D_VALUE = 17;
+    /**
+     * <code>PLAYER1_BULLET_TEXTURE_REGIONS_L = 18;</code>
+     */
+    public static final int PLAYER1_BULLET_TEXTURE_REGIONS_L_VALUE = 18;
+    /**
+     * <code>PLAYER1_BULLET_TEXTURE_REGIONS_R = 19;</code>
+     */
+    public static final int PLAYER1_BULLET_TEXTURE_REGIONS_R_VALUE = 19;
+    /**
+     * <code>PLAYER1_BULLET_TEXTURE_REGIONS_U = 20;</code>
+     */
+    public static final int PLAYER1_BULLET_TEXTURE_REGIONS_U_VALUE = 20;
+    /**
+     * <code>PLAYER1_BULLET_TEXTURE_REGIONS_D = 21;</code>
+     */
+    public static final int PLAYER1_BULLET_TEXTURE_REGIONS_D_VALUE = 21;
 
 
     public final int getNumber() {
@@ -204,6 +236,10 @@ public final class GameService {
         case 15: return DEFAULT_TANK_TEXTURE_REGIONS_R;
         case 16: return DEFAULT_TANK_TEXTURE_REGIONS_U;
         case 17: return DEFAULT_TANK_TEXTURE_REGIONS_D;
+        case 18: return PLAYER1_BULLET_TEXTURE_REGIONS_L;
+        case 19: return PLAYER1_BULLET_TEXTURE_REGIONS_R;
+        case 20: return PLAYER1_BULLET_TEXTURE_REGIONS_U;
+        case 21: return PLAYER1_BULLET_TEXTURE_REGIONS_D;
         default: return null;
       }
     }
@@ -7089,7 +7125,7 @@ public final class GameService {
       " \001(\t\022\016\n\006tankID\030\004 \001(\004\022\021\n\tdirection\030\005 \001(\005\022" +
       "\020\n\010isPlayer\030\006 \001(\010\022\n\n\002id\030\007 \001(\t\"A\n\016GameObj" +
       "ectList\022/\n\016gameObjectList\030\001 \003(\0132\027.gamese" +
-      "rvice.GameObject*\321\004\n\007Texture\022\021\n\rTEXTURE_" +
+      "rvice.GameObject*\351\005\n\007Texture\022\021\n\rTEXTURE_" +
       "ATLAS\020\000\022\035\n\031DEFAULT_TEXTURE_REGIONS_L\020\001\022\035" +
       "\n\031DEFAULT_TEXTURE_REGIONS_R\020\002\022\035\n\031DEFAULT" +
       "_TEXTURE_REGIONS_U\020\003\022\035\n\031DEFAULT_TEXTURE_" +
@@ -7104,11 +7140,15 @@ public final class GameService {
       "TANK_TEXTURE_REGIONS_L\020\016\022\"\n\036DEFAULT_TANK" +
       "_TEXTURE_REGIONS_R\020\017\022\"\n\036DEFAULT_TANK_TEX" +
       "TURE_REGIONS_U\020\020\022\"\n\036DEFAULT_TANK_TEXTURE" +
-      "_REGIONS_D\020\021*\237\001\n\007Command\022\013\n\007UNKNOWN\020\000\022\017\n" +
-      "\013FIND_SERVER\020\001\022\n\n\006UPDATE\020\002\022\017\n\013PLAYER_DAT" +
-      "A\020\003\022\r\n\tMOVE_NONE\020\005\022\013\n\007MOVE_UP\020\006\022\r\n\tMOVE_" +
-      "DOWN\020\007\022\r\n\tMOVE_LEFT\020\010\022\016\n\nMOVE_RIGHT\020\t\022\017\n" +
-      "\013FIRE_BULLET\020\nB\rB\013GameServiceb\006proto3"
+      "_REGIONS_D\020\021\022$\n PLAYER1_BULLET_TEXTURE_R" +
+      "EGIONS_L\020\022\022$\n PLAYER1_BULLET_TEXTURE_REG" +
+      "IONS_R\020\023\022$\n PLAYER1_BULLET_TEXTURE_REGIO" +
+      "NS_U\020\024\022$\n PLAYER1_BULLET_TEXTURE_REGIONS" +
+      "_D\020\025*\237\001\n\007Command\022\013\n\007UNKNOWN\020\000\022\017\n\013FIND_SE" +
+      "RVER\020\001\022\n\n\006UPDATE\020\002\022\017\n\013PLAYER_DATA\020\003\022\r\n\tM" +
+      "OVE_NONE\020\005\022\013\n\007MOVE_UP\020\006\022\r\n\tMOVE_DOWN\020\007\022\r" +
+      "\n\tMOVE_LEFT\020\010\022\016\n\nMOVE_RIGHT\020\t\022\017\n\013FIRE_BU" +
+      "LLET\020\nB\rB\013GameServiceb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

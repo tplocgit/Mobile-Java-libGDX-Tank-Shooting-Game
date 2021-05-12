@@ -171,10 +171,10 @@ public class Tank extends GameObject {
         }
     }
 
-    public void fireBullet() {
+    public void fireBullet(TextureRegion[] textureRegions, boolean isAI) {
         if (canFire) {
-            Bullet bullet = new Bullet(AssetManager.getInstance().DEFAULT_TEXTURE_REGIONS[direction],
-                    this, new Vector2(getPosition()), new Vector2(0,0), 10);
+            Bullet bullet = new Bullet(textureRegions[direction],
+                    this, new Vector2(getPosition()), new Vector2(0,0), 10, isAI);
             if(direction == Direction.UP){
                 bullet.setVelocity(new Vector2(0, 1));
             }else if(direction == Direction.DOWN){

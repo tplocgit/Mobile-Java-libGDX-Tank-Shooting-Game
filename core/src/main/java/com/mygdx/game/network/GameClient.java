@@ -81,7 +81,6 @@ package com.mygdx.game.network;
 //
 //}
 
-import com.google.protobuf.InvalidProtocolBufferException;
 import com.mygdx.game.ConnectServerScreen;
 import com.mygdx.game.Direction;
 import com.mygdx.game.TankShootingGame;
@@ -92,10 +91,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameClient {
 
@@ -135,7 +132,7 @@ public class GameClient {
                     DatagramPacket respondPackage = new DatagramPacket(buffer, buffer.length);
                     UDPSocket.receive(respondPackage);
 
-                    GameService.MainMessage responseMessage = getMessageFromData(respondPackage.getData(), respondPackage.getLength());
+                    GameService.MainMessage responseMessage = GameService.MainMessage.parser().parseFrom(respondPackage.getData(), 0, respondPackage.getLength());
 
                     if(responseMessage.getCommand() == GameService.Command.FIND_SERVER) {
                         serverList.add(new ServerInfo(
@@ -172,21 +169,15 @@ public class GameClient {
 
     private void createTCPClientThread() {
         tcpThread = new Thread(() -> {
-            byte[] data = new byte[25600];
-
+            System.out.println("TCP");
             while(true) {
                 if(clientSocket != null && clientSocket.isConnected()) {
                     try {
-                        int length = clientTCPIn.read(data);
-                        GameService.MainMessage receivedMessage = getMessageFromData(data, length);
+
+                        GameService.MainMessage receivedMessage = Network.getIntance().readMessage(clientTCPIn);
 
                         if(PvPScreen.getInstance() != null) {
-                            if(receivedMessage.getCommand() == GameService.Command.PLAYER_DATA) {
-                                PvPScreen.getInstance().getPlayerNet().setPlayerID(
-                                        receivedMessage.getData().getPlayerData().getPlayerId()
-                                );
-
-                            }else if(receivedMessage.getCommand() == GameService.Command.UPDATE) {
+                            if(receivedMessage.getCommand() == GameService.Command.UPDATE) {
 
                                 PvPScreen.getInstance().getNetObjectList().clear();
                                 PvPScreen.getInstance().setNetObjectList(receivedMessage.getData().getObjectList().getGameObjectListList());
@@ -204,11 +195,6 @@ public class GameClient {
 //            serverPort = 0;
         });
         tcpThread.start();
-    }
-
-    public GameService.MainMessage getMessageFromData(byte[] data, int length) throws InvalidProtocolBufferException {
-        byte[] newData = Arrays.copyOf(data, length);
-        return GameService.MainMessage.parseFrom(newData);
     }
 
     public void searchingForServers() {
@@ -248,9 +234,7 @@ public class GameClient {
             clientTCPIn = clientSocket.getInputStream();
             clientTCPOut = clientSocket.getOutputStream();
 
-            byte[] data = new byte[1024];
-            int length = clientTCPIn.read(data);
-            GameService.MainMessage receivedMessage = getMessageFromData(data, length);
+            GameService.MainMessage receivedMessage = Network.getIntance().readMessage(clientTCPIn);
 
             if(PvPScreen.getInstance() != null) {
                 if(receivedMessage.getCommand() == GameService.Command.PLAYER_DATA) {
@@ -274,7 +258,7 @@ public class GameClient {
                     .build();
 
             try {
-                clientTCPOut.write(cmd.toByteArray());
+                Network.getIntance().sendMessage(clientTCPOut, cmd);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -307,7 +291,7 @@ public class GameClient {
                     .build();
 
             try {
-                clientTCPOut.write(cmd.toByteArray());
+                Network.getIntance().sendMessage(clientTCPOut, cmd);
             } catch (IOException e) {
                 e.printStackTrace();
             }

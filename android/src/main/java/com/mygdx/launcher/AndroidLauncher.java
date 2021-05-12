@@ -18,7 +18,6 @@ public class AndroidLauncher extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 
-		initialize(new TankShootingGame(), config);
 		if(GameServer.getInstance() != null) {
 			GameServer.getInstance().shutdownServer();
 		}
@@ -26,5 +25,7 @@ public class AndroidLauncher extends AndroidApplication {
 		if(GameClient.getInstance() != null) {
 			GameClient.getInstance().shutdownClient();
 		}
+		initialize(new TankShootingGame(), config);
+
 	}
 }//new AndroidInterface()

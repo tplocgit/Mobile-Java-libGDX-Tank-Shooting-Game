@@ -6,6 +6,7 @@ import com.mygdx.game.Direction;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.PvEScreen;
 import com.mygdx.game.VirtualController;
+import com.mygdx.game.network.AssetManager;
 import com.mygdx.game.network.GameClient;
 import com.mygdx.game.network.PvPScreen;
 
@@ -35,7 +36,7 @@ public class PlayerTank extends Tank {
                 if(GameScreen.getInstance() instanceof PvPScreen) {
                     GameClient.getInstance().sendFireCommand();
                 }else {
-                    this.fireBullet();
+                    this.fireBullet(AssetManager.getInstance().PLAYER1_BULLET_TEXTURE_REGIONS, false);
                 }
             }
             //keyboard input -- if move button press then  velocity != 0 --> move
