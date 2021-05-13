@@ -1,6 +1,7 @@
 package com.mygdx.game.network;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -38,6 +39,9 @@ public class PvPScreen extends GameScreen {
 
     private ArrayList<Vector2> spawnPos;
 
+    // music stuff
+    private Music backgroundMusic;
+
     public PvPScreen(){
 
         GameObject.ClearObjectList();
@@ -65,7 +69,11 @@ public class PvPScreen extends GameScreen {
         batch = new SpriteBatch();
         my_hud = new HUD(this);
 
-
+        // play music and stuff
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Ending Theme - Super Mario- World.mp3"));
+        backgroundMusic.setVolume(0.5f);
+        backgroundMusic.setLooping(true);
+        backgroundMusic.play();
     }
 
     public static PvPScreen getInstance(){

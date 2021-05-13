@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -56,6 +57,9 @@ public class PvEScreen extends GameScreen {
 
     private ArrayList<Vector2> spawnPos;
 
+    // music stuff
+    private Music backgroundMusic;
+
     PvEScreen() {
         instance = this;
         GameObject.ClearObjectList();
@@ -101,6 +105,12 @@ public class PvEScreen extends GameScreen {
         spawnPos.add(new Vector2(1400, 2048));
         spawnPos.add(new Vector2(624, 2122));
         spawnPos.add(new Vector2(225, 1520));
+
+        // play music and stuff
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Ending Theme - Super Mario- World.mp3"));
+        backgroundMusic.setVolume(0.5f);
+        backgroundMusic.setLooping(true);
+        backgroundMusic.play();
     }
 
     @Override
@@ -186,6 +196,7 @@ public class PvEScreen extends GameScreen {
         map.dispose();
         font.dispose();
         batch.dispose();
+        backgroundMusic.dispose();
     }
 
     //loop game here
