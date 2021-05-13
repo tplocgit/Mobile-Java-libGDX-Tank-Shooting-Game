@@ -1,5 +1,7 @@
 package com.mygdx.game.objects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -16,7 +18,10 @@ public class Bullet extends GameObject {
     private Tank ownerTank;
     boolean isAI = false;
 
-    public Bullet(TextureRegion textureRegion, Tank ownerTank, Vector2 position, Vector2 movement, float speed, boolean isAI) {
+    private Sound destroySound;
+
+    public Bullet(TextureRegion textureRegion, Tank ownerTank, Vector2 position, Vector2 movement,
+                  float speed, boolean isAI, Sound destroySound) {
         super();
         setImage(textureRegion);
         setPosition(position);
@@ -27,6 +32,7 @@ public class Bullet extends GameObject {
         this.ownerTank = ownerTank;
         timeSinceSpawn = GameScreen.time_line;
         this.isAI = isAI;
+        this.destroySound = destroySound;
     }
 
     //bullet meet map (wall)
@@ -55,9 +61,17 @@ public class Bullet extends GameObject {
                     HUD.getInstance().setEnemyCount(HUD.getInstance().getEnemyCount() - 1);
                     ownerTank.setGainedScore(ownerTank.getGainedScore() + targetTank.getScore());
                     GameObject.Destroy(targetTank);
+                    playDestroySound(destroySound);
                 }
             }
         }
+    }
+
+    public void playDestroySound(Sound sound) {
+        long destroySoundId = sound.play(0.4f);
+        sound.setPitch(destroySoundId, 1.5f);
+        sound.setLooping(destroySoundId, false);
+        System.out.println("Hey hey");
     }
 
     public Tank getOwnerTank() {

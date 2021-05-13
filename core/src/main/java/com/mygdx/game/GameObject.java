@@ -189,9 +189,9 @@ public class GameObject {
 
     }
 
-    //Check if the objet can move or not
+    //Check if the object can move or not
     private void UpdateCollideGameObject(){
-//        check tank colli
+//        check tank collide
         movable = true;
         MapObjects currentMapObjects = GameScreen.getInstance().mapObjects;
 

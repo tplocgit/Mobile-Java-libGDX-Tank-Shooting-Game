@@ -6,7 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.*;
-import com.mygdx.game.network.AssetManager;
+
 import gameservice.GameService;
 
 
@@ -29,6 +29,7 @@ public class Tank extends GameObject {
     private float boostedSpeed = 0;
     private float lastBoostedSpeedTime = 0;
 
+    private Sound shootingSound;
     private Sound destroySound;
 
     public Tank(TextureRegion[] textureRegions, Vector2 position){
@@ -38,7 +39,8 @@ public class Tank extends GameObject {
         setPosition(position);
         setCollidable(true);
         setBlockable(true);
-        destroySound = Gdx.audio.newSound(Gdx.files.internal("explosionCrunch_000.ogg"));
+        shootingSound = Gdx.audio.newSound(Gdx.files.internal("explosionCrunch_000.ogg"));
+        destroySound = Gdx.audio.newSound(Gdx.files.internal("explosionCrunch_001.ogg")); //put this here since it take a while to create this
     }
 
     public long getTankId() {
@@ -184,7 +186,8 @@ public class Tank extends GameObject {
     public void fireBullet(TextureRegion[] textureRegions, boolean isAI) {
         if (canFire) {
             Bullet bullet = new Bullet(textureRegions[direction],
-                    this, new Vector2(getPosition()), new Vector2(0,0), 10, isAI);
+                    this, new Vector2(getPosition()), new Vector2(0,0),
+                    10, isAI, destroySound);
             if(direction == Direction.UP){
                 bullet.setVelocity(new Vector2(0, 1));
             }else if(direction == Direction.DOWN){
@@ -195,10 +198,10 @@ public class Tank extends GameObject {
                 bullet.setVelocity(new Vector2(1, 0));
             }
 
-            long destroySoundId = destroySound.play(1.0f);
-            destroySound.setPitch(destroySoundId, 2);
-            destroySound.setLooping(destroySoundId, false);
-            //destroySound.dispose();
+            long shootingSoundId = shootingSound.play(0.2f);
+            shootingSound.setPitch(shootingSoundId, 1.5f);
+            shootingSound.setLooping(shootingSoundId, false);
+            //shootingSound.dispose();
 
             canFire = false;
             timeSinceLastShot = GameScreen.time_line;
