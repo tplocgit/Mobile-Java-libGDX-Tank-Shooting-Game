@@ -1,6 +1,8 @@
 package com.mygdx.game.objects;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.*;
@@ -27,6 +29,8 @@ public class Tank extends GameObject {
     private float boostedSpeed = 0;
     private float lastBoostedSpeedTime = 0;
 
+    private Sound destroySound;
+
     public Tank(TextureRegion[] textureRegions, Vector2 position){
         super();
         setTankTextureRegions(textureRegions);
@@ -34,7 +38,7 @@ public class Tank extends GameObject {
         setPosition(position);
         setCollidable(true);
         setBlockable(true);
-
+        destroySound = Gdx.audio.newSound(Gdx.files.internal("explosionCrunch_000.ogg"));
     }
 
     public long getTankId() {
@@ -190,6 +194,11 @@ public class Tank extends GameObject {
             }else if(direction == Direction.RIGHT){
                 bullet.setVelocity(new Vector2(1, 0));
             }
+
+            long destroySoundId = destroySound.play(1.0f);
+            destroySound.setPitch(destroySoundId, 2);
+            destroySound.setLooping(destroySoundId, false);
+            //destroySound.dispose();
 
             canFire = false;
             timeSinceLastShot = GameScreen.time_line;
