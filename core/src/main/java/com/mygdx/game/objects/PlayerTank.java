@@ -6,7 +6,7 @@ import com.mygdx.game.Direction;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.PvEScreen;
 import com.mygdx.game.VirtualController;
-import com.mygdx.game.network.AssetManager;
+import com.mygdx.game.AssetManager;
 import com.mygdx.game.network.GameClient;
 import com.mygdx.game.network.PvPScreen;
 
@@ -74,5 +74,4 @@ public class PlayerTank extends Tank {
         }
         PvEScreen.getInstance().getCamera().position.set(this.getPosition().x , this.getPosition().y , 0);
     }
-
 }

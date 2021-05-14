@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.PvEScreen;
-import com.mygdx.game.network.AssetManager;
+import com.mygdx.game.AssetManager;
 
 
 public class TankAI extends  Tank {

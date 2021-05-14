@@ -2,9 +2,9 @@ package com.mygdx.game.network;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.AssetManager;
 import com.mygdx.game.Direction;
 import com.mygdx.game.GameObject;
-import com.mygdx.game.GameScreen;
 import com.mygdx.game.Graphic;
 import com.mygdx.game.objects.Tank;
 import gameservice.GameService;
@@ -59,7 +59,7 @@ public class ServerWorker extends Thread{
 
         switch (receiveData.getCommand()) {
             case FIRE_BULLET:
-                tank.fireBullet(AssetManager.getInstance().PLAYER1_BULLET_TEXTURE_REGIONS, false);
+                tank.fireBullet(com.mygdx.game.AssetManager.getInstance().PLAYER1_BULLET_TEXTURE_REGIONS, false);
                 break;
 
             case MOVE_LEFT:
@@ -85,7 +85,7 @@ public class ServerWorker extends Thread{
     }
 
     private void createClientTank() throws IOException {
-        tank = new Tank(AssetManager.getInstance().PLAYER1_TANK_TEXTURE_REGIONS,
+        tank = new Tank(com.mygdx.game.AssetManager.getInstance().PLAYER1_TANK_TEXTURE_REGIONS,
                 new Vector2(PvPScreen.PLAYER_INITIAL_POSITION_X, PvPScreen.PLAYER_INITIAL_POSITION_Y));
 
         tank.setTankId(TankID);

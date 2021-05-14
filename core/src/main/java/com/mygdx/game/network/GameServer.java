@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.*;
+import com.mygdx.game.AssetManager;
 import com.mygdx.game.items.Star;
 import com.mygdx.game.objects.Tank;
 import com.mygdx.game.objects.TankAI;
@@ -131,7 +132,7 @@ public class GameServer {
 
         if (GameScreen.time_line - spawnTimers > spawnerDownTime) {
             if (normalEnemyCounter > bigEnemyThreshold) {
-                TankAI enemyBigTank = new TankAI(AssetManager.getInstance().BIG_TANK_TEXTURE_REGIONS,
+                TankAI enemyBigTank = new TankAI(com.mygdx.game.AssetManager.getInstance().BIG_TANK_TEXTURE_REGIONS,
                         new Vector2(x, y));
 
                 enemyBigTank.setHitBox(new Rectangle(x - (GameScreen.PLAYER_HIT_BOX_WIDTH * 1.5f) / 2f,
@@ -145,7 +146,7 @@ public class GameServer {
                 enemyBigTank.setTimeBetweenShots(ENEMY_TIME_BETWEEN_SHOT * 0.7f);
                 enemyBigTank.setDirection(Direction.UP);
                 enemyBigTank.setLife(80);
-                enemyBigTank.setTankTextureRegions(AssetManager.getInstance().BIG_TANK_TEXTURE_REGIONS);
+                enemyBigTank.setTankTextureRegions(com.mygdx.game.AssetManager.getInstance().BIG_TANK_TEXTURE_REGIONS);
 
                 boolean isOverLapOtherTank = true;
                 while (isCollideMap(enemyBigTank.getHitBox()) || isOverLapOtherTank){
@@ -164,7 +165,7 @@ public class GameServer {
                 normalEnemyCounter = 0;
             }else {
 
-                TankAI enemyTank = new TankAI(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS,
+                TankAI enemyTank = new TankAI(com.mygdx.game.AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS,
                         new Vector2(x, y));
 
                 enemyTank.setHitBox(new Rectangle(x, y, GameScreen.PLAYER_HIT_BOX_WIDTH, GameScreen.PLAYER_HIT_BOX_HEIGHT));
@@ -176,7 +177,7 @@ public class GameServer {
                 enemyTank.setTimeBetweenShots(ENEMY_TIME_BETWEEN_SHOT);
                 enemyTank.setDirection(direction);
                 enemyTank.setLife(30);
-                enemyTank.setTankTextureRegions(AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS);
+                enemyTank.setTankTextureRegions(com.mygdx.game.AssetManager.getInstance().DEFAULT_TANK_TEXTURE_REGIONS);
 
                 boolean isOverLapOtherTank = true;
                 while (isCollideMap(enemyTank.getHitBox()) || isOverLapOtherTank){

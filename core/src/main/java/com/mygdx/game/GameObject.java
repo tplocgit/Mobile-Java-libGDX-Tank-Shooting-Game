@@ -8,11 +8,8 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.network.AssetManager;
 import com.mygdx.game.network.GameServer;
 import com.mygdx.game.network.PvPScreen;
-import com.mygdx.game.objects.Tank;
-import com.mygdx.game.objects.TankAI;
 import gameservice.GameService;
 
 import java.util.concurrent.CopyOnWriteArrayList;

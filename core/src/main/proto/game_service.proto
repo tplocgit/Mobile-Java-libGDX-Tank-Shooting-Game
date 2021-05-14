@@ -85,8 +85,9 @@ message TankData{
   int32 direction = 5;
   bool isPlayer = 6;
   string id = 7;
-  int32 score = 8;
+  int32 score = 8; //object > class proto > byte > network > byte > class proto > object
   int32 enemyCount = 9;
+  int32 firePower = 10;
 }
 
 message GameObjectList{

@@ -2,9 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import com.mygdx.game.network.AssetManager;
 import com.mygdx.game.network.GameClient;
-import com.mygdx.game.network.GameServer;
 import com.mygdx.game.network.PvPScreen;
 
 public class TankShootingGame extends Game {
@@ -18,6 +16,7 @@ public class TankShootingGame extends Game {
 	public static final int NUMBER_OF_SCREEN = 7;
 	Screen oldScreen;
 
+
 	public TankShootingGame() {
 		GameClient gameClient = new GameClient("Client name");
 	}
@@ -30,10 +29,12 @@ public class TankShootingGame extends Game {
 	}
 
 	public void changeScreen(int screen) {
+
 		if(screen < 0 || screen > NUMBER_OF_SCREEN - 1) return;
 
 		oldScreen = this.getScreen();
 		if(oldScreen != null) oldScreen.dispose();
+
 
 		switch (screen){
 			case MENU_SCREEN:

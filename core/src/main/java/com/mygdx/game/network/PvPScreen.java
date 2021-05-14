@@ -15,8 +15,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.*;
-import com.mygdx.game.objects.PlayerTank;
-import com.mygdx.game.objects.TankAI;
+import com.mygdx.game.AssetManager;
 import gameservice.GameService;
 
 import java.util.ArrayList;
@@ -39,8 +38,6 @@ public class PvPScreen extends GameScreen {
 
     private ArrayList<Vector2> spawnPos;
 
-    // music stuff
-    private Music backgroundMusic;
 
     public PvPScreen(){
 
@@ -70,10 +67,9 @@ public class PvPScreen extends GameScreen {
         my_hud = new HUD(this);
 
         // play music and stuff
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Ending Theme - Super Mario- World.mp3"));
-        backgroundMusic.setVolume(0.5f);
-        backgroundMusic.setLooping(true);
-        backgroundMusic.play();
+        AssetManager.getInstance().backgroundMusic.setVolume(0.5f);
+        AssetManager.getInstance().backgroundMusic.setLooping(true);
+        AssetManager.getInstance().backgroundMusic.play();
     }
 
     public static PvPScreen getInstance(){
@@ -188,11 +184,15 @@ public class PvPScreen extends GameScreen {
             if(ob.getTankData().getTankID() == playerNet.getPlayerID() && playerNet.getPlayerID() != 0) {
                 playerNet.setPlayerObject(ob);
                 camera.position.set(ob.getPosition().getX(), ob.getPosition().getY(), 0);
-                my_hud.setLife(ob.getTankData().getLife());
-                my_hud.setShield(ob.getTankData().getShield());
-                my_hud.setScore(ob.getTankData().getScore());
-                my_hud.setPosition(new Vector2(ob.getPosition().getX(), ob.getPosition().getY()));
-                my_hud.setEnemyCount(ob.getTankData().getEnemyCount());
+                if (ob != null) {
+                    my_hud.setLife(ob.getTankData().getLife());
+                    my_hud.setShield(ob.getTankData().getShield());
+                    my_hud.setScore(ob.getTankData().getScore());
+                    my_hud.setPosition(new Vector2(ob.getPosition().getX(), ob.getPosition().getY()));
+                    my_hud.setEnemyCount(ob.getTankData().getEnemyCount());
+                    my_hud.setFirepower(ob.getTankData().getFirePower());
+                    my_hud.setMovementSpeed(ob.getSpeed());
+                }
             }
             drawNetObject(ob);
         }

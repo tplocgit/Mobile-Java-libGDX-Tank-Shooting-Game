@@ -15,8 +15,6 @@ import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.network.*;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 
 public class CreateRoomScreen implements Screen {

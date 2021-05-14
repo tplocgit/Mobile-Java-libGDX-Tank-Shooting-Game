@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -19,8 +18,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.items.Star;
-import com.mygdx.game.network.AssetManager;
-import com.mygdx.game.network.GameServer;
 import com.mygdx.game.objects.PlayerTank;
 import com.mygdx.game.objects.TankAI;
 
@@ -58,9 +55,9 @@ public class PvEScreen extends GameScreen {
     private ArrayList<Vector2> spawnPos;
 
     // music stuff
-    private Music backgroundMusic;
 
     PvEScreen() {
+
         instance = this;
         GameObject.ClearObjectList();
         camera = new OrthographicCamera();
@@ -107,10 +104,9 @@ public class PvEScreen extends GameScreen {
         spawnPos.add(new Vector2(225, 1520));
 
         // play music and stuff
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Ending Theme - Super Mario- World.mp3"));
-        backgroundMusic.setVolume(0.5f);
-        backgroundMusic.setLooping(true);
-        backgroundMusic.play();
+        AssetManager.getInstance().backgroundMusic.setVolume(0.5f);
+        AssetManager.getInstance().backgroundMusic.setLooping(true);
+        AssetManager.getInstance().backgroundMusic.play();
     }
 
     @Override
@@ -196,15 +192,11 @@ public class PvEScreen extends GameScreen {
         map.dispose();
         font.dispose();
         batch.dispose();
-        backgroundMusic.dispose();
+        AssetManager.getInstance().backgroundMusic.dispose();
     }
 
     //loop game here
 
-
-    public MapObjects getMapObjects() {
-        return mapObjects;
-    }
 
 
     private List<GameObject> getTankAIList(){
@@ -273,11 +265,15 @@ public class PvEScreen extends GameScreen {
         batch.end();
 
         VirtualController.getInstance().draw();
-//        my_hud.update();
-        my_hud.setLife(playerTank.getLife());
-        my_hud.setShield(playerTank.getShield());
-        my_hud.setPosition(playerTank.getPosition());
-        my_hud.setScore(playerTank.getGainedScore());
+//        System.out.println("still loop");
+        if (playerTank != null) {
+            my_hud.setLife(playerTank.getLife());
+            my_hud.setShield(playerTank.getShield());
+            my_hud.setPosition(playerTank.getPosition());
+            my_hud.setScore(playerTank.getGainedScore());
+            my_hud.setMovementSpeed(playerTank.getSpeed());
+            my_hud.setFirepower(playerTank.getFirepower());
+        }
         my_hud.draw();
 
     }

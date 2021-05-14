@@ -21,7 +21,7 @@ public class HUD {
     BitmapFont font;
     float life, movementSpeed, shield;
     int score, enemyCount, firepower;
-    Vector2 position;
+    Vector2 position = new Vector2(0,0);
     boolean debugMode = false;
     boolean isPvp = false;
     SpriteBatch batch;
@@ -129,15 +129,11 @@ public class HUD {
         viewport.update(width, height);
     }
 
-//    public void update() {
-//        this.movementSpeed = gameScreen.getPlayerTank().getSpeed();
-//        this.life = gameScreen.getPlayerTank().getLife();
-//        this.position = gameScreen.getPlayerTank().getPosition();
-//        this.firepower = gameScreen.getPlayerTank().getFirepower();
-//        this.shield = gameScreen.getPlayerTank().getShield();
-//        this.score = gameScreen.getPlayerTank().getGainedScore();
-//    }
-
+    public void dispose(){
+        batch.dispose();
+        font.dispose();
+        stage.dispose();
+    }
 
 
     public void setMovementSpeed(float movementSpeed) {

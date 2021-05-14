@@ -29,9 +29,6 @@ public class Tank extends GameObject {
     private float boostedSpeed = 0;
     private float lastBoostedSpeedTime = 0;
 
-    private Sound shootingSound;
-    private Sound destroySound;
-
     public Tank(TextureRegion[] textureRegions, Vector2 position){
         super();
         setTankTextureRegions(textureRegions);
@@ -39,8 +36,7 @@ public class Tank extends GameObject {
         setPosition(position);
         setCollidable(true);
         setBlockable(true);
-        shootingSound = Gdx.audio.newSound(Gdx.files.internal("explosionCrunch_000.ogg"));
-        destroySound = Gdx.audio.newSound(Gdx.files.internal("explosionCrunch_001.ogg")); //put this here since it take a while to create this
+         //put this here since it take a while to create this
     }
 
     public long getTankId() {
@@ -187,7 +183,7 @@ public class Tank extends GameObject {
         if (canFire) {
             Bullet bullet = new Bullet(textureRegions[direction],
                     this, new Vector2(getPosition()), new Vector2(0,0),
-                    10, isAI, destroySound);
+                    10, isAI);
             if(direction == Direction.UP){
                 bullet.setVelocity(new Vector2(0, 1));
             }else if(direction == Direction.DOWN){
@@ -198,10 +194,11 @@ public class Tank extends GameObject {
                 bullet.setVelocity(new Vector2(1, 0));
             }
 
-            long shootingSoundId = shootingSound.play(0.2f);
-            shootingSound.setPitch(shootingSoundId, 1.5f);
-            shootingSound.setLooping(shootingSoundId, false);
-            //shootingSound.dispose();
+            if(!isAI){
+                long shootingSoundId = AssetManager.getInstance().shootingSound.play(0.2f);
+                AssetManager.getInstance().shootingSound.setPitch(shootingSoundId, 1.5f);
+                AssetManager.getInstance().shootingSound.setLooping(shootingSoundId, false);
+            }
 
             canFire = false;
             timeSinceLastShot = GameScreen.time_line;
@@ -237,6 +234,7 @@ public class Tank extends GameObject {
                         .setDirection(getDirection())
                         .setScore(gainedScore)
                         .setEnemyCount(HUD.getInstance().getEnemyCount())
+                        .setFirePower(getFirepower())
                 );
 
         if(getTextureID() != null) {

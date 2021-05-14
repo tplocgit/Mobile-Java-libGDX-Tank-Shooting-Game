@@ -173,7 +173,6 @@ public class GameClient {
             while(true) {
                 if(clientSocket != null && clientSocket.isConnected()) {
                     try {
-
                         GameService.MainMessage receivedMessage = Network.getIntance().readMessage(clientTCPIn);
 
                         if(PvPScreen.getInstance() != null) {

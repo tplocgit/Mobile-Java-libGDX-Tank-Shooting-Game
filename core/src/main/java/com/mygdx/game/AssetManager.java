@@ -1,5 +1,8 @@
-package com.mygdx.game.network;
+package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -49,6 +52,12 @@ public class AssetManager {
             TEXTURE_ATLAS.findRegion("tank_bigRed_up"),
             TEXTURE_ATLAS.findRegion("tank_bigRed_down"),
     };
+
+    public final Sound shootingSound = Gdx.audio.newSound(Gdx.files.internal("explosionCrunch_000.ogg"));
+    public final Sound destroySound = Gdx.audio.newSound(Gdx.files.internal("explosionCrunch_001.ogg"));
+
+    public Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Ending Theme - Super Mario- World.mp3"));
+
 
     public AssetManager(){
         instance = this;

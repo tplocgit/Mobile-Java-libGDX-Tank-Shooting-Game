@@ -18,10 +18,8 @@ public class Bullet extends GameObject {
     private Tank ownerTank;
     boolean isAI = false;
 
-    private Sound destroySound;
-
     public Bullet(TextureRegion textureRegion, Tank ownerTank, Vector2 position, Vector2 movement,
-                  float speed, boolean isAI, Sound destroySound) {
+                  float speed, boolean isAI) {
         super();
         setImage(textureRegion);
         setPosition(position);
@@ -32,7 +30,6 @@ public class Bullet extends GameObject {
         this.ownerTank = ownerTank;
         timeSinceSpawn = GameScreen.time_line;
         this.isAI = isAI;
-        this.destroySound = destroySound;
     }
 
     //bullet meet map (wall)
@@ -60,8 +57,14 @@ public class Bullet extends GameObject {
                 if (targetTank.getLife() <= 0) {
                     HUD.getInstance().setEnemyCount(HUD.getInstance().getEnemyCount() - 1);
                     ownerTank.setGainedScore(ownerTank.getGainedScore() + targetTank.getScore());
+//                    if (targetTank instanceof PlayerTank) {
+////                        TankShootingGame tankShootingGame = new TankShootingGame();
+////                        System.out.println("im here");
+//                        GameObject.gameObjectList.clear();
+//                        TankShootingGame.getInstance().changeScreen(TankShootingGame.MENU_SCREEN);
+//                    }
+                    playDestroySound(AssetManager.getInstance().destroySound);
                     GameObject.Destroy(targetTank);
-                    playDestroySound(destroySound);
                 }
             }
         }
@@ -71,7 +74,6 @@ public class Bullet extends GameObject {
         long destroySoundId = sound.play(0.4f);
         sound.setPitch(destroySoundId, 1.5f);
         sound.setLooping(destroySoundId, false);
-        System.out.println("Hey hey");
     }
 
     public Tank getOwnerTank() {

@@ -25,6 +25,7 @@ public class AndroidLauncher extends AndroidApplication {
 		if(GameClient.getInstance() != null) {
 			GameClient.getInstance().shutdownClient();
 		}
+
 		initialize(new TankShootingGame(), config);
 
 	}
